@@ -1,0 +1,7 @@
+/nbproject
+/nbproject/private/
+node_modules
+npm-debug.log
+/dist
+/typings
+app/.LCKindex.html

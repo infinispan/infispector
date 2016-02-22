@@ -1,8 +1,8 @@
 {
-  "name": "angular2-seed",
-  "version": "0.0.0",
-  "description": "Seed for Angular 2 apps",
-  "repository": "https://github.com/mgechev/angular2-seed",
+  "name": "InfiSpector app",
+  "version": "0.9.0",
+  "description": "InfiSpector web application",
+  "repository": "https://github.com/infinispan/infispector",
   "scripts": {
     "build.dev": "gulp build.dev",
     "build.dev.watch": "gulp build.dev.watch",
@@ -21,7 +21,7 @@
     "tsd": "tsd",
     "docs": "npm run gulp -- build.docs && npm run gulp -- serve.docs"
   },
-  "author": "Minko Gechev <mgechev>",
+  "authors": "Tomas Sykora, Vratislav Hais, Marek Ciz, Jan Fitz, Patrik Cigas, Tomas Veskrna",
   "license": "MIT",
   "devDependencies": {
     "@reactivex/rxjs": "^5.0.0-alpha.6",

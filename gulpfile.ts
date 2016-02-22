@@ -77,5 +77,5 @@ gulp.task('docs', done =>
 
 // --------------
 // Build prod.
-// To be implemented (https://github.com/mgechev/angular2-seed/issues/58)
+// To be implemented
 // Will start implementation when Angular 2 will get close to a stable release.
