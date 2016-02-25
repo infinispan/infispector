@@ -16,6 +16,7 @@ export const APP_BASE         = argv['base']        || '/';
 export const APP_SRC          = 'app';
 export const APP_DEST         = 'dist';
 export const APP_DOCS         = 'docs';
+export const APP_IMG          = 'img';
 export const ANGULAR_BUNDLES  = './node_modules/angular2/bundles';
 export const VERSION          = version();
 
@@ -32,6 +33,7 @@ export const PATH = {
       all: `${APP_DEST}/${ENV}`,
       lib: `${APP_DEST}/${ENV}/lib`,
       css: `${APP_DEST}/${ENV}/css`,
+      img: `${APP_DEST}/${ENV}/img`,
       fonts: `${APP_DEST}/${ENV}/fonts`
     },
     test: 'test',
@@ -39,6 +41,9 @@ export const PATH = {
   },
   src: {
     all: APP_SRC,
+    img: [
+        `${APP_IMG}/*`
+    ],
     jslib_inject: [
       // Order is quite important here for the HTML tag injection.
       resolve('es6-shim/es6-shim.min.js'),
