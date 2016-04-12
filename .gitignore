@@ -1,5 +1,8 @@
-app/
-node_modules/
+infispector_app/app/
+infispector_app/node_modules/
+infispector_app/.idea/
+infispector_app/nbproject/private/
+infispector_app/nbproject/
 .idea/
 /nbproject/private/
 nbproject/
