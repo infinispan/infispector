@@ -3,6 +3,11 @@ infispector_app/node_modules/
 infispector_app/.idea/
 infispector_app/nbproject/private/
 infispector_app/nbproject/
+infispan_example_app/.idea/
+infispan_example_app/nbproject/private/
+infispan_example_app/nbproject/
+infispan_example_app/target/
 .idea/
 /nbproject/private/
 nbproject/
+/infinispan_example_app/target/
