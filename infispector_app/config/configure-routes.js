@@ -8,8 +8,11 @@ var app = require('../app'),
 
 function configureRoutes() {
     app.post('/connectDruid', routes.queryDruid);
-    app.get('/', routes.root);
-    app.get('*', routes.root);
+    app.post('/putEntry', routes.putEntry);
+    app.post('/getEntry', routes.getEntry);
+    app.get('/', routes.index);
+    app.get('/index.html', routes.index);
+    app.get('/operations.html', routes.operations);
 }
 
 module.exports = configureRoutes;

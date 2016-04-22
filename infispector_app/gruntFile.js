@@ -169,6 +169,10 @@
       tpl: {
         files: ['src/*.tpl.html','src/**/*.tpl.html','src/*.html','src/**/*.html'],
         tasks: ['copy:tpl']
+      },
+      assets: {
+        files: ['src/assets/*.json'],
+        tasks: ['copy:assets']
       }
     },
 
@@ -185,7 +189,7 @@
 
       concurrent: {
           target: {
-              tasks: ['watch:tpl', 'watch:js', 'shell:nodemon'],
+              tasks: ['watch:tpl', 'watch:js', 'watch:assets', 'shell:nodemon'],
               options: {
                   logConcurrentOutput: true
               }
