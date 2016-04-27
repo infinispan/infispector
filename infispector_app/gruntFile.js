@@ -147,6 +147,7 @@
       options: {
         asi: true,
         sub: true,
+        expr: true,
         // options here to override JSHint defaults
         globals: {
           jQuery: true,
