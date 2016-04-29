@@ -76,3 +76,33 @@ svg .shelf:hover , .shelf.active {
     font-weight: bold;
     padding: 5px 0;
 }
+
+/*CSS styles for time sliders*/
+#time_sliders {
+    width: 250px;
+    margin: 20px;
+}
+
+input[type=text] {
+    -webkit-appearance: none;
+    width: 40px;
+    height:20px;
+    margin: 5px;
+    text-align: right;
+    padding: 2px;
+}
+
+input[type=range] {
+    -webkit-appearance: none;
+    background-color: silver;
+    width: 200px;
+    height:20px;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    background-color: blue;
+    opacity: 0.5;
+    width: 10px;
+    height: 26px;
+}

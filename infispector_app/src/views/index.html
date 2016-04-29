@@ -28,6 +28,15 @@
                 <div>{{queryResults}}</div>
                 <br>
                 <div stuff></div>
+
+	   		 	<div id="time_sliders">
+	                Start time: <input type="text" value="0" id="start_input" onchange="changeSlider(this.value)">
+	                <input id="valR" type="range" min="0" max="100" value="0" step="1" oninput="showVal(this.value)" onchange="showVal(this.value)" />   		 			
+	                <br>
+	   		 		End time: <input type="text" value="0" id="end_input" onchange="changeSlider2(this.value)">
+	   		 		<input id="valR2" type="range" min="0" max="100" value="0" step="1" oninput="showVal2(this.value)" onchange="showVal2(this.value)" />   		 			
+	   		 	</div>
+
             </center>
         </div>
 
