@@ -4,19 +4,21 @@ app.controller('InfiSpectorCtrl', ['$scope', '$http', function ($scope, $http) {
         $scope.connectToDruid = function () {
 
             // see configure-routes.js for the path
-            var request = $http.post('/connectDruid',
-                    {
-                        payload: 'some json stuff',
-                        myQuery: 'my custom query',
-                        attribute: 'some other attributes'
-                    });
+            var request = $http.post('/connectDruid?' +
+                        "payload=" + 'some json stuff' +
+                        "&myQuery="  + 'my custom query' +
+                        "&attribute=" + 'some other attributes'
+                    );
 
             return request.then(function (response) {
                 if (response.data.error === 1) {
                     console.log('ERROR: response.data.error === 1');
                 } else {
                     console.log('Post request was called without error.');
-                    $scope.queryResults = response.data.jsonObjects;
+                    $scope.queryResults = response.data.jsonResponseAsString;
+                    
+                    var objects = JSON.parse($scope.queryResults);
+                    console.log(objects);
                 }
             });
         };
