@@ -31,3 +31,7 @@ Our InfiSpector application for visualization data flows.
 
 Helper files and configurations for setting up our Lambda Architecture: 
 Zookeper, Apache Kafka and Druid.
+
+## Scheme of Infispector architecture
+
+<img src="https://raw.githubusercontent.com/infinispan/infispector/master/architecture_scheme.png" width="880">
