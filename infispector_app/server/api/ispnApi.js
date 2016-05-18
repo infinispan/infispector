@@ -123,7 +123,27 @@ exports.putEntry = function (req, res) {
 
 exports.getEntry = function (req, res) {
     console.log('Operating with Infinispan api.ispn.getEntry.... ' +
-            "key to get: " + req.body.keyToGet);
-    res.send({error: 0, valueReturned: value}, 201);
+            "key to get: " + req.body.keyToGet);    
+    
+    var connected = infinispan.client({port: 11222, host: '127.0.0.1'});
+    
+    connected.then(function (client) {       
+        
+        var value = client.get(req.body.keyToGet);
+        
+        var valueSend = value.then(
+            function(){
+                res.send({error: 0, valueReturned: value._65}, 201);
+            }
+        );
+                
+        return valueSend.finally(
+                function () {
+                    return client.disconnect();
+                });
+        
+    }).catch(function (error) {
+        console.log("***** Got error getEntry: " + error.message);
+    });
 };
 
