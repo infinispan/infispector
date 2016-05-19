@@ -63,9 +63,19 @@ exports.putEntry = function (req, res) {
         var members = client.getTopologyInfo().getMembers();
         // Should show all cluster members
         console.log('***** Connected to MEMBERS: ' + JSON.stringify(members) + ' members size ' + members.length);
-
-        var clientPut = client.put(req.body.keyToPut, req.body.valueToPut);
-
+        
+        if (req.body.putNumber === undefined || req.body.putNumber == null) {
+            var clientPut = client.put(req.body.keyToPut, req.body.valueToPut);
+        }
+        else {
+            var data = [];
+            var rndNum = Math.floor((Math.random() * 10000) + 1);
+            for (i = 0; i < parseInt(req.body.putNumber); i++) {
+                data[i] = {key: 'k' + (rndNum + i).toString(), value: rndNum.toString()};
+            }
+            var clientPut = client.putAll(data);
+        }
+        
         var clientStats = clientPut.then(
                 function () {
                     return client.stats();
