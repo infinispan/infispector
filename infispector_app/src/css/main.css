@@ -38,12 +38,6 @@ svg .shelf:hover , .shelf.active {
 
 }
 
-
-
-
-
-
-
 .regionlist {
     -webkit-column-count: 5; /* Chrome, Safari, Opera */
     -moz-column-count: 5; /* Firefox */
@@ -83,15 +77,6 @@ svg .shelf:hover , .shelf.active {
     margin: 20px;
 }
 
-input[type=text] {
-    -webkit-appearance: none;
-    width: 40px;
-    height:20px;
-    margin: 5px;
-    text-align: right;
-    padding: 2px;
-}
-
 input[type=range] {
     -webkit-appearance: none;
     background-color: silver;
@@ -101,8 +86,68 @@ input[type=range] {
 
 input[type="range"]::-webkit-slider-thumb {
     -webkit-appearance: none;
-    background-color: blue;
+    background-color: #a45b36;
     opacity: 0.5;
     width: 10px;
     height: 26px;
+}
+
+#left_col {
+    float: left;
+    width: 50%;
+    padding: 30px 0px 20px 150px;
+}
+
+#right_col {
+    width: 50%;
+    float: right;
+}
+
+input[type=button]{
+    background-color: #a45b36;
+    border: none;
+    color: white;
+    padding: 12px 25px;
+    margin: 0px 0px 0px 5px;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+input[type=text] {
+    -webkit-appearance: none;
+    min-width: 120px;
+    height: 45px;
+    font-size: 18px;
+    margin: 0px 0px 10px 0px;
+    padding: 2px 5px 2px 2px;
+}
+
+legend {
+    padding: 5px;
+    border: 1px solid #a45b36;
+    color:green;
+    font-size: 100%;
+    background: #a45b36;
+    color: #fff;
+    max-width: 200px;
+}
+
+fieldset {
+    text-align: left;
+    width: 500px;
+    margin: 5px;
+    padding:  0px 20px 20px 20px;
+    font-size: 16px;
+    border: 2px solid #a45b36;
+    border-radius: 5px;
+}
+
+#label {
+    border: 1px solid #a45b36;
+    width: 500px;
+    height: 45px;
+    font-size: 16px;
+    padding: 10px;
+    margin: 5px 0px 20px 5px;
+    text-align: left;
 }
