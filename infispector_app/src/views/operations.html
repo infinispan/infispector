@@ -31,164 +31,172 @@
             .node--leaf {
                 pointer-events: none;
             }
+
+            
         </style>
     </head>
     <body>
         <div ng-app="InfiSpector" ng-controller="OperationsCtrl">
-
             <center>
                 <br>
                 <img src="../img/logo.jpg" width="300" height="100" alt="logo" >
                 <br><br>
-
-                <table>
-                    <tr> 
-                    <input type="button" ng-model="putEntryButton" ng-click="putEntry()"
-                           value="Put entry">
-                    Key: <input type="text" ng-model="keyToPut">
-                    Value: <input type="text" ng-model="valueToPut">
-                    Node HotRod port: <input type="text" ng-model="nodeToPut">
-                    </tr>
-                    <br>
-                    <tr>
-                        Current number of entries after put: {{currentNumberOfEntriesAfterPut}}    
-                    <br>
-                    Cluster members: {{clusterMembers}} {{clusterMembers.length}}
-                    </tr>
-                    <br>
-                    <tr> 
-                    <input type="button" ng-model="getEntryButton" ng-click="getEntry()"
-                           value="Get value for a key">
-                    Key: <input type="text" ng-model="keyToGet">
-                    Value: {{valueReturned}}                    
-                    </tr>
-                </table>
-                <br>
-                <p id="zoomableDiv"></p>
             </center>
+            <div id="left_col">  
+                <fieldset>
+    				<legend>Put entry</legend>                
+	               	Key:<input type="text" ng-model="keyToPut" style="margin: 7px 0px 0px 146px;">
+	               	<br>
+	               	Value: <input type="text" ng-model="valueToPut" style="margin: 7px 0px 0px 129px;">
+	               	<br>
+	               	Node HotRod port: <input type="text" ng-model="nodeToPut" style="margin: 7px 0px 0px 40px;">
+	               	<br>
+	               	Amount: <input type="text" style="margin: 7px 0px 0px 114px;">
+	            </fieldset>
+	            <br>
+	            <div id="label">
+	    			Current number of entries after put:  {{currentNumberOfEntriesAfterPut}}
+	    		</div>	                
+	            <div id="label">
+	                Cluster members:  {{clusterMembers}} {{clusterMembers.length}}	                 
+	            </div>  
+	            <fieldset>
+    				<legend>Get value for a key</legend>          
+	                Key:<input type="text" ng-model="keyToGet" style="margin: 7px 0px 0px 146px;">
+	            </fieldset>
+	            <br>	                               
+	            <div id="label">
+	              	Value: {{valueReturned}}                    
+	            </div>
+	            <input type="button" ng-model="putEntryButton" ng-click="putEntry()" value="Put entry">
+	            <input type="button" ng-model="getEntryButton" ng-click="getEntry()" value="Get value for a key">
+	        </div>               
         </div>
 
+        <div id="right_col">
+            
+	        <script src="//d3js.org/d3.v3.min.js"></script>
+	        <script>
+	            var margin = 20, diameter = 500;
 
-        <script src="//d3js.org/d3.v3.min.js"></script>
-        <script>
+	            drawChart();
+	                                
+	            function drawChart() {
+	                var color = d3.scale.linear()
+	                    .domain([-1, 5])
+	                    .range(["hsl(152,80%,80%)", "hsl(228,30%,40%)"])
+	                    .interpolate(d3.interpolateHcl);
 
-                                var margin = 20, diameter = 500;
+	                var pack = d3.layout.pack()
+	                    .padding(2)
+	                    .size([diameter - margin, diameter - margin])
+	                    .value(function (d) {
+	            return d.size;
+	            });
 
-                                drawChart();
-                                
-                                function drawChart() {
-                                    var color = d3.scale.linear()
-                                            .domain([-1, 5])
-                                            .range(["hsl(152,80%,80%)", "hsl(228,30%,40%)"])
-                                            .interpolate(d3.interpolateHcl);
+	            // dummy "reload"        
+	            d3.select("svg").remove();
+	            var svg = d3.select("p").append("svg")
+	                .attr("width", diameter)
+	                .attr("height", diameter)
+	                .append("g")
+	                .attr("transform", "translate(" + diameter / 2 + "," + diameter / 2 + ")");
 
-                                    var pack = d3.layout.pack()
-                                            .padding(2)
-                                            .size([diameter - margin, diameter - margin])
-                                            .value(function (d) {
-                                                return d.size;
-                                            });
+	            d3.json("assets/flare.json", function (error, root) {
 
-                                    // dummy "reload"        
-                                    d3.select("svg").remove();
-                                    var svg = d3.select("p").append("svg")
-                                            .attr("width", diameter)
-                                            .attr("height", diameter)
-                                            .append("g")
-                                            .attr("transform", "translate(" + diameter / 2 + "," + diameter / 2 + ")");
+	            if (error)
+	                throw error;
 
-                                    d3.json("assets/flare.json", function (error, root) {
+	            var focus = root,
+	                nodes = pack.nodes(root),
+	                view;
 
-                                        if (error)
-                                            throw error;
+	            var circle = svg.selectAll("circle")
+	                .data(nodes)
+	                .enter().append("circle")
+	                .attr("class", function (d) {
+	            		return d.parent ? d.children ? "node" : "node node--leaf" : "node node--root";
+	            	})
+	                                                
+	                .style("fill", function (d) {
+	                    return d.children ? color(d.depth) : null;
+	                })
+	                .on("click", function (d) {
+	                                                    if (focus !== d)
+	                                                        zoom(d), d3.event.stopPropagation();
+	                                                });
 
-                                        var focus = root,
-                                                nodes = pack.nodes(root),
-                                                view;
+	                                        var text = svg.selectAll("text")
+	                                                .data(nodes)
+	                                                .enter().append("text")
+	                                                .attr("class", "label")
+	                                                .style("fill-opacity", function (d) {
+	                                                    return d.parent === root ? 1 : 0;
+	                                                })
+	                                                .style("display", function (d) {
+	                                                    return d.parent === root ? "inline" : "none";
+	                                                })
+	                                                .text(function (d) {
+	                                                    return d.name;
+	                                                });
 
-                                        var circle = svg.selectAll("circle")
-                                                .data(nodes)
-                                                .enter().append("circle")
-                                                .attr("class", function (d) {
-                                                    return d.parent ? d.children ? "node" : "node node--leaf" : "node node--root";
-                                                })
-                                                .style("fill", function (d) {
-                                                    return d.children ? color(d.depth) : null;
-                                                })
-                                                .on("click", function (d) {
-                                                    if (focus !== d)
-                                                        zoom(d), d3.event.stopPropagation();
-                                                });
+	                                        var node = svg.selectAll("circle,text");
 
-                                        var text = svg.selectAll("text")
-                                                .data(nodes)
-                                                .enter().append("text")
-                                                .attr("class", "label")
-                                                .style("fill-opacity", function (d) {
-                                                    return d.parent === root ? 1 : 0;
-                                                })
-                                                .style("display", function (d) {
-                                                    return d.parent === root ? "inline" : "none";
-                                                })
-                                                .text(function (d) {
-                                                    return d.name;
-                                                });
+	                                        d3.select("zoomableDiv")
+	                                                .style("zoomableDiv", color(-1))
+	                                                .on("click", function () {
+	                                                    zoom(root);
+	                                                });
 
-                                        var node = svg.selectAll("circle,text");
+	                                        zoomTo([root.x, root.y, root.r * 2 + margin]);
 
-                                        d3.select("zoomableDiv")
-                                                .style("zoomableDiv", color(-1))
-                                                .on("click", function () {
-                                                    zoom(root);
-                                                });
+	                                        function zoom(d) {
+	                                            var focus0 = focus;
+	                                            focus = d;
 
-                                        zoomTo([root.x, root.y, root.r * 2 + margin]);
+	                                            var transition = d3.transition()
+	                                                    .duration(d3.event.altKey ? 7500 : 750)
+	                                                    .tween("zoom", function (d) {
+	                                                        var i = d3.interpolateZoom(view, [focus.x, focus.y, focus.r * 2 + margin]);
+	                                                        return function (t) {
+	                                                            zoomTo(i(t));
+	                                                        };
+	                                                    });
 
-                                        function zoom(d) {
-                                            var focus0 = focus;
-                                            focus = d;
+	                                            transition.selectAll("text")
+	                                                    .filter(function (d) {
+	                                                        return d.parent === focus || this.style.display === "inline";
+	                                                    })
+	                                                    .style("fill-opacity", function (d) {
+	                                                        return d.parent === focus ? 1 : 0;
+	                                                    })
+	                                                    .each("start", function (d) {
+	                                                        if (d.parent === focus)
+	                                                            this.style.display = "inline";
+	                                                    })
+	                                                    .each("end", function (d) {
+	                                                        if (d.parent !== focus)
+	                                                            this.style.display = "none";
+	                                                    });
+	                                        }
 
-                                            var transition = d3.transition()
-                                                    .duration(d3.event.altKey ? 7500 : 750)
-                                                    .tween("zoom", function (d) {
-                                                        var i = d3.interpolateZoom(view, [focus.x, focus.y, focus.r * 2 + margin]);
-                                                        return function (t) {
-                                                            zoomTo(i(t));
-                                                        };
-                                                    });
+	                                        function zoomTo(v) {
+	                                            var k = diameter / v[2];
+	                                            view = v;
+	                                            node.attr("transform", function (d) {
+	                                                return "translate(" + (d.x - v[0]) * k + "," + (d.y - v[1]) * k + ")";
+	                                            });
+	                                            circle.attr("r", function (d) {
+	                                                return d.r * k;
+	                                            });
+	                                        }
+	            	});
+	            };
 
-                                            transition.selectAll("text")
-                                                    .filter(function (d) {
-                                                        return d.parent === focus || this.style.display === "inline";
-                                                    })
-                                                    .style("fill-opacity", function (d) {
-                                                        return d.parent === focus ? 1 : 0;
-                                                    })
-                                                    .each("start", function (d) {
-                                                        if (d.parent === focus)
-                                                            this.style.display = "inline";
-                                                    })
-                                                    .each("end", function (d) {
-                                                        if (d.parent !== focus)
-                                                            this.style.display = "none";
-                                                    });
-                                        }
-
-                                        function zoomTo(v) {
-                                            var k = diameter / v[2];
-                                            view = v;
-                                            node.attr("transform", function (d) {
-                                                return "translate(" + (d.x - v[0]) * k + "," + (d.y - v[1]) * k + ")";
-                                            });
-                                            circle.attr("r", function (d) {
-                                                return d.r * k;
-                                            });
-                                        }
-                                    });
-                                };
-
-                                d3.select(self.frameElement).style("height", diameter + "px");
-        </script>
+	            d3.select(self.frameElement).style("height", diameter + "px");
+	        </script>
+	        <p id="zoomableDiv"></p>
+	        </div>    
 
         <!-- build:remove:dev -->
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.js"></script>
