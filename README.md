@@ -34,4 +34,4 @@ Zookeper, Apache Kafka and Druid.
 
 ## Scheme of Infispector architecture
 
-<img src="https://raw.githubusercontent.com/infinispan/infispector/master/architecture_scheme.png" width="880">
+<img src="https://raw.githubusercontent.com/infinispan/infispector/master/infispector_architecture.png" width="880">
