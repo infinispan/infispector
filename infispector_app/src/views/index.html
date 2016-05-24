@@ -10,7 +10,7 @@
         <link rel="stylesheet" href="css/main.css"/>
     </head>
     <body>
-        <div ng-app="InfiSpector" ng-controller="InfiSpectorCtrl">
+        <div ng-app="InfiSpector" ng-controller="InfiSpectorCtrl" id="myId">
 
             <center>
                 <br>
@@ -25,7 +25,9 @@
 
                 <input type="button" ng-model="connectToDruidButton" ng-click="connectToDruid()"
                        value="Connect to druid">
+                <input type="button" ng-model="getNodes" ng-click="getNodes()" value="Get Nodes">
                 <div>{{queryResults}}</div>
+
                 <br>
                 <div stuff></div>
 
@@ -36,7 +38,6 @@
 	   		 		End time: <input type="text" value="0" id="end_input" onchange="changeSlider2(this.value)">
 	   		 		<input id="valR2" type="range" min="0" max="100" value="0" step="1" oninput="showVal2(this.value)" onchange="showVal2(this.value)" />   		 			
 	   		 	</div>
-
             </center>
         </div>
 
@@ -62,130 +63,7 @@
         <script src="js/directives.js"></script>
         <!-- /build -->
         <script src="http://d3js.org/d3.v3.min.js"></script>
-        <script src="graf2.js"></script>
-        <script src="graf.js"></script>
-        <script>
-        var sales_data=[
-        ['N1','N3',16,0],
-        ['N2','N1',1278,4],
-        ['N3','N1',27,0],
-        ['N4','N1',58,0],
-        ['N6','N1',1551,15],
-        ['N5','N1',141,0],
-        ['N1','N2',5453,35],
-        ['N2','N2',683,1],
-        ['N3','N2',862,0],
-        ['N6','N2',6228,30],
-        ['N1','N3',15001,449],
-        ['N2','N3',527,3],
-        ['N3','N3',836,0],
-        ['N4','N3',28648,1419],
-        ['N6','N3',3,0],
-        ['N1','N4',13,0],
-        ['N2','N4',396,0],
-        ['N3','N4',362,0],
-        ['N4','N4',78,10],
-        ['N6','N4',2473,32],
-        ['N5','N4',2063,64],
-        ['N3','N6',203,0],
-        ['N6','N6',686,2],
-        ['N5','N6',826,0],
-        ['N1','N3',1738,110],
-        ['N2','N3',12925,13],
-        ['N3','N3',15413,0],
-        ['N2','N2',2166,2],
-        ['N3','N2',86,0],
-        ['N4','N2',348,3],
-        ['N6','N2',4244,18],
-        ['N5','N2',1536,1],
-        ['N2','N1',351,0],
-        ['N6','N1',405,1],
-        ['N2','N5',914,1],
-        ['N3','N5',127,0],
-        ['N6','N5',1470,7],
-        ['N5','N5',516,1],
-        ['N1','N5',43,0],
-        ['N2','N5',667,1],
-        ['N3','N5',172,0],
-        ['N4','N5',149,1],
-        ['N6','N5',1380,5],
-        ['N5','N5',791,23],
-        ['N2','N3',1,0],
-        ['N6','N3',1,0],
-        ['N2','N6',1070,1],
-        ['N6','N6',1171,2],
-        ['N5','N6',33,0],
-        ['N4','N4',1,0],
-        ['N2','N6',407,0],
-        ['N3','N6',3,0],
-        ['N6','N6',457,2],
-        ['N5','N6',20,0],
-        ['N2','N4',557,0],
-        ['N3','N4',167,0],
-        ['N4','N4',95,1],
-        ['N6','N4',1090,5],
-        ['N5','N4',676,6],
-        ['N1','N5',1195,99],
-        ['N2','N5',350,3],
-        ['N3','N5',212,0],
-        ['N6','N5',1509,8],
-        ['N1','N3',3899,389],
-        ['N2','N1',147,0],
-        ['N3','N1',455,0],
-        ['N4','N1',1,1],
-        ['N6','N3',4100,16],
-        ['N1','N3',12,0],
-        ['N2','N3',634,2],
-        ['N3','N3',749,0],
-        ['N4','N3',119,1],
-        ['N6','N3',3705,19],
-        ['N5','N3',3456,25],
-        ['N2','N4',828,2],
-        ['N3','N4',288,0],
-        ['N4','N4',141,0],
-        ['N6','N4',2625,7],
-        ['N5','N4',1920,10],
-        ['N2','N6',1146,2],
-        ['N3','N6',212,0],
-        ['N4','N6',223,4],
-        ['N6','N6',1803,6],
-        ['N5','N6',761,8],
-        ['N2','N5',527,0],
-        ['N3','N5',90,0],
-        ['N6','N5',930,4],
-        ['N5','N5',395,1],
-        ['N1','N6',7232,58],
-        ['N2','N6',1272,0],
-        ['N3','N6',1896,0],
-        ['N4','N6',1,0],
-        ['N6','N6',10782,33],
-        ['N5','N6',1911,3],
-        ['N2','N5',495,0],
-        ['N3','N5',32,0],
-        ['N4','N5',7,0],
-        ['N6','N5',1557,12],
-        ['N5','N5',24,0],
-        ['N2','N6',460,1],
-        ['N4','N6',88,3],
-        ['N6','N6',956,3],
-        ['N2','N6',232,0],
-        ['N3','N6',71,0],
-        ['N6','N6',575,2],
-        ['N5','N6',368,3]
-        ];
-
-        var width = 1100, height = 610, margin ={b:0, t:40, l:170, r:50};
-
-        var svg = d3.select("body")
-                .append("svg").attr('width',width).attr('height',(height+margin.b+margin.t))
-                .append("g").attr("transform","translate("+ margin.l+","+margin.t+")");
-
-        var data = [ 
-                {data:bP.partData(sales_data,2), id:'SalesAttempts', header:["Channel","State", "Sales Attempts"]},
-                {data:bP.partData(sales_data,3), id:'Sales', header:["Channel","State", "Sales"]}
-        ];
-
-        bP.draw(data, svg);
-        </script>
+        <script src="../js/chordDiagram.js"></script>
+        <!--<script src="../js/messageFlowChartCaller.js"></script>-->
     </body>
 </html>
