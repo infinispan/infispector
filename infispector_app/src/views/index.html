@@ -1,4 +1,4 @@
-<html >
+<html ng-app="InfiSpector">
     <head>
         <meta charset="utf-8">
         <title>InfiSpector</title>
@@ -10,7 +10,7 @@
         <link rel="stylesheet" href="css/main.css"/>
     </head>
     <body>
-        <div ng-app="InfiSpector" ng-controller="InfiSpectorCtrl" id="myId">
+        <div id="InfiSpectorCtrlDivId" ng-controller="InfiSpectorCtrl">
 
             <center>
                 <br>
@@ -63,7 +63,8 @@
         <script src="js/directives.js"></script>
         <!-- /build -->
         <script src="http://d3js.org/d3.v3.min.js"></script>
-        <script src="../js/chordDiagram.js"></script>
-        <!--<script src="../js/messageFlowChartCaller.js"></script>-->
+        <script src="js/chordDiagram.js"></script>
+        <script src="js/messageFlowChart.js"></script>
+        <script>messageFlowChart();</script>
     </body>
 </html>

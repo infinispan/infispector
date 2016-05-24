@@ -137,6 +137,58 @@ exports.getMessagesCount = function (request, response) {
 };
 
 /*
+ * Stejne jako getMessagesCount, akorat pro vnitrni pouziti bez nutnosti requestu
+ */
+
+var getMessagesCountIntern = function (srcNode, destNode) {
+     
+   var params = {host: "127.0.0.1:8084", debug: "true"};
+   var druidRequester = require('facetjs-druid-requester').druidRequesterFactory(params);
+
+   druidRequester({
+       query: {
+           "queryType": "topN",
+           "dataSource": "InfiSpectorTopic",
+           "granularity": "all",
+           "dimension": "length",
+           "metric": "length",
+           "threshold": 10000,
+           "filter": {
+		   "type": "and",
+		   "fields": [
+		      {
+		        "type": "selector",
+		        "dimension": "src",
+		        "value": srcNode
+		      },
+		      {
+		        "type": "selector",
+		        "dimension": "dest",
+		        "value": destNode
+		      }
+		    ]
+		  },
+           "aggregations": [
+               {"type": "count", "fieldName": "length", "name": "length"}
+           ],
+           "intervals": ["2009-10-01T00:00/2020-01-01T00"]
+       }
+   })
+            
+           .then(function (result) {
+                
+               var test = JSON.stringify(result[0]); 
+               var reg = /(?:"length":)[0-9]+/g; 
+               var messagesCount = test.match(reg);      
+               messagesCount = messagesCount[0].replace('"length":',"");
+               
+               console.log(messagesCount);
+               return messagesCount;
+           })
+           .done();
+};
+
+/*
 @brief function which returns final count of messages from src node to dest node and from given time interval
 @param srcNode
 @param destNode
@@ -200,4 +252,81 @@ exports.getMessagesCountInInterval = function (request, response) {
                response.send({error: 0, jsonResponseAsString: JSON.stringify(messagesCount)}, 201);
            })
            .done();
+};
+
+/*
+ * Stejne jako getMessagesCountInInterval, akorat pro vnitrni pouziti bez nutnosti requestu
+ */
+
+var getMessagesCountInIntervalIntern = function (srcNode, destNode, fromTime, toTime) {   
+   var params = {host: "127.0.0.1:8084", debug: "true"};
+   var druidRequester = require('facetjs-druid-requester').druidRequesterFactory(params);
+
+   druidRequester({
+       query: {
+           "queryType": "topN",
+           "dataSource": "InfiSpectorTopic",
+           "granularity": "all",
+           "dimension": "length",
+           "metric": "length",
+           "threshold": 10000,
+           "filter": {
+		   "type": "and",
+		   "fields": [
+		      {
+		        "type": "selector",
+		        "dimension": "src",
+		        "value": srcNode
+		      },
+		      {
+		        "type": "selector",
+		        "dimension": "dest",
+		        "value": destNode
+		      }
+		    ]
+		  },
+           "aggregations": [
+               {"type": "count", "fieldName": "length", "name": "length"}
+           ],
+           "intervals": [fromTime + "/" + toTime]
+       }
+   })
+           .then(function (result) {
+                
+               var test = JSON.stringify(result[0]); 
+               var reg = /(?:"length":)[0-9]+/g; 
+               var messagesCount = test.match(reg);      
+               messagesCount = messagesCount[0].replace('"length":',"");
+               return messagesCount;
+           })
+           .done();
+};
+
+exports.flowChartMatrix = function (request, response) {
+    var nodes = request.body.nodes;
+    var from = request.body.from;
+    var to = request.body.to;
+    var numberOfNodes = nodes.length;
+    var matrix = [];
+    for (var i = 0; i < numberOfNodes; i++) {
+        for (var j = 0; j < numberOfNodes; j++) {
+            matrix[i * numberOfNodes + j] = [nodes[i], nodes[j], getMessagesCountIntern(nodes[i], nodes[j])];
+        }
+    }
+    response.send({error: 0, matrix: JSON.stringify(matrix)}, 201);
+};
+
+exports.chordDiagramMatrix = function (request, response) {
+    var nodes = request.body.nodes;
+    var from = request.body.from;
+    var to = request.body.to;
+    var numberOfNodes = nodes.length;
+    var matrix = [];
+    for (var i = 0; i < numberOfNodes; i++) {
+        matrix[i] = [];
+        for (var j = 0; j < numberOfNodes; j++) {
+            matrix[i][j] = getMessagesCountIntern(nodes[i], nodes[j]);
+        }
+    }
+    response.send({error: 0, matrix: JSON.stringify(matrix)}, 201);
 };
