@@ -11,6 +11,7 @@
     "facetjs-druid-requester": "^1.0.0",
     "express": "3.0.0",
     "ejs": ">= 0.8.3",
+    "es6-promise": ">= 3.2.1",
     "mongoose": ">= 3.6.1",
     "infinispan": "0.2.0",
     "jsonfile": "2.3.0",

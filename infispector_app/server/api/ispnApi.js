@@ -5,6 +5,7 @@ var infinispan = require('infinispan');
 // replace JSON file for generating new updated zoomable chart
 var jsonfile = require('jsonfile');
 var file = './app/assets/flare.json';
+require('es6-promise').polyfill();
 
 function updateJsonForChart(member) {
 
