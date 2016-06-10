@@ -41,6 +41,7 @@ function updateJsonForChart(member) {
                     },
                     function (err) {
                         // TODO: implement better and proper error handling
+                        // TODO: reject and propagate
                         console.log("Getting stats failed.", err);
                     });
         },

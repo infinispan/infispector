@@ -11,8 +11,8 @@ function configureRoutes() {
     app.post('/putEntry', routes.putEntry);
     app.post('/getEntry', routes.getEntry);
     app.post('/getNodes', routes.getNodes);
-    app.post('/getFlowChartMatrix', routes.flowChartMatrix);
-    app.post('/getChordDiagramMatrix', routes.chordDiagramMatrix);
+    app.post('/getFlowChartMatrix', routes.getFlowChartMatrix);
+    app.post('/getChordDiagramMatrix', routes.getChordDiagramMatrix);
     app.get('/', routes.index);
     app.get('/index.html', routes.index);
     app.get('/operations.html', routes.operations);

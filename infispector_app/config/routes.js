@@ -12,6 +12,18 @@ exports.queryDruid = function(req, res) {
     api.druid.queryDruid(req, res);
 };
 
+exports.getNodes = function(req, res) {    
+    api.druid.getNodes(req, res);
+};
+
+exports.getFlowChartMatrix = function(req, res) {    
+    api.druid.getFlowChartMatrix(req, res);
+};
+
+exports.getChordDiagramMatrix = function(req, res) {    
+    api.druid.getChordDiagramMatrix(req, res);
+};
+
 exports.getEntry = function(req, res) {    
     api.ispn.getEntry(req, res);
 };
