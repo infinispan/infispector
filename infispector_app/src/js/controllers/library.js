@@ -186,5 +186,18 @@ app.controller('OperationsCtrl', ['$scope', '$http', function ($scope, $http) {
                 }
             });
         };
+        
+        $scope.clearCache = function () {
+            var request = $http.post('/clearCache', {});
+            
+            return request.then(function (response) {
+                if (response.data.error === 1) {
+                    console.log('ERROR: response.data.error === 1');
+                } else {
+                    console.log('Post request was called without error.');
+                    drawChart();
+                }
+            });
+        };
 
     }]);
