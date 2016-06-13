@@ -187,6 +187,9 @@ app.controller('OperationsCtrl', ['$scope', '$http', function ($scope, $http) {
             });
         };
         
+        /**
+         * @todo drawChart after clear cache
+         */
         $scope.clearCache = function () {
             var request = $http.post('/clearCache', {});
             

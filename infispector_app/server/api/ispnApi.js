@@ -167,11 +167,12 @@ exports.clearCache = function (req, res) {
     connected.then(function (client) {       
 
         return client.clear();
-        return client.disconnect();
         
     }).catch(function (error) {
+        
         console.log("***** Got error clearCache: " + error.message);
-    }).finally(function (client) {       
+        
+    }).finally(function (client) {
         
         return client.disconnect();
         
