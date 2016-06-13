@@ -117,6 +117,11 @@
 	}
 	
 	function drawPart(data, id, p, length){
+                var len = 0;
+                if (!p) {
+                    len = length;
+                    length = 0;
+                }
 		d3.select("#"+id).append("g").attr("class","part"+p)
 			.attr("transform","translate("+( p*(bb+b))+",0)");
 		d3.select("#"+id).select(".part"+p).append("g").attr("class","subbars");
@@ -134,7 +139,7 @@
 			.style("stroke","black").style("stroke-opacity",0);
 			
 		mainbar.append("text").attr("class","barlabel")
-			.attr("x", c1[p]).attr("y",function(d){ return d.middle+5;})
+			.attr("x", c1[p] - 4 * len).attr("y",function(d){ return d.middle+5;})
 			.text(function(d,i){ return data.keys[p][i];})
 			.attr("text-anchor","start" );
 			
@@ -173,13 +178,13 @@
 		[0,1].forEach(function(d){
 			var h = d3.select("#"+id).select(".part"+d).append("g").attr("class","header");
 			
-			h.append("text").text(header[d]).attr("x", (c1[d]-5))
+			h.append("text").text(header[d]).attr("x", (c1[d]-5 - (!d) * (3 * length)))
 				.attr("y", -5).style("fill","grey");
 			
 			h.append("text").text("Count").attr("x", (c2[d]-10 + d * 5 * length))
 				.attr("y", -5).style("fill","grey");
 			
-			h.append("line").attr("x1",c1[d]-10).attr("y1", -2)
+			h.append("line").attr("x1",c1[d]-10 - (!d) * (3 * length)).attr("y1", -2)
 				.attr("x2",c3[d]+10 + d * 5 * length).attr("y2", -2).style("stroke","black")
 				.style("stroke-width","1").style("shape-rendering","crispEdges");
 		});
@@ -231,12 +236,13 @@
 	
 	bP.draw = function(data, svg, length){
 		data.forEach(function(biP,s){
+                        s = 0.5;
 			svg.append("g")
 				.attr("id", biP.id)
 				.attr("transform","translate("+ (550*s)+",0)");
 				
 			var visData = visualize(biP.data);
-			drawPart(visData, biP.id, 0, 0);
+			drawPart(visData, biP.id, 0, length);
 			drawPart(visData, biP.id, 1, length); 
 			drawEdges(visData, biP.id);
 			drawHeader(biP.header, biP.id, length);
@@ -292,69 +298,23 @@
 	this.bP = bP;
 }();
 
-//function getNodes1() {
-//    return ['node_12345', 'node2', 'node3', 'node4', 'node5', 'node6', 'node7', 'node8', 'node9', 'node10', 'node11', 'node12', 'node13', 'node14', 'node15', 'node16', 'node17', 'node18', 'node19', 'node20', 'node21', 'node22', 'node23', 'node24','node25', 'node26', 'node27', 'node28','node29', 'node30', 'node31', 'node32'];
-//}
-//
-//function getNumberOfMessages1(nodeFrom, nodeTo, from, to) {
-//    var messages = [[15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3],
-//                    [8, 7, 9, 1, 8, 7, 9, 1, 8, 7, 9, 1, 8, 7, 9, 1, 8, 7, 9, 1, 8, 7, 9, 1, 8, 7, 9, 1, 8, 7, 9, 1],
-//                    [15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3],
-//                    [15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3],
-//                    [15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3],
-//                    [15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3],
-//                    [15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3],
-//                    [15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3],
-//                    [15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3],
-//                    [15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3],
-//                    [15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3],
-//                    [15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3],
-//                    [15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3],
-//                    [15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3],
-//                    [15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3],
-//                    [15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3],
-//                    [15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3],
-//                    [15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3],
-//                    [15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3],
-//                    [15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3],
-//                    [15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3],
-//                    [15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3],
-//                    [15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3],
-//                    [15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3],
-//                    [15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3],
-//                    [15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3],
-//                    [15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3],
-//                    [15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3],
-//                    [15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3],
-//                    [15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3],
-//                    [15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3],
-//                    [15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3, 15, 6, 0, 3]];
-//    return messages[from][to];
-//}
-
-//function getMatrixFlowChart(nodes) {
-//    var nodesMessages = [];
-//    var nodesLength = nodes.length;
-//    for (var index = 0; index <  nodesLength; index++) {
-//        for (var index2 = 0; index2 < nodesLength; index2++) {
-//            nodesMessages[index * nodesLength + index2] = [nodes[index], nodes[index2], getNumberOfMessages1(nodes[index], nodes[index2], index, index2)];
-//        }
-//    }
-//    return nodesMessages;
-//}
-
-
 function messageFlowChart(nodes, matrix) {
     var longest = nodes.sort(function (a, b) { return b.length - a.length; })[0].length;
 
     var width = 1100, height = 610, margin ={b:0, t:40, l:170, r:50};
 
     var svg = d3.select("body")
-            .append("svg").attr('width',width).attr('height',(height+margin.b+margin.t))
+            .append("svg").attr('width',width).attr('height',(height+margin.b+margin.t)).attr("id", "messageFlow")
             .append("g").attr("transform","translate("+ margin.l+","+margin.t+")");
-
     var data = [ 
             {data:bP.partData(matrix,2), id:'Comunication', header:["From","To", "Nodes"]}
     ];
     bP.draw(data, svg, longest);
+}
+
+function unshowFlowDiagram() {
+    var element = document.getElementById("messageFlow");
+    if (element !== null) {
+        element.remove();
+    }
 }

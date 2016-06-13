@@ -1,64 +1,3 @@
-   // --> from ROW to COLLUMN
-//
-//   function getNodes() {
-//       return [ "Node1", "Node2", "Node3", "Node4", "Node5", "Node6", "Node7", "Node8",
-//            "Node9", "Node10", "Node11", "Node12", "Node13", "Node14", "Node15", "Node16"];
-//   }
-//   
-//   function getNumberOfMessages(nodeFrom, nodeTo, from, to) {
-//       var matrix = [
-//            [ 20, 11, 3, 30, 32, 35, 59, 5, 20, 11, 3, 30, 32, 35, 59, 5],
-//            [ 20, 11, 3, 30, 32, 35, 59, 5, 20, 11, 3, 30, 32, 35, 59, 5],
-//            [ 20, 11, 3, 30, 32, 35, 59, 5, 20, 11, 3, 30, 32, 35, 59, 5],
-//            [ 20, 11, 3, 30, 32, 35, 59, 5, 20, 11, 3, 30, 32, 35, 59, 5],
-//            [ 20, 11, 3, 30, 32, 35, 59, 5, 20, 11, 3, 30, 32, 35, 59, 5],
-//            [ 20, 11, 3, 30, 32, 35, 59, 5, 20, 11, 3, 30, 32, 35, 59, 5],
-//            [ 20, 11, 3, 30, 32, 35, 59, 5, 20, 11, 3, 30, 32, 35, 59, 5],
-//            [ 20, 11, 3, 30, 32, 35, 59, 5, 20, 11, 3, 30, 32, 35, 59, 5],
-//            [ 20, 11, 3, 30, 32, 35, 59, 5, 20, 11, 3, 30, 32, 35, 59, 5],
-//            [ 100, 100, 100, 30, 32, 35, 59, 5, 20, 11, 3, 30, 32, 35, 59, 5],
-//
-//
-//
-//            [ 20, 11, 3, 30, 32, 35, 59, 5, 20, 11, 3, 30, 32, 35, 59, 5],
-//            [ 20, 11, 3, 30, 32, 35, 59, 5, 20, 11, 3, 30, 32, 35, 59, 5],
-//            [ 20, 11, 3, 30, 32, 35, 59, 5, 20, 11, 3, 30, 32, 35, 59, 5],
-//            [ 20, 11, 3, 30, 32, 35, 59, 5, 20, 11, 3, 30, 32, 35, 59, 5],
-//            [ 20, 11, 3, 30, 32, 35, 59, 5, 20, 11, 3, 30, 32, 35, 59, 5],
-//            [ 20, 11, 3, 30, 32, 35, 59, 5, 20, 11, 3, 30, 32, 35, 59, 5]
-//         ];
-//         return matrix[from][to];
-//   }
-//   
-//   function getMatrix(nodes) {
-//       var arrayLength = nodes.length;
-//       var matrix = [];
-//       for (var index = 0; index < arrayLength; index++) {
-//           matrix[index] = [];
-//           for (var index1 = 0; index1 < arrayLength; index1++) {
-//               matrix[index][index1] = getNumberOfMessages(nodes[index], nodes[index1], index, index1);
-//           }
-//       }
-//       return matrix;
-//   }
-
-//   var nodes = getNodes();
-//   var nodes1 = angular.element(document.getElementById('InfiSpectorCtrl')).scope();
-//   console.log(nodes1);
-//   var matrix = getMatrix(nodes);
-//   var rotation = -0.7;
-//
-//   var chord_options = {
-//      "gnames": nodes,
-//      "rotation": rotation,
-//      "colors": ["rgb(233,222,187)","rgb(255,205,243)","rgb(255,255,155)",
-//                 "rgb(0,0,0)","rgb(87,87,87)","rgb(173,35,35)",
-//                 "rgb(42,75,215)","rgb(29,105,20)","rgb(129,74,25)",
-//                 "rgb(255,146,51)","rgb(255,238,51)","rgb(129,38,192)",
-//                 "rgb(160,160,160)","rgb(129,197,122)","rgb(157,175,215)",
-//                 "rgb(41,208,208)"]
-//   };
-
 function chordDiagram(options, matrix) {
 
    // initialize the chord configuration variables
@@ -115,6 +54,7 @@ function chordDiagram(options, matrix) {
          .attr("preserveAspectRatio", "xMinYMid")    // add viewBox and preserveAspectRatio
          .attr("width", width)
          .attr("height", height)
+         .attr("id", "chordDiagram")
          .append("g")
          .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
@@ -193,4 +133,7 @@ function chordDiagram(options, matrix) {
 
 
 }
-//   chordDiagram(chord_options, matrix);
+
+function unshowChordDiagram() {
+    document.getElementById("chordDiagram").remove();
+}
