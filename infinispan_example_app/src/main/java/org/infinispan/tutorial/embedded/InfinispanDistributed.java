@@ -49,7 +49,7 @@ public class InfinispanDistributed {
       cache.getAdvancedCache().withFlags(Flag.SKIP_REMOTE_LOOKUP)
             .entrySet().forEach(entry -> System.out.printf("%s = %s\n", entry.getKey(), entry.getValue()));
 
-      Thread.sleep(5000);
+      Thread.sleep(15000);
 
       // Stop the cache manager and release all resources
       cacheManager.stop();
