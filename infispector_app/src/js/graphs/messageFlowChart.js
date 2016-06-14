@@ -116,10 +116,11 @@
 		};
 	}
 	
-	function drawPart(data, id, p, length){
+	function drawPart(data, id, p, length, longestCnt){
                 var len = 0;
                 if (!p) {
-                    len = length;
+                    longestCnt /= 5;
+                    len = length + longestCnt;
                     length = 0;
                 }
 		d3.select("#"+id).append("g").attr("class","part"+p)
@@ -149,7 +150,7 @@
 			.attr("text-anchor","end");
 			
 		mainbar.append("text").attr("class","barpercent")
-			.attr("x", c3[p] + 5 * length + length).attr("y",function(d){ return d.middle+5;})
+			.attr("x", c3[p] + 5 * length + longestCnt).attr("y",function(d){ return d.middle+5;})
 			.text(function(d,i){ return "( "+Math.round(100*d.percent)+"%)" ;})
 			.attr("text-anchor","end").style("fill","grey");
 			
@@ -170,7 +171,7 @@
 			.style("opacity",0.5).each(function(d) { this._current = d; });	
 	}	
 	
-	function drawHeader(header, id, length){
+	function drawHeader(header, id, length, longestCnt){
 		d3.select("#"+id).append("g").attr("class","header").append("text").text(header[2])
 			.style("font-size","20").attr("x",108).attr("y",-20).style("text-anchor","middle")
 			.style("font-weight","bold");
@@ -178,13 +179,13 @@
 		[0,1].forEach(function(d){
 			var h = d3.select("#"+id).select(".part"+d).append("g").attr("class","header");
 			
-			h.append("text").text(header[d]).attr("x", (c1[d]-5 - (!d) * (3 * length)))
+			h.append("text").text(header[d]).attr("x", (c1[d]-5 - (!d) * (3 * length + longestCnt)))
 				.attr("y", -5).style("fill","grey");
 			
 			h.append("text").text("Count").attr("x", (c2[d]-10 + d * 5 * length))
 				.attr("y", -5).style("fill","grey");
 			
-			h.append("line").attr("x1",c1[d]-10 - (!d) * (3 * length)).attr("y1", -2)
+			h.append("line").attr("x1",c1[d]-10 - (!d) * (3 * length + longestCnt)).attr("y1", -2)
 				.attr("x2",c3[d]+10 + d * 5 * length).attr("y2", -2).style("stroke","black")
 				.style("stroke-width","1").style("shape-rendering","crispEdges");
 		});
@@ -234,7 +235,7 @@
 		transitionEdges(data, id);
 	}
 	
-	bP.draw = function(data, svg, length){
+	bP.draw = function(data, svg, length, longestCnt){
 		data.forEach(function(biP,s){
                         s = 0.5;
 			svg.append("g")
@@ -242,10 +243,10 @@
 				.attr("transform","translate("+ (550*s)+",0)");
 				
 			var visData = visualize(biP.data);
-			drawPart(visData, biP.id, 0, length);
-			drawPart(visData, biP.id, 1, length); 
+			drawPart(visData, biP.id, 0, length, longestCnt);
+			drawPart(visData, biP.id, 1, length, longestCnt); 
 			drawEdges(visData, biP.id);
-			drawHeader(biP.header, biP.id, length);
+			drawHeader(biP.header, biP.id, length, longestCnt);
 			
 			[0,1].forEach(function(p){			
 				d3.select("#"+biP.id)
@@ -300,6 +301,12 @@
 
 function messageFlowChart(nodes, matrix) {
     var longest = nodes.sort(function (a, b) { return b.length - a.length; })[0].length;
+    var longestCnt = 0;
+    matrix.forEach(function (element) {
+        if (element[2].length > longestCnt) {
+            longestCnt = element[2].length;
+        }
+    });
 
     var width = 1100, height = 610, margin ={b:0, t:40, l:170, r:50};
 
@@ -309,7 +316,7 @@ function messageFlowChart(nodes, matrix) {
     var data = [ 
             {data:bP.partData(matrix,2), id:'Comunication', header:["From","To", "Nodes"]}
     ];
-    bP.draw(data, svg, longest);
+    bP.draw(data, svg, longest, longestCnt * 10 + 4);
 }
 
 function unshowFlowDiagram() {
