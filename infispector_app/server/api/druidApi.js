@@ -59,11 +59,11 @@ exports.getNodes = function (request, response) {
     })
             .then(function (result) {
                 var test = JSON.stringify(result[0]);
-                var reg = /(?:\"dest\"):\"[a-zA-Z]+-\d+/g;
+                var reg = /(?:\"dest\")\s*:\s*\".*?\"/g;
                 var nodeField = test.match(reg);
 
                 for (var i = 0; i < nodeField.length; i++) {
-                    nodeField[i] = nodeField[i].replace('"dest":"', "");
+                    nodeField[i] = nodeField[i].replace('"dest":"', "").replace('\"', "");
                 }
                 console.log("\n Result of getNodes function (druidApi): " + nodeField);
 
