@@ -6,15 +6,12 @@ svg .state {
     -o-transition: stroke 0.5s, stroke-width 0.5s;
     transition: stroke 0.5s, stroke-width 0.5s;
 }
+
 svg .state:hover , .state.active {
     cursor: pointer;
     stroke-width: 4;
     stroke: #000;
 }
-
-
-
-
 
 svg .shelf {
     stroke-width: 2;
@@ -92,15 +89,73 @@ input[type="range"]::-webkit-slider-thumb {
     height: 26px;
 }
 
-#left_col {
-    float: left;
+#column1{
     width: 50%;
-    padding: 30px 0px 20px 150px;
+    text-align: center;
+    margin-top: 30px; 
+    float: left;
 }
 
-#right_col {
+#column2 {
     width: 50%;
+    text-align: center;
+    margin-top: 40px; 
+    float: left;
+}
+
+#logo {
+    width: 100%;
+    height: 130px;
+    background-color: #333333;
+    padding: 15px;
+}
+
+#logo img{
+    margin: 5px 20px 0px 0px;
     float: right;
+}
+
+/*Menu styles*/
+nav {
+  padding: 35px 0px 0px 0px;
+  text-align: center;
+  font-family: Helvetica;
+  float: left;
+}
+            
+#nav-1 {
+    background: #333333;
+ }
+
+.link-1 {
+  transition: 0.3s ease;
+  background: #333333;
+  color: #ffffff;
+  font-size: 20px;
+  text-decoration: none;
+  border-top: 4px solid #a46b36;
+  border-bottom: 4px solid #a46b36;
+  padding: 20px 0;
+  margin: 0 20px;
+}
+.link-1:hover {
+  border-top: 4px solid #e9ddaf;
+  border-bottom: 4px solid #e9ddaf;
+  padding: 6px 0; 
+  text-decoration: none;
+  color: #ffffff;
+}
+
+#put_entry {
+    text-align: center;
+    margin: 30px 0px 0px 50px;
+    visibility: hidden;
+}
+
+#get_value { 
+    text-align: center;   
+    margin: 30px 0px 0px 50px;
+    visibility: hidden;
 }
 
 input[type=button]{
@@ -134,7 +189,7 @@ legend {
 
 fieldset {
     text-align: left;
-    width: 500px;
+    width: 450px;
     margin: 5px;
     padding:  0px 20px 20px 20px;
     font-size: 16px;
@@ -144,10 +199,11 @@ fieldset {
 
 #label {
     border: 1px solid #a45b36;
-    width: 500px;
+    width: 450px;
     height: 45px;
     font-size: 16px;
     padding: 10px;
     margin: 5px 0px 20px 5px;
     text-align: left;
 }
+
