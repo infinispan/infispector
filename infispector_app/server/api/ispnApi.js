@@ -159,3 +159,22 @@ exports.getEntry = function (req, res) {
     });
 };
 
+exports.clearCache = function (req, res) {
+    console.log('Operating with Infinispan api.ispn.clearCache.... ');
+    
+    var connected = infinispan.client({port: 11222, host: '127.0.0.1'});
+    
+    connected.then(function (client) {       
+
+        return client.clear();
+        
+    }).catch(function (error) {
+        
+        console.log("***** Got error clearCache: " + error.message);
+        
+    }).finally(function (client) {
+        
+        return client.disconnect();
+        
+    });
+};

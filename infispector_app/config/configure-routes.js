@@ -13,6 +13,7 @@ function configureRoutes() {
     app.post('/getNodes', routes.getNodes);
     app.post('/getFlowChartMatrix', routes.getFlowChartMatrix);
     app.post('/getChordDiagramMatrix', routes.getChordDiagramMatrix);
+    app.post('/clearCache', routes.clearCache);
     app.get('/', routes.index);
     app.get('/index.html', routes.index);
     app.get('/operations.html', routes.operations);
