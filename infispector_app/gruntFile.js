@@ -173,6 +173,10 @@
       assets: {
         files: ['src/assets/*.json'],
         tasks: ['copy:assets']
+      },
+      css: {
+        files: ['src/css/*.css'],
+        tasks: ['copy:css']
       }
     },
 
@@ -189,7 +193,7 @@
 
       concurrent: {
           target: {
-              tasks: ['watch:tpl', 'watch:js', 'watch:assets', 'shell:nodemon'],
+              tasks: ['watch:tpl', 'watch:js', 'watch:assets', 'watch:css', 'shell:nodemon'],
               options: {
                   logConcurrentOutput: true
               }
