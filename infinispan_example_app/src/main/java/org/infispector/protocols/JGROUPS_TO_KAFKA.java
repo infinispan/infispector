@@ -78,8 +78,10 @@ public class JGROUPS_TO_KAFKA extends Protocol {
                if (do_print) {
                   System.out.printf("-- sending %d bytes\n", num_bytes);
                   System.out.println("-- headers are " + msg.printHeaders());
+                  System.out.println("-- Was not sent to Kafka. We send only received messages capturing.");
                }
-               sendMsgToKafka(msg, "sending/down");
+               // Was not sent to Kafka. We send only received messages capturing now. ^^^
+               // sendMsgToKafka(msg, "sending/down");
             }
             break;
 
@@ -124,8 +126,7 @@ public class JGROUPS_TO_KAFKA extends Protocol {
             + "\"src\": \"" + msg.src() + "\",\n"
             + "\"dest\": \"" + msg.dest() + "\",\n"
             + "\"length\": " + msg.getLength() + ",\n"
-            + "\"timestamp\": " + System.currentTimeMillis() + ",\n"
-            + "\"utcdt\": \"2010-01-01T01:01:03\",\n"
+            + "\"timestamp\": " + System.currentTimeMillis() + ",\n"            
             + "\"message\": \"" + o + "\"\n"
             + "}";
       infiSpectorKafkaProducer.sendToKafka(json, kafka_topic);

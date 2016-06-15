@@ -1,0 +1,2377 @@
+{
+"direction": "receiving/up",
+"src": "tsykora-41524",
+"dest": "tsykora-51778",
+"length": 1392,
+"timestamp": 1465975784411,
+"message": "CacheTopologyControlCommand{cache=___defaultcache, type=STABLE_TOPOLOGY_UPDATE, sender=tsykora-41524, joinInfo=null, topologyId=0, rebalanceId=0, currentCH=DefaultConsistentHash{ns = 60, owners = (1)[tsykora-41524: 60+0]}, pendingCH=null, availabilityMode=null, throwable=null, viewId=1}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-51778",
+"dest": "tsykora-41524",
+"length": 94,
+"timestamp": 1465975784490,
+"message": "CacheTopologyControlCommand{cache=___defaultcache, type=JOIN, sender=tsykora-51778, joinInfo=CacheJoinInfo{consistentHashFactory=org.infinispan.distribution.ch.impl.DefaultConsistentHashFactory@48f2cb38, hashFunction=MurmurHash3, numSegments=60, numOwners=2, timeout=240000, totalOrder=false, distributed=true}, topologyId=0, rebalanceId=0, currentCH=null, pendingCH=null, availabilityMode=null, throwable=null, viewId=1}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-41524",
+"dest": "tsykora-51778",
+"length": 2756,
+"timestamp": 1465975784716,
+"message": "SuccessfulResponse{responseValue=StatusResponse{cacheJoinInfo=null, cacheTopology=CacheTopology{id=0, rebalanceId=0, currentCH=DefaultConsistentHash{ns = 60, owners = (1)[tsykora-41524: 60+0]}, pendingCH=null, unionCH=null}, stableTopology=CacheTopology{id=0, rebalanceId=0, currentCH=DefaultConsistentHash{ns = 60, owners = (1)[tsykora-41524: 60+0]}, pendingCH=null, unionCH=null}}} "
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-51778",
+"dest": "tsykora-41524",
+"length": 59,
+"timestamp": 1465975784744,
+"message": "StateRequestCommand{cache=___defaultcache, origin=tsykora-51778, type=GET_CACHE_LISTENERS, topologyId=0, segments=null}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-41524",
+"dest": "tsykora-51778",
+"length": 4436,
+"timestamp": 1465975784773,
+"message": "CacheTopologyControlCommand{cache=___defaultcache, type=REBALANCE_START, sender=tsykora-41524, joinInfo=null, topologyId=1, rebalanceId=1, currentCH=DefaultConsistentHash{ns = 60, owners = (1)[tsykora-41524: 60+0]}, pendingCH=DefaultConsistentHash{ns = 60, owners = (2)[tsykora-41524: 30+30, tsykora-51778: 30+30]}, availabilityMode=null, throwable=null, viewId=1}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-41524",
+"dest": "tsykora-51778",
+"length": 10,
+"timestamp": 1465975784778,
+"message": "SuccessfulResponse{responseValue=[]} "
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-51778",
+"dest": "tsykora-41524",
+"length": 363,
+"timestamp": 1465975784843,
+"message": "StateRequestCommand{cache=___defaultcache, origin=tsykora-51778, type=START_STATE_TRANSFER, topologyId=1, segments=[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59]}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-41524",
+"dest": "tsykora-51778",
+"length": 7,
+"timestamp": 1465975784863,
+"message": "SuccessfulResponse{responseValue=true} "
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-41524",
+"dest": "tsykora-51778",
+"length": 1194,
+"timestamp": 1465975784876,
+"message": "StateResponseCommand{cache=___defaultcache, origin=tsykora-41524, topologyId=1}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-51778",
+"dest": "tsykora-41524",
+"length": 4,
+"timestamp": 1465975784926,
+"message": "null"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-51778",
+"dest": "tsykora-41524",
+"length": 67,
+"timestamp": 1465975784928,
+"message": "CacheTopologyControlCommand{cache=___defaultcache, type=REBALANCE_CONFIRM, sender=tsykora-51778, joinInfo=null, topologyId=1, rebalanceId=0, currentCH=null, pendingCH=null, availabilityMode=null, throwable=null, viewId=1}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-41524",
+"dest": "null",
+"length": 3181,
+"timestamp": 1465975784991,
+"message": "CacheTopologyControlCommand{cache=___defaultcache, type=CH_UPDATE, sender=tsykora-41524, joinInfo=null, topologyId=2, rebalanceId=1, currentCH=DefaultConsistentHash{ns = 60, owners = (2)[tsykora-41524: 30+30, tsykora-51778: 30+30]}, pendingCH=null, availabilityMode=AVAILABLE, throwable=null, viewId=2}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-41524",
+"dest": "null",
+"length": 3111,
+"timestamp": 1465975785004,
+"message": "CacheTopologyControlCommand{cache=___defaultcache, type=STABLE_TOPOLOGY_UPDATE, sender=tsykora-41524, joinInfo=null, topologyId=2, rebalanceId=1, currentCH=DefaultConsistentHash{ns = 60, owners = (2)[tsykora-41524: 30+30, tsykora-51778: 30+30]}, pendingCH=null, availabilityMode=null, throwable=null, viewId=2}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-41524",
+"dest": "null",
+"length": 3111,
+"timestamp": 1465975785007,
+"message": "CacheTopologyControlCommand{cache=___defaultcache, type=STABLE_TOPOLOGY_UPDATE, sender=tsykora-41524, joinInfo=null, topologyId=2, rebalanceId=1, currentCH=DefaultConsistentHash{ns = 60, owners = (2)[tsykora-41524: 30+30, tsykora-51778: 30+30]}, pendingCH=null, availabilityMode=null, throwable=null, viewId=2}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-41524",
+"dest": "null",
+"length": 3181,
+"timestamp": 1465975785034,
+"message": "CacheTopologyControlCommand{cache=___defaultcache, type=CH_UPDATE, sender=tsykora-41524, joinInfo=null, topologyId=2, rebalanceId=1, currentCH=DefaultConsistentHash{ns = 60, owners = (2)[tsykora-41524: 30+30, tsykora-51778: 30+30]}, pendingCH=null, availabilityMode=AVAILABLE, throwable=null, viewId=2}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-51778",
+"dest": "tsykora-41524",
+"length": 182,
+"timestamp": 1465975785040,
+"message": "SingleRpcCommand{cacheName='___defaultcache', command=PutKeyValueCommand{key=c9a3f989-94f3-4811-9a0a-69b8dffdd0f1, value=tsykora-51778, flags=null, putIfAbsent=false, valueMatcher=MATCH_ALWAYS, metadata=EmbeddedExpirableMetadata{lifespan=60000, maxIdle=-1, version=null}, successful=true}}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-41524",
+"dest": "tsykora-51778",
+"length": 4,
+"timestamp": 1465975785053,
+"message": "null"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-51778",
+"dest": "tsykora-41524",
+"length": 182,
+"timestamp": 1465975785062,
+"message": "SingleRpcCommand{cacheName='___defaultcache', command=PutKeyValueCommand{key=bda2d65e-3fb6-4019-9734-c5c99a58ee1f, value=tsykora-51778, flags=null, putIfAbsent=false, valueMatcher=MATCH_ALWAYS, metadata=EmbeddedExpirableMetadata{lifespan=60000, maxIdle=-1, version=null}, successful=true}}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-41524",
+"dest": "tsykora-51778",
+"length": 182,
+"timestamp": 1465975785072,
+"message": "SingleRpcCommand{cacheName='___defaultcache', command=PutKeyValueCommand{key=bda2d65e-3fb6-4019-9734-c5c99a58ee1f, value=tsykora-51778, flags=null, putIfAbsent=false, valueMatcher=MATCH_ALWAYS, metadata=EmbeddedExpirableMetadata{lifespan=60000, maxIdle=-1, version=null}, successful=true}}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-51778",
+"dest": "tsykora-41524",
+"length": 4,
+"timestamp": 1465975785084,
+"message": "null"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-41524",
+"dest": "tsykora-51778",
+"length": 4,
+"timestamp": 1465975785122,
+"message": "null"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-51778",
+"dest": "tsykora-41524",
+"length": 182,
+"timestamp": 1465975785127,
+"message": "SingleRpcCommand{cacheName='___defaultcache', command=PutKeyValueCommand{key=ec5f3eea-caf0-4846-a041-4d492742ea2f, value=tsykora-51778, flags=null, putIfAbsent=false, valueMatcher=MATCH_ALWAYS, metadata=EmbeddedExpirableMetadata{lifespan=60000, maxIdle=-1, version=null}, successful=true}}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-41524",
+"dest": "tsykora-51778",
+"length": 182,
+"timestamp": 1465975785145,
+"message": "SingleRpcCommand{cacheName='___defaultcache', command=PutKeyValueCommand{key=ec5f3eea-caf0-4846-a041-4d492742ea2f, value=tsykora-51778, flags=null, putIfAbsent=false, valueMatcher=MATCH_ALWAYS, metadata=EmbeddedExpirableMetadata{lifespan=60000, maxIdle=-1, version=null}, successful=true}}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-51778",
+"dest": "tsykora-41524",
+"length": 4,
+"timestamp": 1465975785153,
+"message": "null"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-41524",
+"dest": "tsykora-51778",
+"length": 4,
+"timestamp": 1465975785175,
+"message": "null"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-51778",
+"dest": "tsykora-41524",
+"length": 182,
+"timestamp": 1465975785183,
+"message": "SingleRpcCommand{cacheName='___defaultcache', command=PutKeyValueCommand{key=2c515751-8e8e-481a-a883-de9d5c19c62a, value=tsykora-51778, flags=null, putIfAbsent=false, valueMatcher=MATCH_ALWAYS, metadata=EmbeddedExpirableMetadata{lifespan=60000, maxIdle=-1, version=null}, successful=true}}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-41524",
+"dest": "tsykora-51778",
+"length": 182,
+"timestamp": 1465975785191,
+"message": "SingleRpcCommand{cacheName='___defaultcache', command=PutKeyValueCommand{key=2c515751-8e8e-481a-a883-de9d5c19c62a, value=tsykora-51778, flags=null, putIfAbsent=false, valueMatcher=MATCH_ALWAYS, metadata=EmbeddedExpirableMetadata{lifespan=60000, maxIdle=-1, version=null}, successful=true}}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-51778",
+"dest": "tsykora-41524",
+"length": 4,
+"timestamp": 1465975785205,
+"message": "null"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-41524",
+"dest": "tsykora-51778",
+"length": 4,
+"timestamp": 1465975785221,
+"message": "null"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-51778",
+"dest": "tsykora-41524",
+"length": 182,
+"timestamp": 1465975785230,
+"message": "SingleRpcCommand{cacheName='___defaultcache', command=PutKeyValueCommand{key=059cc79f-eec3-4681-9f25-c5095e507cb8, value=tsykora-51778, flags=null, putIfAbsent=false, valueMatcher=MATCH_ALWAYS, metadata=EmbeddedExpirableMetadata{lifespan=60000, maxIdle=-1, version=null}, successful=true}}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-41524",
+"dest": "tsykora-51778",
+"length": 182,
+"timestamp": 1465975785254,
+"message": "SingleRpcCommand{cacheName='___defaultcache', command=PutKeyValueCommand{key=059cc79f-eec3-4681-9f25-c5095e507cb8, value=tsykora-51778, flags=null, putIfAbsent=false, valueMatcher=MATCH_ALWAYS, metadata=EmbeddedExpirableMetadata{lifespan=60000, maxIdle=-1, version=null}, successful=true}}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-51778",
+"dest": "tsykora-41524",
+"length": 4,
+"timestamp": 1465975785262,
+"message": "null"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-41524",
+"dest": "tsykora-51778",
+"length": 4,
+"timestamp": 1465975785275,
+"message": "null"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-51778",
+"dest": "tsykora-41524",
+"length": 182,
+"timestamp": 1465975785290,
+"message": "SingleRpcCommand{cacheName='___defaultcache', command=PutKeyValueCommand{key=6f7a880d-e214-48d6-a68a-6f14dd3e2c32, value=tsykora-51778, flags=null, putIfAbsent=false, valueMatcher=MATCH_ALWAYS, metadata=EmbeddedExpirableMetadata{lifespan=60000, maxIdle=-1, version=null}, successful=true}}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-41524",
+"dest": "tsykora-51778",
+"length": 182,
+"timestamp": 1465975785312,
+"message": "SingleRpcCommand{cacheName='___defaultcache', command=PutKeyValueCommand{key=6f7a880d-e214-48d6-a68a-6f14dd3e2c32, value=tsykora-51778, flags=null, putIfAbsent=false, valueMatcher=MATCH_ALWAYS, metadata=EmbeddedExpirableMetadata{lifespan=60000, maxIdle=-1, version=null}, successful=true}}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-51778",
+"dest": "tsykora-41524",
+"length": 4,
+"timestamp": 1465975785332,
+"message": "null"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-41524",
+"dest": "tsykora-51778",
+"length": 4,
+"timestamp": 1465975785344,
+"message": "null"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-51778",
+"dest": "tsykora-41524",
+"length": 182,
+"timestamp": 1465975785359,
+"message": "SingleRpcCommand{cacheName='___defaultcache', command=PutKeyValueCommand{key=2bf20a58-9656-49a6-9055-175810535dec, value=tsykora-51778, flags=null, putIfAbsent=false, valueMatcher=MATCH_ALWAYS, metadata=EmbeddedExpirableMetadata{lifespan=60000, maxIdle=-1, version=null}, successful=true}}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-41524",
+"dest": "tsykora-51778",
+"length": 4,
+"timestamp": 1465975785372,
+"message": "null"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-51778",
+"dest": "tsykora-41524",
+"length": 182,
+"timestamp": 1465975785380,
+"message": "SingleRpcCommand{cacheName='___defaultcache', command=PutKeyValueCommand{key=37f02f76-3fce-47ca-adce-4f209176ca0b, value=tsykora-51778, flags=null, putIfAbsent=false, valueMatcher=MATCH_ALWAYS, metadata=EmbeddedExpirableMetadata{lifespan=60000, maxIdle=-1, version=null}, successful=true}}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-41524",
+"dest": "tsykora-51778",
+"length": 182,
+"timestamp": 1465975785398,
+"message": "SingleRpcCommand{cacheName='___defaultcache', command=PutKeyValueCommand{key=37f02f76-3fce-47ca-adce-4f209176ca0b, value=tsykora-51778, flags=null, putIfAbsent=false, valueMatcher=MATCH_ALWAYS, metadata=EmbeddedExpirableMetadata{lifespan=60000, maxIdle=-1, version=null}, successful=true}}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-51778",
+"dest": "tsykora-41524",
+"length": 4,
+"timestamp": 1465975785423,
+"message": "null"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-41524",
+"dest": "tsykora-51778",
+"length": 4,
+"timestamp": 1465975785437,
+"message": "null"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-52630",
+"dest": "tsykora-41524",
+"length": 94,
+"timestamp": 1465975785440,
+"message": "CacheTopologyControlCommand{cache=___defaultcache, type=JOIN, sender=tsykora-52630, joinInfo=CacheJoinInfo{consistentHashFactory=org.infinispan.distribution.ch.impl.DefaultConsistentHashFactory@568e9550, hashFunction=MurmurHash3, numSegments=60, numOwners=2, timeout=240000, totalOrder=false, distributed=true}, topologyId=0, rebalanceId=0, currentCH=null, pendingCH=null, availabilityMode=null, throwable=null, viewId=2}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-51778",
+"dest": "tsykora-41524",
+"length": 182,
+"timestamp": 1465975785444,
+"message": "SingleRpcCommand{cacheName='___defaultcache', command=PutKeyValueCommand{key=8f66a593-7611-46e2-b546-9d39e1ee9026, value=tsykora-51778, flags=null, putIfAbsent=false, valueMatcher=MATCH_ALWAYS, metadata=EmbeddedExpirableMetadata{lifespan=60000, maxIdle=-1, version=null}, successful=true}}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-41524",
+"dest": "null",
+"length": 6142,
+"timestamp": 1465975785474,
+"message": "CacheTopologyControlCommand{cache=___defaultcache, type=REBALANCE_START, sender=tsykora-41524, joinInfo=null, topologyId=3, rebalanceId=2, currentCH=DefaultConsistentHash{ns = 60, owners = (2)[tsykora-41524: 30+30, tsykora-51778: 30+30]}, pendingCH=DefaultConsistentHash{ns = 60, owners = (3)[tsykora-41524: 20+20, tsykora-51778: 20+20, tsykora-52630: 20+20]}, availabilityMode=null, throwable=null, viewId=2}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-41524",
+"dest": "null",
+"length": 6142,
+"timestamp": 1465975785473,
+"message": "CacheTopologyControlCommand{cache=___defaultcache, type=REBALANCE_START, sender=tsykora-41524, joinInfo=null, topologyId=3, rebalanceId=2, currentCH=DefaultConsistentHash{ns = 60, owners = (2)[tsykora-41524: 30+30, tsykora-51778: 30+30]}, pendingCH=DefaultConsistentHash{ns = 60, owners = (3)[tsykora-41524: 20+20, tsykora-51778: 20+20, tsykora-52630: 20+20]}, availabilityMode=null, throwable=null, viewId=2}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-41524",
+"dest": "tsykora-51778",
+"length": 4,
+"timestamp": 1465975785486,
+"message": "null"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-51778",
+"dest": "tsykora-41524",
+"length": 67,
+"timestamp": 1465975785486,
+"message": "CacheTopologyControlCommand{cache=___defaultcache, type=REBALANCE_CONFIRM, sender=tsykora-51778, joinInfo=null, topologyId=3, rebalanceId=0, currentCH=null, pendingCH=null, availabilityMode=null, throwable=null, viewId=2}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-51778",
+"dest": "tsykora-41524",
+"length": 188,
+"timestamp": 1465975785504,
+"message": "SingleRpcCommand{cacheName='___defaultcache', command=PutKeyValueCommand{key=8f66a593-7611-46e2-b546-9d39e1ee9026, value=tsykora-51778, flags=[COMMAND_RETRY], putIfAbsent=false, valueMatcher=MATCH_ALWAYS, metadata=EmbeddedExpirableMetadata{lifespan=60000, maxIdle=-1, version=null}, successful=true}}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-41524",
+"dest": "tsykora-51778",
+"length": 21,
+"timestamp": 1465975785528,
+"message": "SuccessfulResponse{responseValue=tsykora-51778} "
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-51778",
+"dest": "tsykora-41524",
+"length": 182,
+"timestamp": 1465975785539,
+"message": "SingleRpcCommand{cacheName='___defaultcache', command=PutKeyValueCommand{key=17320d23-3e14-4de6-b5a3-7c0dad4c2065, value=tsykora-51778, flags=null, putIfAbsent=false, valueMatcher=MATCH_ALWAYS, metadata=EmbeddedExpirableMetadata{lifespan=60000, maxIdle=-1, version=null}, successful=true}}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-41524",
+"dest": "null",
+"length": 182,
+"timestamp": 1465975785561,
+"message": "SingleRpcCommand{cacheName='___defaultcache', command=PutKeyValueCommand{key=17320d23-3e14-4de6-b5a3-7c0dad4c2065, value=tsykora-51778, flags=null, putIfAbsent=false, valueMatcher=MATCH_ALWAYS, metadata=EmbeddedExpirableMetadata{lifespan=60000, maxIdle=-1, version=null}, successful=true}}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-41524",
+"dest": "null",
+"length": 182,
+"timestamp": 1465975785560,
+"message": "SingleRpcCommand{cacheName='___defaultcache', command=PutKeyValueCommand{key=17320d23-3e14-4de6-b5a3-7c0dad4c2065, value=tsykora-51778, flags=null, putIfAbsent=false, valueMatcher=MATCH_ALWAYS, metadata=EmbeddedExpirableMetadata{lifespan=60000, maxIdle=-1, version=null}, successful=true}}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-51778",
+"dest": "tsykora-41524",
+"length": 4,
+"timestamp": 1465975785581,
+"message": "null"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-41524",
+"dest": "null",
+"length": 3111,
+"timestamp": 1465975785133,
+"message": "CacheTopologyControlCommand{cache=___defaultcache, type=STABLE_TOPOLOGY_UPDATE, sender=tsykora-41524, joinInfo=null, topologyId=2, rebalanceId=1, currentCH=DefaultConsistentHash{ns = 60, owners = (2)[tsykora-41524: 30+30, tsykora-51778: 30+30]}, pendingCH=null, availabilityMode=null, throwable=null, viewId=2}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-41524",
+"dest": "null",
+"length": 182,
+"timestamp": 1465975785580,
+"message": "SingleRpcCommand{cacheName='___defaultcache', command=PutKeyValueCommand{key=17320d23-3e14-4de6-b5a3-7c0dad4c2065, value=tsykora-51778, flags=null, putIfAbsent=false, valueMatcher=MATCH_ALWAYS, metadata=EmbeddedExpirableMetadata{lifespan=60000, maxIdle=-1, version=null}, successful=true}}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-41524",
+"dest": "null",
+"length": 6142,
+"timestamp": 1465975785525,
+"message": "CacheTopologyControlCommand{cache=___defaultcache, type=REBALANCE_START, sender=tsykora-41524, joinInfo=null, topologyId=3, rebalanceId=2, currentCH=DefaultConsistentHash{ns = 60, owners = (2)[tsykora-41524: 30+30, tsykora-51778: 30+30]}, pendingCH=DefaultConsistentHash{ns = 60, owners = (3)[tsykora-41524: 20+20, tsykora-51778: 20+20, tsykora-52630: 20+20]}, availabilityMode=null, throwable=null, viewId=2}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-41524",
+"dest": "tsykora-52630",
+"length": 3378,
+"timestamp": 1465975785523,
+"message": "SuccessfulResponse{responseValue=StatusResponse{cacheJoinInfo=null, cacheTopology=CacheTopology{id=2, rebalanceId=1, currentCH=DefaultConsistentHash{ns = 60, owners = (2)[tsykora-41524: 30+30, tsykora-51778: 30+30]}, pendingCH=null, unionCH=null}, stableTopology=CacheTopology{id=2, rebalanceId=1, currentCH=DefaultConsistentHash{ns = 60, owners = (2)[tsykora-41524: 30+30, tsykora-51778: 30+30]}, pendingCH=null, unionCH=null}}} "
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-41524",
+"dest": "null",
+"length": 3181,
+"timestamp": 1465975785129,
+"message": "CacheTopologyControlCommand{cache=___defaultcache, type=CH_UPDATE, sender=tsykora-41524, joinInfo=null, topologyId=2, rebalanceId=1, currentCH=DefaultConsistentHash{ns = 60, owners = (2)[tsykora-41524: 30+30, tsykora-51778: 30+30]}, pendingCH=null, availabilityMode=AVAILABLE, throwable=null, viewId=2}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-52630",
+"dest": "tsykora-41524",
+"length": 59,
+"timestamp": 1465975785725,
+"message": "StateRequestCommand{cache=___defaultcache, origin=tsykora-52630, type=GET_CACHE_LISTENERS, topologyId=0, segments=null}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-41524",
+"dest": "tsykora-52630",
+"length": 10,
+"timestamp": 1465975785732,
+"message": "SuccessfulResponse{responseValue=[]} "
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-52630",
+"dest": "tsykora-41524",
+"length": 163,
+"timestamp": 1465975785751,
+"message": "StateRequestCommand{cache=___defaultcache, origin=tsykora-52630, type=START_STATE_TRANSFER, topologyId=3, segments=[10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29]}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-41524",
+"dest": "tsykora-52630",
+"length": 7,
+"timestamp": 1465975785761,
+"message": "SuccessfulResponse{responseValue=true} "
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-52630",
+"dest": "tsykora-41524",
+"length": 4,
+"timestamp": 1465975785781,
+"message": "null"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-41524",
+"dest": "tsykora-52630",
+"length": 854,
+"timestamp": 1465975785771,
+"message": "StateResponseCommand{cache=___defaultcache, origin=tsykora-41524, topologyId=3}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-41524",
+"dest": "tsykora-51778",
+"length": 4,
+"timestamp": 1465975785789,
+"message": "null"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-52630",
+"dest": "tsykora-41524",
+"length": 4,
+"timestamp": 1465975785801,
+"message": "null"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-52630",
+"dest": "tsykora-51778",
+"length": 163,
+"timestamp": 1465975785818,
+"message": "StateRequestCommand{cache=___defaultcache, origin=tsykora-52630, type=START_STATE_TRANSFER, topologyId=3, segments=[40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59]}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-51778",
+"dest": "tsykora-52630",
+"length": 7,
+"timestamp": 1465975785834,
+"message": "SuccessfulResponse{responseValue=true} "
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-51778",
+"dest": "tsykora-52630",
+"length": 615,
+"timestamp": 1465975785845,
+"message": "StateResponseCommand{cache=___defaultcache, origin=tsykora-51778, topologyId=3}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-52630",
+"dest": "tsykora-41524",
+"length": 67,
+"timestamp": 1465975785856,
+"message": "CacheTopologyControlCommand{cache=___defaultcache, type=REBALANCE_CONFIRM, sender=tsykora-52630, joinInfo=null, topologyId=3, rebalanceId=0, currentCH=null, pendingCH=null, availabilityMode=null, throwable=null, viewId=2}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-52630",
+"dest": "tsykora-51778",
+"length": 4,
+"timestamp": 1465975785871,
+"message": "null"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-41524",
+"dest": "null",
+"length": 3224,
+"timestamp": 1465975785875,
+"message": "CacheTopologyControlCommand{cache=___defaultcache, type=CH_UPDATE, sender=tsykora-41524, joinInfo=null, topologyId=4, rebalanceId=2, currentCH=DefaultConsistentHash{ns = 60, owners = (3)[tsykora-41524: 20+20, tsykora-51778: 20+20, tsykora-52630: 20+20]}, pendingCH=null, availabilityMode=AVAILABLE, throwable=null, viewId=2}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-41524",
+"dest": "null",
+"length": 3224,
+"timestamp": 1465975785876,
+"message": "CacheTopologyControlCommand{cache=___defaultcache, type=CH_UPDATE, sender=tsykora-41524, joinInfo=null, topologyId=4, rebalanceId=2, currentCH=DefaultConsistentHash{ns = 60, owners = (3)[tsykora-41524: 20+20, tsykora-51778: 20+20, tsykora-52630: 20+20]}, pendingCH=null, availabilityMode=AVAILABLE, throwable=null, viewId=2}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-41524",
+"dest": "null",
+"length": 3224,
+"timestamp": 1465975785888,
+"message": "CacheTopologyControlCommand{cache=___defaultcache, type=CH_UPDATE, sender=tsykora-41524, joinInfo=null, topologyId=4, rebalanceId=2, currentCH=DefaultConsistentHash{ns = 60, owners = (3)[tsykora-41524: 20+20, tsykora-51778: 20+20, tsykora-52630: 20+20]}, pendingCH=null, availabilityMode=AVAILABLE, throwable=null, viewId=2}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-41524",
+"dest": "null",
+"length": 3154,
+"timestamp": 1465975785899,
+"message": "CacheTopologyControlCommand{cache=___defaultcache, type=STABLE_TOPOLOGY_UPDATE, sender=tsykora-41524, joinInfo=null, topologyId=4, rebalanceId=2, currentCH=DefaultConsistentHash{ns = 60, owners = (3)[tsykora-41524: 20+20, tsykora-51778: 20+20, tsykora-52630: 20+20]}, pendingCH=null, availabilityMode=null, throwable=null, viewId=2}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-41524",
+"dest": "null",
+"length": 3154,
+"timestamp": 1465975785901,
+"message": "CacheTopologyControlCommand{cache=___defaultcache, type=STABLE_TOPOLOGY_UPDATE, sender=tsykora-41524, joinInfo=null, topologyId=4, rebalanceId=2, currentCH=DefaultConsistentHash{ns = 60, owners = (3)[tsykora-41524: 20+20, tsykora-51778: 20+20, tsykora-52630: 20+20]}, pendingCH=null, availabilityMode=null, throwable=null, viewId=2}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-52630",
+"dest": "tsykora-41524",
+"length": 182,
+"timestamp": 1465975785905,
+"message": "SingleRpcCommand{cacheName='___defaultcache', command=PutKeyValueCommand{key=3d58dcff-b6de-4f38-a7af-08606d0eed25, value=tsykora-52630, flags=null, putIfAbsent=false, valueMatcher=MATCH_ALWAYS, metadata=EmbeddedExpirableMetadata{lifespan=60000, maxIdle=-1, version=null}, successful=true}}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-41524",
+"dest": "tsykora-52630",
+"length": 182,
+"timestamp": 1465975785915,
+"message": "SingleRpcCommand{cacheName='___defaultcache', command=PutKeyValueCommand{key=3d58dcff-b6de-4f38-a7af-08606d0eed25, value=tsykora-52630, flags=null, putIfAbsent=false, valueMatcher=MATCH_ALWAYS, metadata=EmbeddedExpirableMetadata{lifespan=60000, maxIdle=-1, version=null}, successful=true}}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-41524",
+"dest": "null",
+"length": 3154,
+"timestamp": 1465975785926,
+"message": "CacheTopologyControlCommand{cache=___defaultcache, type=STABLE_TOPOLOGY_UPDATE, sender=tsykora-41524, joinInfo=null, topologyId=4, rebalanceId=2, currentCH=DefaultConsistentHash{ns = 60, owners = (3)[tsykora-41524: 20+20, tsykora-51778: 20+20, tsykora-52630: 20+20]}, pendingCH=null, availabilityMode=null, throwable=null, viewId=2}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-52630",
+"dest": "tsykora-41524",
+"length": 4,
+"timestamp": 1465975785929,
+"message": "null"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-41524",
+"dest": "tsykora-52630",
+"length": 4,
+"timestamp": 1465975785939,
+"message": "null"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-52630",
+"dest": "tsykora-41524",
+"length": 182,
+"timestamp": 1465975785947,
+"message": "SingleRpcCommand{cacheName='___defaultcache', command=PutKeyValueCommand{key=ab2c69fe-af96-4af0-9c38-ad729901f31d, value=tsykora-52630, flags=null, putIfAbsent=false, valueMatcher=MATCH_ALWAYS, metadata=EmbeddedExpirableMetadata{lifespan=60000, maxIdle=-1, version=null}, successful=true}}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-41524",
+"dest": "tsykora-52630",
+"length": 182,
+"timestamp": 1465975785955,
+"message": "SingleRpcCommand{cacheName='___defaultcache', command=PutKeyValueCommand{key=ab2c69fe-af96-4af0-9c38-ad729901f31d, value=tsykora-52630, flags=null, putIfAbsent=false, valueMatcher=MATCH_ALWAYS, metadata=EmbeddedExpirableMetadata{lifespan=60000, maxIdle=-1, version=null}, successful=true}}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-52630",
+"dest": "tsykora-41524",
+"length": 4,
+"timestamp": 1465975785963,
+"message": "null"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-41524",
+"dest": "tsykora-52630",
+"length": 4,
+"timestamp": 1465975785970,
+"message": "null"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-52630",
+"dest": "tsykora-41524",
+"length": 182,
+"timestamp": 1465975785975,
+"message": "SingleRpcCommand{cacheName='___defaultcache', command=PutKeyValueCommand{key=03a45683-5c24-481d-8c73-fc6f67f10f74, value=tsykora-52630, flags=null, putIfAbsent=false, valueMatcher=MATCH_ALWAYS, metadata=EmbeddedExpirableMetadata{lifespan=60000, maxIdle=-1, version=null}, successful=true}}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-41524",
+"dest": "tsykora-52630",
+"length": 182,
+"timestamp": 1465975785979,
+"message": "SingleRpcCommand{cacheName='___defaultcache', command=PutKeyValueCommand{key=03a45683-5c24-481d-8c73-fc6f67f10f74, value=tsykora-52630, flags=null, putIfAbsent=false, valueMatcher=MATCH_ALWAYS, metadata=EmbeddedExpirableMetadata{lifespan=60000, maxIdle=-1, version=null}, successful=true}}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-52630",
+"dest": "tsykora-41524",
+"length": 4,
+"timestamp": 1465975785986,
+"message": "null"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-41524",
+"dest": "tsykora-52630",
+"length": 4,
+"timestamp": 1465975785992,
+"message": "null"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-52630",
+"dest": "tsykora-51778",
+"length": 182,
+"timestamp": 1465975785998,
+"message": "SingleRpcCommand{cacheName='___defaultcache', command=PutKeyValueCommand{key=ef13b59e-1588-4184-9d34-0082ace94924, value=tsykora-52630, flags=null, putIfAbsent=false, valueMatcher=MATCH_ALWAYS, metadata=EmbeddedExpirableMetadata{lifespan=60000, maxIdle=-1, version=null}, successful=true}}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-51778",
+"dest": "tsykora-52630",
+"length": 4,
+"timestamp": 1465975786006,
+"message": "null"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-52630",
+"dest": "tsykora-41524",
+"length": 182,
+"timestamp": 1465975786015,
+"message": "SingleRpcCommand{cacheName='___defaultcache', command=PutKeyValueCommand{key=089b0e19-8388-4b52-8e51-a5113da73673, value=tsykora-52630, flags=null, putIfAbsent=false, valueMatcher=MATCH_ALWAYS, metadata=EmbeddedExpirableMetadata{lifespan=60000, maxIdle=-1, version=null}, successful=true}}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-41524",
+"dest": "tsykora-51778",
+"length": 182,
+"timestamp": 1465975786024,
+"message": "SingleRpcCommand{cacheName='___defaultcache', command=PutKeyValueCommand{key=089b0e19-8388-4b52-8e51-a5113da73673, value=tsykora-52630, flags=null, putIfAbsent=false, valueMatcher=MATCH_ALWAYS, metadata=EmbeddedExpirableMetadata{lifespan=60000, maxIdle=-1, version=null}, successful=true}}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-51778",
+"dest": "tsykora-41524",
+"length": 4,
+"timestamp": 1465975786030,
+"message": "null"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-41524",
+"dest": "tsykora-52630",
+"length": 4,
+"timestamp": 1465975786038,
+"message": "null"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-52630",
+"dest": "tsykora-41524",
+"length": 182,
+"timestamp": 1465975786047,
+"message": "SingleRpcCommand{cacheName='___defaultcache', command=PutKeyValueCommand{key=5b5ce3b0-14d7-473a-aa77-918b22d0f1c9, value=tsykora-52630, flags=null, putIfAbsent=false, valueMatcher=MATCH_ALWAYS, metadata=EmbeddedExpirableMetadata{lifespan=60000, maxIdle=-1, version=null}, successful=true}}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-41524",
+"dest": "tsykora-51778",
+"length": 182,
+"timestamp": 1465975786053,
+"message": "SingleRpcCommand{cacheName='___defaultcache', command=PutKeyValueCommand{key=5b5ce3b0-14d7-473a-aa77-918b22d0f1c9, value=tsykora-52630, flags=null, putIfAbsent=false, valueMatcher=MATCH_ALWAYS, metadata=EmbeddedExpirableMetadata{lifespan=60000, maxIdle=-1, version=null}, successful=true}}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-51778",
+"dest": "tsykora-41524",
+"length": 4,
+"timestamp": 1465975786057,
+"message": "null"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-41524",
+"dest": "tsykora-52630",
+"length": 4,
+"timestamp": 1465975786061,
+"message": "null"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-52630",
+"dest": "tsykora-41524",
+"length": 182,
+"timestamp": 1465975786068,
+"message": "SingleRpcCommand{cacheName='___defaultcache', command=PutKeyValueCommand{key=b53fb250-a077-4718-adfa-0891d4cde83e, value=tsykora-52630, flags=null, putIfAbsent=false, valueMatcher=MATCH_ALWAYS, metadata=EmbeddedExpirableMetadata{lifespan=60000, maxIdle=-1, version=null}, successful=true}}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-41524",
+"dest": "tsykora-52630",
+"length": 182,
+"timestamp": 1465975786076,
+"message": "SingleRpcCommand{cacheName='___defaultcache', command=PutKeyValueCommand{key=b53fb250-a077-4718-adfa-0891d4cde83e, value=tsykora-52630, flags=null, putIfAbsent=false, valueMatcher=MATCH_ALWAYS, metadata=EmbeddedExpirableMetadata{lifespan=60000, maxIdle=-1, version=null}, successful=true}}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-52630",
+"dest": "tsykora-41524",
+"length": 4,
+"timestamp": 1465975786088,
+"message": "null"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-41524",
+"dest": "tsykora-52630",
+"length": 4,
+"timestamp": 1465975786094,
+"message": "null"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-52630",
+"dest": "tsykora-41524",
+"length": 182,
+"timestamp": 1465975786101,
+"message": "SingleRpcCommand{cacheName='___defaultcache', command=PutKeyValueCommand{key=fd29f0b8-1613-48c3-8fdb-e1fe52602d55, value=tsykora-52630, flags=null, putIfAbsent=false, valueMatcher=MATCH_ALWAYS, metadata=EmbeddedExpirableMetadata{lifespan=60000, maxIdle=-1, version=null}, successful=true}}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-41524",
+"dest": "tsykora-52630",
+"length": 182,
+"timestamp": 1465975786106,
+"message": "SingleRpcCommand{cacheName='___defaultcache', command=PutKeyValueCommand{key=fd29f0b8-1613-48c3-8fdb-e1fe52602d55, value=tsykora-52630, flags=null, putIfAbsent=false, valueMatcher=MATCH_ALWAYS, metadata=EmbeddedExpirableMetadata{lifespan=60000, maxIdle=-1, version=null}, successful=true}}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-52630",
+"dest": "tsykora-41524",
+"length": 4,
+"timestamp": 1465975786111,
+"message": "null"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-41524",
+"dest": "tsykora-52630",
+"length": 4,
+"timestamp": 1465975786115,
+"message": "null"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-52630",
+"dest": "tsykora-41524",
+"length": 182,
+"timestamp": 1465975786120,
+"message": "SingleRpcCommand{cacheName='___defaultcache', command=PutKeyValueCommand{key=86e77039-4922-4ad1-ae8b-58dbdea1d5e0, value=tsykora-52630, flags=null, putIfAbsent=false, valueMatcher=MATCH_ALWAYS, metadata=EmbeddedExpirableMetadata{lifespan=60000, maxIdle=-1, version=null}, successful=true}}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-41524",
+"dest": "tsykora-52630",
+"length": 182,
+"timestamp": 1465975786129,
+"message": "SingleRpcCommand{cacheName='___defaultcache', command=PutKeyValueCommand{key=86e77039-4922-4ad1-ae8b-58dbdea1d5e0, value=tsykora-52630, flags=null, putIfAbsent=false, valueMatcher=MATCH_ALWAYS, metadata=EmbeddedExpirableMetadata{lifespan=60000, maxIdle=-1, version=null}, successful=true}}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-52630",
+"dest": "tsykora-41524",
+"length": 4,
+"timestamp": 1465975786133,
+"message": "null"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-41524",
+"dest": "tsykora-52630",
+"length": 4,
+"timestamp": 1465975786136,
+"message": "null"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-52630",
+"dest": "tsykora-51778",
+"length": 182,
+"timestamp": 1465975786140,
+"message": "SingleRpcCommand{cacheName='___defaultcache', command=PutKeyValueCommand{key=30a69d53-07b3-4baf-92bf-43744e2a1684, value=tsykora-52630, flags=null, putIfAbsent=false, valueMatcher=MATCH_ALWAYS, metadata=EmbeddedExpirableMetadata{lifespan=60000, maxIdle=-1, version=null}, successful=true}}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-51778",
+"dest": "tsykora-52630",
+"length": 4,
+"timestamp": 1465975786146,
+"message": "null"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-39173",
+"dest": "tsykora-41524",
+"length": 94,
+"timestamp": 1465975786957,
+"message": "CacheTopologyControlCommand{cache=___defaultcache, type=JOIN, sender=tsykora-39173, joinInfo=CacheJoinInfo{consistentHashFactory=org.infinispan.distribution.ch.impl.DefaultConsistentHashFactory@5b1b8875, hashFunction=MurmurHash3, numSegments=60, numOwners=2, timeout=240000, totalOrder=false, distributed=true}, topologyId=0, rebalanceId=0, currentCH=null, pendingCH=null, availabilityMode=null, throwable=null, viewId=3}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-41524",
+"dest": "null",
+"length": 6228,
+"timestamp": 1465975786966,
+"message": "CacheTopologyControlCommand{cache=___defaultcache, type=REBALANCE_START, sender=tsykora-41524, joinInfo=null, topologyId=5, rebalanceId=3, currentCH=DefaultConsistentHash{ns = 60, owners = (3)[tsykora-41524: 20+20, tsykora-51778: 20+20, tsykora-52630: 20+20]}, pendingCH=DefaultConsistentHash{ns = 60, owners = (4)[tsykora-41524: 15+15, tsykora-51778: 15+15, tsykora-52630: 15+15, tsykora-39173: 15+15]}, availabilityMode=null, throwable=null, viewId=3}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-41524",
+"dest": "null",
+"length": 6228,
+"timestamp": 1465975786967,
+"message": "CacheTopologyControlCommand{cache=___defaultcache, type=REBALANCE_START, sender=tsykora-41524, joinInfo=null, topologyId=5, rebalanceId=3, currentCH=DefaultConsistentHash{ns = 60, owners = (3)[tsykora-41524: 20+20, tsykora-51778: 20+20, tsykora-52630: 20+20]}, pendingCH=DefaultConsistentHash{ns = 60, owners = (4)[tsykora-41524: 15+15, tsykora-51778: 15+15, tsykora-52630: 15+15, tsykora-39173: 15+15]}, availabilityMode=null, throwable=null, viewId=3}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-41524",
+"dest": "null",
+"length": 6228,
+"timestamp": 1465975786966,
+"message": "CacheTopologyControlCommand{cache=___defaultcache, type=REBALANCE_START, sender=tsykora-41524, joinInfo=null, topologyId=5, rebalanceId=3, currentCH=DefaultConsistentHash{ns = 60, owners = (3)[tsykora-41524: 20+20, tsykora-51778: 20+20, tsykora-52630: 20+20]}, pendingCH=DefaultConsistentHash{ns = 60, owners = (4)[tsykora-41524: 15+15, tsykora-51778: 15+15, tsykora-52630: 15+15, tsykora-39173: 15+15]}, availabilityMode=null, throwable=null, viewId=3}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-52630",
+"dest": "tsykora-41524",
+"length": 67,
+"timestamp": 1465975786984,
+"message": "CacheTopologyControlCommand{cache=___defaultcache, type=REBALANCE_CONFIRM, sender=tsykora-52630, joinInfo=null, topologyId=5, rebalanceId=0, currentCH=null, pendingCH=null, availabilityMode=null, throwable=null, viewId=3}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-51778",
+"dest": "tsykora-41524",
+"length": 67,
+"timestamp": 1465975786987,
+"message": "CacheTopologyControlCommand{cache=___defaultcache, type=REBALANCE_CONFIRM, sender=tsykora-51778, joinInfo=null, topologyId=5, rebalanceId=0, currentCH=null, pendingCH=null, availabilityMode=null, throwable=null, viewId=3}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-41524",
+"dest": "tsykora-39173",
+"length": 3464,
+"timestamp": 1465975787017,
+"message": "SuccessfulResponse{responseValue=StatusResponse{cacheJoinInfo=null, cacheTopology=CacheTopology{id=4, rebalanceId=2, currentCH=DefaultConsistentHash{ns = 60, owners = (3)[tsykora-41524: 20+20, tsykora-51778: 20+20, tsykora-52630: 20+20]}, pendingCH=null, unionCH=null}, stableTopology=CacheTopology{id=4, rebalanceId=2, currentCH=DefaultConsistentHash{ns = 60, owners = (3)[tsykora-41524: 20+20, tsykora-51778: 20+20, tsykora-52630: 20+20]}, pendingCH=null, unionCH=null}}} "
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-41524",
+"dest": "null",
+"length": 6228,
+"timestamp": 1465975787021,
+"message": "CacheTopologyControlCommand{cache=___defaultcache, type=REBALANCE_START, sender=tsykora-41524, joinInfo=null, topologyId=5, rebalanceId=3, currentCH=DefaultConsistentHash{ns = 60, owners = (3)[tsykora-41524: 20+20, tsykora-51778: 20+20, tsykora-52630: 20+20]}, pendingCH=DefaultConsistentHash{ns = 60, owners = (4)[tsykora-41524: 15+15, tsykora-51778: 15+15, tsykora-52630: 15+15, tsykora-39173: 15+15]}, availabilityMode=null, throwable=null, viewId=3}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-39173",
+"dest": "tsykora-41524",
+"length": 59,
+"timestamp": 1465975787210,
+"message": "StateRequestCommand{cache=___defaultcache, origin=tsykora-39173, type=GET_CACHE_LISTENERS, topologyId=0, segments=null}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-41524",
+"dest": "tsykora-39173",
+"length": 10,
+"timestamp": 1465975787218,
+"message": "SuccessfulResponse{responseValue=[]} "
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-39173",
+"dest": "tsykora-52630",
+"length": 127,
+"timestamp": 1465975787231,
+"message": "StateRequestCommand{cache=___defaultcache, origin=tsykora-39173, type=START_STATE_TRANSFER, topologyId=5, segments=[51, 53, 23, 55, 24, 56, 25, 57, 26, 58, 27, 59, 28]}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-52630",
+"dest": "tsykora-39173",
+"length": 7,
+"timestamp": 1465975787241,
+"message": "SuccessfulResponse{responseValue=true} "
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-52630",
+"dest": "tsykora-39173",
+"length": 591,
+"timestamp": 1465975787250,
+"message": "StateResponseCommand{cache=___defaultcache, origin=tsykora-52630, topologyId=5}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-39173",
+"dest": "tsykora-41524",
+"length": 107,
+"timestamp": 1465975787272,
+"message": "StateRequestCommand{cache=___defaultcache, origin=tsykora-39173, type=START_STATE_TRANSFER, topologyId=5, segments=[16, 17, 18, 19, 8, 9, 13, 14, 15]}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-39173",
+"dest": "tsykora-52630",
+"length": 4,
+"timestamp": 1465975787270,
+"message": "null"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-41524",
+"dest": "tsykora-39173",
+"length": 7,
+"timestamp": 1465975787280,
+"message": "SuccessfulResponse{responseValue=true} "
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-41524",
+"dest": "tsykora-39173",
+"length": 495,
+"timestamp": 1465975787280,
+"message": "StateResponseCommand{cache=___defaultcache, origin=tsykora-41524, topologyId=5}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-39173",
+"dest": "tsykora-41524",
+"length": 4,
+"timestamp": 1465975787291,
+"message": "null"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-39173",
+"dest": "tsykora-51778",
+"length": 102,
+"timestamp": 1465975787292,
+"message": "StateRequestCommand{cache=___defaultcache, origin=tsykora-39173, type=START_STATE_TRANSFER, topologyId=5, segments=[48, 49, 42, 43, 44, 45, 46, 47]}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-51778",
+"dest": "tsykora-39173",
+"length": 7,
+"timestamp": 1465975787295,
+"message": "SuccessfulResponse{responseValue=true} "
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-51778",
+"dest": "tsykora-39173",
+"length": 391,
+"timestamp": 1465975787297,
+"message": "StateResponseCommand{cache=___defaultcache, origin=tsykora-51778, topologyId=5}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-39173",
+"dest": "tsykora-41524",
+"length": 67,
+"timestamp": 1465975787321,
+"message": "CacheTopologyControlCommand{cache=___defaultcache, type=REBALANCE_CONFIRM, sender=tsykora-39173, joinInfo=null, topologyId=5, rebalanceId=0, currentCH=null, pendingCH=null, availabilityMode=null, throwable=null, viewId=3}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-41524",
+"dest": "null",
+"length": 3267,
+"timestamp": 1465975787324,
+"message": "CacheTopologyControlCommand{cache=___defaultcache, type=CH_UPDATE, sender=tsykora-41524, joinInfo=null, topologyId=6, rebalanceId=3, currentCH=DefaultConsistentHash{ns = 60, owners = (4)[tsykora-41524: 15+15, tsykora-51778: 15+15, tsykora-52630: 15+15, tsykora-39173: 15+15]}, pendingCH=null, availabilityMode=AVAILABLE, throwable=null, viewId=3}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-41524",
+"dest": "null",
+"length": 3267,
+"timestamp": 1465975787325,
+"message": "CacheTopologyControlCommand{cache=___defaultcache, type=CH_UPDATE, sender=tsykora-41524, joinInfo=null, topologyId=6, rebalanceId=3, currentCH=DefaultConsistentHash{ns = 60, owners = (4)[tsykora-41524: 15+15, tsykora-51778: 15+15, tsykora-52630: 15+15, tsykora-39173: 15+15]}, pendingCH=null, availabilityMode=AVAILABLE, throwable=null, viewId=3}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-39173",
+"dest": "tsykora-51778",
+"length": 4,
+"timestamp": 1465975787321,
+"message": "null"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-41524",
+"dest": "null",
+"length": 3197,
+"timestamp": 1465975787340,
+"message": "CacheTopologyControlCommand{cache=___defaultcache, type=STABLE_TOPOLOGY_UPDATE, sender=tsykora-41524, joinInfo=null, topologyId=6, rebalanceId=3, currentCH=DefaultConsistentHash{ns = 60, owners = (4)[tsykora-41524: 15+15, tsykora-51778: 15+15, tsykora-52630: 15+15, tsykora-39173: 15+15]}, pendingCH=null, availabilityMode=null, throwable=null, viewId=3}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-41524",
+"dest": "null",
+"length": 3197,
+"timestamp": 1465975787338,
+"message": "CacheTopologyControlCommand{cache=___defaultcache, type=STABLE_TOPOLOGY_UPDATE, sender=tsykora-41524, joinInfo=null, topologyId=6, rebalanceId=3, currentCH=DefaultConsistentHash{ns = 60, owners = (4)[tsykora-41524: 15+15, tsykora-51778: 15+15, tsykora-52630: 15+15, tsykora-39173: 15+15]}, pendingCH=null, availabilityMode=null, throwable=null, viewId=3}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-41524",
+"dest": "null",
+"length": 3197,
+"timestamp": 1465975787339,
+"message": "CacheTopologyControlCommand{cache=___defaultcache, type=STABLE_TOPOLOGY_UPDATE, sender=tsykora-41524, joinInfo=null, topologyId=6, rebalanceId=3, currentCH=DefaultConsistentHash{ns = 60, owners = (4)[tsykora-41524: 15+15, tsykora-51778: 15+15, tsykora-52630: 15+15, tsykora-39173: 15+15]}, pendingCH=null, availabilityMode=null, throwable=null, viewId=3}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-41524",
+"dest": "null",
+"length": 3197,
+"timestamp": 1465975787344,
+"message": "CacheTopologyControlCommand{cache=___defaultcache, type=STABLE_TOPOLOGY_UPDATE, sender=tsykora-41524, joinInfo=null, topologyId=6, rebalanceId=3, currentCH=DefaultConsistentHash{ns = 60, owners = (4)[tsykora-41524: 15+15, tsykora-51778: 15+15, tsykora-52630: 15+15, tsykora-39173: 15+15]}, pendingCH=null, availabilityMode=null, throwable=null, viewId=3}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-41524",
+"dest": "null",
+"length": 3267,
+"timestamp": 1465975787329,
+"message": "CacheTopologyControlCommand{cache=___defaultcache, type=CH_UPDATE, sender=tsykora-41524, joinInfo=null, topologyId=6, rebalanceId=3, currentCH=DefaultConsistentHash{ns = 60, owners = (4)[tsykora-41524: 15+15, tsykora-51778: 15+15, tsykora-52630: 15+15, tsykora-39173: 15+15]}, pendingCH=null, availabilityMode=AVAILABLE, throwable=null, viewId=3}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-41524",
+"dest": "null",
+"length": 3267,
+"timestamp": 1465975787355,
+"message": "CacheTopologyControlCommand{cache=___defaultcache, type=CH_UPDATE, sender=tsykora-41524, joinInfo=null, topologyId=6, rebalanceId=3, currentCH=DefaultConsistentHash{ns = 60, owners = (4)[tsykora-41524: 15+15, tsykora-51778: 15+15, tsykora-52630: 15+15, tsykora-39173: 15+15]}, pendingCH=null, availabilityMode=AVAILABLE, throwable=null, viewId=3}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-39173",
+"dest": "tsykora-51778",
+"length": 182,
+"timestamp": 1465975787381,
+"message": "SingleRpcCommand{cacheName='___defaultcache', command=PutKeyValueCommand{key=fd6e36c8-f21a-4119-9e5f-dbe97227381d, value=tsykora-39173, flags=null, putIfAbsent=false, valueMatcher=MATCH_ALWAYS, metadata=EmbeddedExpirableMetadata{lifespan=60000, maxIdle=-1, version=null}, successful=true}}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-51778",
+"dest": "tsykora-41524",
+"length": 182,
+"timestamp": 1465975787385,
+"message": "SingleRpcCommand{cacheName='___defaultcache', command=PutKeyValueCommand{key=fd6e36c8-f21a-4119-9e5f-dbe97227381d, value=tsykora-39173, flags=null, putIfAbsent=false, valueMatcher=MATCH_ALWAYS, metadata=EmbeddedExpirableMetadata{lifespan=60000, maxIdle=-1, version=null}, successful=true}}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-41524",
+"dest": "tsykora-51778",
+"length": 4,
+"timestamp": 1465975787390,
+"message": "null"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-51778",
+"dest": "tsykora-39173",
+"length": 4,
+"timestamp": 1465975787396,
+"message": "null"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-39173",
+"dest": "tsykora-51778",
+"length": 182,
+"timestamp": 1465975787408,
+"message": "SingleRpcCommand{cacheName='___defaultcache', command=PutKeyValueCommand{key=09373b1a-967d-4916-99a6-f59b7bc94235, value=tsykora-39173, flags=null, putIfAbsent=false, valueMatcher=MATCH_ALWAYS, metadata=EmbeddedExpirableMetadata{lifespan=60000, maxIdle=-1, version=null}, successful=true}}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-51778",
+"dest": "tsykora-41524",
+"length": 182,
+"timestamp": 1465975787416,
+"message": "SingleRpcCommand{cacheName='___defaultcache', command=PutKeyValueCommand{key=09373b1a-967d-4916-99a6-f59b7bc94235, value=tsykora-39173, flags=null, putIfAbsent=false, valueMatcher=MATCH_ALWAYS, metadata=EmbeddedExpirableMetadata{lifespan=60000, maxIdle=-1, version=null}, successful=true}}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-41524",
+"dest": "tsykora-51778",
+"length": 4,
+"timestamp": 1465975787423,
+"message": "null"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-51778",
+"dest": "tsykora-39173",
+"length": 4,
+"timestamp": 1465975787427,
+"message": "null"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-39173",
+"dest": "tsykora-41524",
+"length": 182,
+"timestamp": 1465975787434,
+"message": "SingleRpcCommand{cacheName='___defaultcache', command=PutKeyValueCommand{key=fafb21ed-8907-4e8d-bc96-d0669b12954e, value=tsykora-39173, flags=null, putIfAbsent=false, valueMatcher=MATCH_ALWAYS, metadata=EmbeddedExpirableMetadata{lifespan=60000, maxIdle=-1, version=null}, successful=true}}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-41524",
+"dest": "tsykora-39173",
+"length": 182,
+"timestamp": 1465975787440,
+"message": "SingleRpcCommand{cacheName='___defaultcache', command=PutKeyValueCommand{key=fafb21ed-8907-4e8d-bc96-d0669b12954e, value=tsykora-39173, flags=null, putIfAbsent=false, valueMatcher=MATCH_ALWAYS, metadata=EmbeddedExpirableMetadata{lifespan=60000, maxIdle=-1, version=null}, successful=true}}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-39173",
+"dest": "tsykora-41524",
+"length": 4,
+"timestamp": 1465975787451,
+"message": "null"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-41524",
+"dest": "tsykora-39173",
+"length": 4,
+"timestamp": 1465975787457,
+"message": "null"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-39173",
+"dest": "tsykora-52630",
+"length": 182,
+"timestamp": 1465975787464,
+"message": "SingleRpcCommand{cacheName='___defaultcache', command=PutKeyValueCommand{key=ef289732-7797-4577-9711-ed15cb301af9, value=tsykora-39173, flags=null, putIfAbsent=false, valueMatcher=MATCH_ALWAYS, metadata=EmbeddedExpirableMetadata{lifespan=60000, maxIdle=-1, version=null}, successful=true}}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-52630",
+"dest": "tsykora-39173",
+"length": 4,
+"timestamp": 1465975787469,
+"message": "null"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-39173",
+"dest": "tsykora-52630",
+"length": 182,
+"timestamp": 1465975787475,
+"message": "SingleRpcCommand{cacheName='___defaultcache', command=PutKeyValueCommand{key=7a78932e-1e06-412f-bb33-eebec6ef0489, value=tsykora-39173, flags=null, putIfAbsent=false, valueMatcher=MATCH_ALWAYS, metadata=EmbeddedExpirableMetadata{lifespan=60000, maxIdle=-1, version=null}, successful=true}}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-52630",
+"dest": "tsykora-39173",
+"length": 182,
+"timestamp": 1465975787481,
+"message": "SingleRpcCommand{cacheName='___defaultcache', command=PutKeyValueCommand{key=7a78932e-1e06-412f-bb33-eebec6ef0489, value=tsykora-39173, flags=null, putIfAbsent=false, valueMatcher=MATCH_ALWAYS, metadata=EmbeddedExpirableMetadata{lifespan=60000, maxIdle=-1, version=null}, successful=true}}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-39173",
+"dest": "tsykora-52630",
+"length": 4,
+"timestamp": 1465975787485,
+"message": "null"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-52630",
+"dest": "tsykora-39173",
+"length": 4,
+"timestamp": 1465975787492,
+"message": "null"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-39173",
+"dest": "tsykora-41524",
+"length": 182,
+"timestamp": 1465975787497,
+"message": "SingleRpcCommand{cacheName='___defaultcache', command=PutKeyValueCommand{key=553049d3-177d-44a5-b360-34d304d79c9c, value=tsykora-39173, flags=null, putIfAbsent=false, valueMatcher=MATCH_ALWAYS, metadata=EmbeddedExpirableMetadata{lifespan=60000, maxIdle=-1, version=null}, successful=true}}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-41524",
+"dest": "tsykora-51778",
+"length": 182,
+"timestamp": 1465975787501,
+"message": "SingleRpcCommand{cacheName='___defaultcache', command=PutKeyValueCommand{key=553049d3-177d-44a5-b360-34d304d79c9c, value=tsykora-39173, flags=null, putIfAbsent=false, valueMatcher=MATCH_ALWAYS, metadata=EmbeddedExpirableMetadata{lifespan=60000, maxIdle=-1, version=null}, successful=true}}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-51778",
+"dest": "tsykora-41524",
+"length": 4,
+"timestamp": 1465975787504,
+"message": "null"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-41524",
+"dest": "tsykora-39173",
+"length": 4,
+"timestamp": 1465975787507,
+"message": "null"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-39173",
+"dest": "tsykora-41524",
+"length": 182,
+"timestamp": 1465975787513,
+"message": "SingleRpcCommand{cacheName='___defaultcache', command=PutKeyValueCommand{key=90bd1169-0897-4b26-96ad-7cdf989d41a9, value=tsykora-39173, flags=null, putIfAbsent=false, valueMatcher=MATCH_ALWAYS, metadata=EmbeddedExpirableMetadata{lifespan=60000, maxIdle=-1, version=null}, successful=true}}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-41524",
+"dest": "tsykora-39173",
+"length": 182,
+"timestamp": 1465975787517,
+"message": "SingleRpcCommand{cacheName='___defaultcache', command=PutKeyValueCommand{key=90bd1169-0897-4b26-96ad-7cdf989d41a9, value=tsykora-39173, flags=null, putIfAbsent=false, valueMatcher=MATCH_ALWAYS, metadata=EmbeddedExpirableMetadata{lifespan=60000, maxIdle=-1, version=null}, successful=true}}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-39173",
+"dest": "tsykora-41524",
+"length": 4,
+"timestamp": 1465975787523,
+"message": "null"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-41524",
+"dest": "tsykora-39173",
+"length": 4,
+"timestamp": 1465975787528,
+"message": "null"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-39173",
+"dest": "tsykora-51778",
+"length": 182,
+"timestamp": 1465975787533,
+"message": "SingleRpcCommand{cacheName='___defaultcache', command=PutKeyValueCommand{key=a4e6d1a9-7b58-4c83-a0ca-d99155ed8044, value=tsykora-39173, flags=null, putIfAbsent=false, valueMatcher=MATCH_ALWAYS, metadata=EmbeddedExpirableMetadata{lifespan=60000, maxIdle=-1, version=null}, successful=true}}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-51778",
+"dest": "tsykora-41524",
+"length": 182,
+"timestamp": 1465975787539,
+"message": "SingleRpcCommand{cacheName='___defaultcache', command=PutKeyValueCommand{key=a4e6d1a9-7b58-4c83-a0ca-d99155ed8044, value=tsykora-39173, flags=null, putIfAbsent=false, valueMatcher=MATCH_ALWAYS, metadata=EmbeddedExpirableMetadata{lifespan=60000, maxIdle=-1, version=null}, successful=true}}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-41524",
+"dest": "tsykora-51778",
+"length": 4,
+"timestamp": 1465975787543,
+"message": "null"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-51778",
+"dest": "tsykora-39173",
+"length": 4,
+"timestamp": 1465975787547,
+"message": "null"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-39173",
+"dest": "tsykora-52630",
+"length": 182,
+"timestamp": 1465975787555,
+"message": "SingleRpcCommand{cacheName='___defaultcache', command=PutKeyValueCommand{key=af36c95c-1d42-4891-9e07-cf093595ba9d, value=tsykora-39173, flags=null, putIfAbsent=false, valueMatcher=MATCH_ALWAYS, metadata=EmbeddedExpirableMetadata{lifespan=60000, maxIdle=-1, version=null}, successful=true}}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-52630",
+"dest": "tsykora-39173",
+"length": 4,
+"timestamp": 1465975787564,
+"message": "null"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-39173",
+"dest": "tsykora-51778",
+"length": 182,
+"timestamp": 1465975787569,
+"message": "SingleRpcCommand{cacheName='___defaultcache', command=PutKeyValueCommand{key=07ffaefd-cab3-40f9-863c-91af1f56e063, value=tsykora-39173, flags=null, putIfAbsent=false, valueMatcher=MATCH_ALWAYS, metadata=EmbeddedExpirableMetadata{lifespan=60000, maxIdle=-1, version=null}, successful=true}}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-51778",
+"dest": "tsykora-41524",
+"length": 182,
+"timestamp": 1465975787572,
+"message": "SingleRpcCommand{cacheName='___defaultcache', command=PutKeyValueCommand{key=07ffaefd-cab3-40f9-863c-91af1f56e063, value=tsykora-39173, flags=null, putIfAbsent=false, valueMatcher=MATCH_ALWAYS, metadata=EmbeddedExpirableMetadata{lifespan=60000, maxIdle=-1, version=null}, successful=true}}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-41524",
+"dest": "tsykora-51778",
+"length": 4,
+"timestamp": 1465975787576,
+"message": "null"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-51778",
+"dest": "tsykora-39173",
+"length": 4,
+"timestamp": 1465975787588,
+"message": "null"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-41524",
+"dest": "null",
+"length": 2414,
+"timestamp": 1465975799439,
+"message": "CacheTopologyControlCommand{cache=___defaultcache, type=CH_UPDATE, sender=tsykora-41524, joinInfo=null, topologyId=7, rebalanceId=3, currentCH=DefaultConsistentHash{ns = 60, owners = (3)[tsykora-51778: 23+7, tsykora-52630: 18+12, tsykora-39173: 19+11]}, pendingCH=null, availabilityMode=AVAILABLE, throwable=null, viewId=3}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-41524",
+"dest": "null",
+"length": 2414,
+"timestamp": 1465975799440,
+"message": "CacheTopologyControlCommand{cache=___defaultcache, type=CH_UPDATE, sender=tsykora-41524, joinInfo=null, topologyId=7, rebalanceId=3, currentCH=DefaultConsistentHash{ns = 60, owners = (3)[tsykora-51778: 23+7, tsykora-52630: 18+12, tsykora-39173: 19+11]}, pendingCH=null, availabilityMode=AVAILABLE, throwable=null, viewId=3}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-41524",
+"dest": "null",
+"length": 2414,
+"timestamp": 1465975799443,
+"message": "CacheTopologyControlCommand{cache=___defaultcache, type=CH_UPDATE, sender=tsykora-41524, joinInfo=null, topologyId=7, rebalanceId=3, currentCH=DefaultConsistentHash{ns = 60, owners = (3)[tsykora-51778: 23+7, tsykora-52630: 18+12, tsykora-39173: 19+11]}, pendingCH=null, availabilityMode=AVAILABLE, throwable=null, viewId=3}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-41524",
+"dest": "null",
+"length": 5375,
+"timestamp": 1465975799448,
+"message": "CacheTopologyControlCommand{cache=___defaultcache, type=REBALANCE_START, sender=tsykora-41524, joinInfo=null, topologyId=8, rebalanceId=4, currentCH=DefaultConsistentHash{ns = 60, owners = (3)[tsykora-51778: 23+7, tsykora-52630: 18+12, tsykora-39173: 19+11]}, pendingCH=DefaultConsistentHash{ns = 60, owners = (3)[tsykora-51778: 20+20, tsykora-52630: 20+20, tsykora-39173: 20+20]}, availabilityMode=null, throwable=null, viewId=3}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-41524",
+"dest": "null",
+"length": 5375,
+"timestamp": 1465975799448,
+"message": "CacheTopologyControlCommand{cache=___defaultcache, type=REBALANCE_START, sender=tsykora-41524, joinInfo=null, topologyId=8, rebalanceId=4, currentCH=DefaultConsistentHash{ns = 60, owners = (3)[tsykora-51778: 23+7, tsykora-52630: 18+12, tsykora-39173: 19+11]}, pendingCH=DefaultConsistentHash{ns = 60, owners = (3)[tsykora-51778: 20+20, tsykora-52630: 20+20, tsykora-39173: 20+20]}, availabilityMode=null, throwable=null, viewId=3}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-41524",
+"dest": "null",
+"length": 2414,
+"timestamp": 1465975799440,
+"message": "CacheTopologyControlCommand{cache=___defaultcache, type=CH_UPDATE, sender=tsykora-41524, joinInfo=null, topologyId=7, rebalanceId=3, currentCH=DefaultConsistentHash{ns = 60, owners = (3)[tsykora-51778: 23+7, tsykora-52630: 18+12, tsykora-39173: 19+11]}, pendingCH=null, availabilityMode=AVAILABLE, throwable=null, viewId=3}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-41524",
+"dest": "null",
+"length": 5375,
+"timestamp": 1465975799449,
+"message": "CacheTopologyControlCommand{cache=___defaultcache, type=REBALANCE_START, sender=tsykora-41524, joinInfo=null, topologyId=8, rebalanceId=4, currentCH=DefaultConsistentHash{ns = 60, owners = (3)[tsykora-51778: 23+7, tsykora-52630: 18+12, tsykora-39173: 19+11]}, pendingCH=DefaultConsistentHash{ns = 60, owners = (3)[tsykora-51778: 20+20, tsykora-52630: 20+20, tsykora-39173: 20+20]}, availabilityMode=null, throwable=null, viewId=3}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-41524",
+"dest": "null",
+"length": 5375,
+"timestamp": 1465975799446,
+"message": "CacheTopologyControlCommand{cache=___defaultcache, type=REBALANCE_START, sender=tsykora-41524, joinInfo=null, topologyId=8, rebalanceId=4, currentCH=DefaultConsistentHash{ns = 60, owners = (3)[tsykora-51778: 23+7, tsykora-52630: 18+12, tsykora-39173: 19+11]}, pendingCH=DefaultConsistentHash{ns = 60, owners = (3)[tsykora-51778: 20+20, tsykora-52630: 20+20, tsykora-39173: 20+20]}, availabilityMode=null, throwable=null, viewId=3}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-51778",
+"dest": "tsykora-39173",
+"length": 92,
+"timestamp": 1465975799471,
+"message": "StateRequestCommand{cache=___defaultcache, origin=tsykora-51778, type=START_STATE_TRANSFER, topologyId=8, segments=[49, 18, 55, 8, 9, 14]}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-51778",
+"dest": "null",
+"length": 51,
+"timestamp": 1465975799491,
+"message": "CacheTopologyControlCommand{cache=null, type=GET_STATUS, sender=tsykora-51778, joinInfo=null, topologyId=0, rebalanceId=0, currentCH=null, pendingCH=null, availabilityMode=null, throwable=null, viewId=4}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-39173",
+"dest": "tsykora-52630",
+"length": 77,
+"timestamp": 1465975799484,
+"message": "StateRequestCommand{cache=___defaultcache, origin=tsykora-39173, type=START_STATE_TRANSFER, topologyId=8, segments=[21, 12, 29]}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-51778",
+"dest": "null",
+"length": 51,
+"timestamp": 1465975799496,
+"message": "CacheTopologyControlCommand{cache=null, type=GET_STATUS, sender=tsykora-51778, joinInfo=null, topologyId=0, rebalanceId=0, currentCH=null, pendingCH=null, availabilityMode=null, throwable=null, viewId=4}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-51778",
+"dest": "null",
+"length": 51,
+"timestamp": 1465975799499,
+"message": "CacheTopologyControlCommand{cache=null, type=GET_STATUS, sender=tsykora-51778, joinInfo=null, topologyId=0, rebalanceId=0, currentCH=null, pendingCH=null, availabilityMode=null, throwable=null, viewId=4}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-52630",
+"dest": "tsykora-39173",
+"length": 72,
+"timestamp": 1465975799517,
+"message": "StateRequestCommand{cache=___defaultcache, origin=tsykora-52630, type=START_STATE_TRANSFER, topologyId=8, segments=[16, 13]}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-52630",
+"dest": "tsykora-51778",
+"length": 8466,
+"timestamp": 1465975799536,
+"message": "SuccessfulResponse{responseValue={___defaultcache=StatusResponse{cacheJoinInfo=CacheJoinInfo{consistentHashFactory=org.infinispan.distribution.ch.impl.DefaultConsistentHashFactory@4bf3399c, hashFunction=MurmurHash3, numSegments=60, numOwners=2, timeout=240000, totalOrder=false, distributed=true}, cacheTopology=CacheTopology{id=8, rebalanceId=4, currentCH=DefaultConsistentHash{ns = 60, owners = (3)[tsykora-51778: 23+7, tsykora-52630: 18+12, tsykora-39173: 19+11]}, pendingCH=DefaultConsistentHash{ns = 60, owners = (3)[tsykora-51778: 20+20, tsykora-52630: 20+20, tsykora-39173: 20+20]}, unionCH=null}, stableTopology=CacheTopology{id=6, rebalanceId=3, currentCH=DefaultConsistentHash{ns = 60, owners = (4)[tsykora-41524: 15+15, tsykora-51778: 15+15, tsykora-52630: 15+15, tsykora-39173: 15+15]}, pendingCH=null, unionCH=null}}}} "
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-52630",
+"dest": "tsykora-39173",
+"length": 7,
+"timestamp": 1465975799540,
+"message": "SuccessfulResponse{responseValue=true} "
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-39173",
+"dest": "tsykora-51778",
+"length": 8466,
+"timestamp": 1465975799540,
+"message": "SuccessfulResponse{responseValue={___defaultcache=StatusResponse{cacheJoinInfo=CacheJoinInfo{consistentHashFactory=org.infinispan.distribution.ch.impl.DefaultConsistentHashFactory@349a780f, hashFunction=MurmurHash3, numSegments=60, numOwners=2, timeout=240000, totalOrder=false, distributed=true}, cacheTopology=CacheTopology{id=8, rebalanceId=4, currentCH=DefaultConsistentHash{ns = 60, owners = (3)[tsykora-51778: 23+7, tsykora-52630: 18+12, tsykora-39173: 19+11]}, pendingCH=DefaultConsistentHash{ns = 60, owners = (3)[tsykora-51778: 20+20, tsykora-52630: 20+20, tsykora-39173: 20+20]}, unionCH=null}, stableTopology=CacheTopology{id=6, rebalanceId=3, currentCH=DefaultConsistentHash{ns = 60, owners = (4)[tsykora-41524: 15+15, tsykora-51778: 15+15, tsykora-52630: 15+15, tsykora-39173: 15+15]}, pendingCH=null, unionCH=null}}}} "
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-39173",
+"dest": "tsykora-51778",
+"length": 7,
+"timestamp": 1465975799547,
+"message": "SuccessfulResponse{responseValue=true} "
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-39173",
+"dest": "tsykora-51778",
+"length": 399,
+"timestamp": 1465975799563,
+"message": "StateResponseCommand{cache=___defaultcache, origin=tsykora-39173, topologyId=8}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-39173",
+"dest": "tsykora-52630",
+"length": 221,
+"timestamp": 1465975799575,
+"message": "StateResponseCommand{cache=___defaultcache, origin=tsykora-39173, topologyId=8}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-39173",
+"dest": "tsykora-52630",
+"length": 7,
+"timestamp": 1465975799582,
+"message": "SuccessfulResponse{responseValue=true} "
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-52630",
+"dest": "tsykora-39173",
+"length": 230,
+"timestamp": 1465975799575,
+"message": "StateResponseCommand{cache=___defaultcache, origin=tsykora-52630, topologyId=8}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-52630",
+"dest": "tsykora-39173",
+"length": 4,
+"timestamp": 1465975799587,
+"message": "null"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-39173",
+"dest": "tsykora-52630",
+"length": 4,
+"timestamp": 1465975799608,
+"message": "null"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-39173",
+"dest": "tsykora-51778",
+"length": 107,
+"timestamp": 1465975799609,
+"message": "StateRequestCommand{cache=___defaultcache, origin=tsykora-39173, type=START_STATE_TRANSFER, topologyId=8, segments=[0, 33, 2, 35, 4, 37, 6, 39, 31]}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-51778",
+"dest": "null",
+"length": 2344,
+"timestamp": 1465975799622,
+"message": "CacheTopologyControlCommand{cache=___defaultcache, type=CH_UPDATE, sender=tsykora-51778, joinInfo=null, topologyId=9, rebalanceId=4, currentCH=DefaultConsistentHash{ns = 60, owners = (3)[tsykora-51778: 23+7, tsykora-52630: 18+12, tsykora-39173: 19+11]}, pendingCH=null, availabilityMode=null, throwable=null, viewId=4}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-51778",
+"dest": "null",
+"length": 2344,
+"timestamp": 1465975799624,
+"message": "CacheTopologyControlCommand{cache=___defaultcache, type=CH_UPDATE, sender=tsykora-51778, joinInfo=null, topologyId=9, rebalanceId=4, currentCH=DefaultConsistentHash{ns = 60, owners = (3)[tsykora-51778: 23+7, tsykora-52630: 18+12, tsykora-39173: 19+11]}, pendingCH=null, availabilityMode=null, throwable=null, viewId=4}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-52630",
+"dest": "tsykora-51778",
+"length": 107,
+"timestamp": 1465975799610,
+"message": "StateRequestCommand{cache=___defaultcache, origin=tsykora-52630, type=START_STATE_TRANSFER, topologyId=8, segments=[32, 1, 34, 3, 36, 5, 38, 7, 30]}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-51778",
+"dest": "tsykora-52630",
+"length": 82,
+"timestamp": 1465975799656,
+"message": "StateRequestCommand{cache=___defaultcache, origin=tsykora-51778, type=START_STATE_TRANSFER, topologyId=8, segments=[51, 53, 10, 11]}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-52630",
+"dest": "tsykora-51778",
+"length": 107,
+"timestamp": 1465975799643,
+"message": "StateRequestCommand{cache=___defaultcache, origin=tsykora-52630, type=CANCEL_STATE_TRANSFER, topologyId=8, segments=[32, 1, 34, 3, 36, 5, 38, 7, 30]}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-51778",
+"dest": "tsykora-39173",
+"length": 4,
+"timestamp": 1465975799657,
+"message": "null"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-51778",
+"dest": "tsykora-52630",
+"length": 82,
+"timestamp": 1465975799671,
+"message": "StateRequestCommand{cache=___defaultcache, origin=tsykora-51778, type=CANCEL_STATE_TRANSFER, topologyId=8, segments=[51, 53, 10, 11]}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-51778",
+"dest": "tsykora-39173",
+"length": 92,
+"timestamp": 1465975799680,
+"message": "StateRequestCommand{cache=___defaultcache, origin=tsykora-51778, type=CANCEL_STATE_TRANSFER, topologyId=8, segments=[49, 18, 55, 8, 9, 14]}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-51778",
+"dest": "null",
+"length": 2344,
+"timestamp": 1465975799622,
+"message": "CacheTopologyControlCommand{cache=___defaultcache, type=CH_UPDATE, sender=tsykora-51778, joinInfo=null, topologyId=9, rebalanceId=4, currentCH=DefaultConsistentHash{ns = 60, owners = (3)[tsykora-51778: 23+7, tsykora-52630: 18+12, tsykora-39173: 19+11]}, pendingCH=null, availabilityMode=null, throwable=null, viewId=4}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-51778",
+"dest": "tsykora-39173",
+"length": 7,
+"timestamp": 1465975799692,
+"message": "SuccessfulResponse{responseValue=true} "
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-51778",
+"dest": "null",
+"length": 3197,
+"timestamp": 1465975799675,
+"message": "CacheTopologyControlCommand{cache=___defaultcache, type=STABLE_TOPOLOGY_UPDATE, sender=tsykora-51778, joinInfo=null, topologyId=6, rebalanceId=3, currentCH=DefaultConsistentHash{ns = 60, owners = (4)[tsykora-41524: 15+15, tsykora-51778: 15+15, tsykora-52630: 15+15, tsykora-39173: 15+15]}, pendingCH=null, availabilityMode=null, throwable=null, viewId=4}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-51778",
+"dest": "tsykora-52630",
+"length": 7,
+"timestamp": 1465975799672,
+"message": "SuccessfulResponse{responseValue=true} "
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-39173",
+"dest": "tsykora-51778",
+"length": 107,
+"timestamp": 1465975799674,
+"message": "StateRequestCommand{cache=___defaultcache, origin=tsykora-39173, type=CANCEL_STATE_TRANSFER, topologyId=8, segments=[0, 33, 2, 35, 4, 37, 6, 39, 31]}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-51778",
+"dest": "null",
+"length": 5375,
+"timestamp": 1465975799715,
+"message": "CacheTopologyControlCommand{cache=___defaultcache, type=REBALANCE_START, sender=tsykora-51778, joinInfo=null, topologyId=10, rebalanceId=5, currentCH=DefaultConsistentHash{ns = 60, owners = (3)[tsykora-51778: 23+7, tsykora-52630: 18+12, tsykora-39173: 19+11]}, pendingCH=DefaultConsistentHash{ns = 60, owners = (3)[tsykora-51778: 20+20, tsykora-52630: 20+20, tsykora-39173: 20+20]}, availabilityMode=null, throwable=null, viewId=4}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-51778",
+"dest": "tsykora-52630",
+"length": 706,
+"timestamp": 1465975799677,
+"message": "StateResponseCommand{cache=___defaultcache, origin=tsykora-51778, topologyId=8}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-51778",
+"dest": "null",
+"length": 5375,
+"timestamp": 1465975799734,
+"message": "CacheTopologyControlCommand{cache=___defaultcache, type=REBALANCE_START, sender=tsykora-51778, joinInfo=null, topologyId=10, rebalanceId=5, currentCH=DefaultConsistentHash{ns = 60, owners = (3)[tsykora-51778: 23+7, tsykora-52630: 18+12, tsykora-39173: 19+11]}, pendingCH=DefaultConsistentHash{ns = 60, owners = (3)[tsykora-51778: 20+20, tsykora-52630: 20+20, tsykora-39173: 20+20]}, availabilityMode=null, throwable=null, viewId=4}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-52630",
+"dest": "tsykora-51778",
+"length": 7,
+"timestamp": 1465975799703,
+"message": "SuccessfulResponse{responseValue=true} "
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-51778",
+"dest": "null",
+"length": 5375,
+"timestamp": 1465975799723,
+"message": "CacheTopologyControlCommand{cache=___defaultcache, type=REBALANCE_START, sender=tsykora-51778, joinInfo=null, topologyId=10, rebalanceId=5, currentCH=DefaultConsistentHash{ns = 60, owners = (3)[tsykora-51778: 23+7, tsykora-52630: 18+12, tsykora-39173: 19+11]}, pendingCH=DefaultConsistentHash{ns = 60, owners = (3)[tsykora-51778: 20+20, tsykora-52630: 20+20, tsykora-39173: 20+20]}, availabilityMode=null, throwable=null, viewId=4}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-51778",
+"dest": "null",
+"length": 3197,
+"timestamp": 1465975799745,
+"message": "CacheTopologyControlCommand{cache=___defaultcache, type=STABLE_TOPOLOGY_UPDATE, sender=tsykora-51778, joinInfo=null, topologyId=6, rebalanceId=3, currentCH=DefaultConsistentHash{ns = 60, owners = (4)[tsykora-41524: 15+15, tsykora-51778: 15+15, tsykora-52630: 15+15, tsykora-39173: 15+15]}, pendingCH=null, availabilityMode=null, throwable=null, viewId=4}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-51778",
+"dest": "tsykora-39173",
+"length": 342,
+"timestamp": 1465975799751,
+"message": "StateResponseCommand{cache=___defaultcache, origin=tsykora-51778, topologyId=8}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-52630",
+"dest": "tsykora-51778",
+"length": 308,
+"timestamp": 1465975799761,
+"message": "StateResponseCommand{cache=___defaultcache, origin=tsykora-52630, topologyId=8}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-52630",
+"dest": "tsykora-51778",
+"length": 4,
+"timestamp": 1465975799770,
+"message": "null"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-51778",
+"dest": "null",
+"length": 3197,
+"timestamp": 1465975799756,
+"message": "CacheTopologyControlCommand{cache=___defaultcache, type=STABLE_TOPOLOGY_UPDATE, sender=tsykora-51778, joinInfo=null, topologyId=6, rebalanceId=3, currentCH=DefaultConsistentHash{ns = 60, owners = (4)[tsykora-41524: 15+15, tsykora-51778: 15+15, tsykora-52630: 15+15, tsykora-39173: 15+15]}, pendingCH=null, availabilityMode=null, throwable=null, viewId=4}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-51778",
+"dest": "tsykora-39173",
+"length": 92,
+"timestamp": 1465975799765,
+"message": "StateRequestCommand{cache=___defaultcache, origin=tsykora-51778, type=START_STATE_TRANSFER, topologyId=10, segments=[49, 18, 55, 8, 9, 14]}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-39173",
+"dest": "tsykora-51778",
+"length": 4,
+"timestamp": 1465975799780,
+"message": "null"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-51778",
+"dest": "tsykora-52630",
+"length": 4,
+"timestamp": 1465975799787,
+"message": "null"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-39173",
+"dest": "tsykora-51778",
+"length": 7,
+"timestamp": 1465975799796,
+"message": "SuccessfulResponse{responseValue=true} "
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-39173",
+"dest": "tsykora-52630",
+"length": 77,
+"timestamp": 1465975799796,
+"message": "StateRequestCommand{cache=___defaultcache, origin=tsykora-39173, type=START_STATE_TRANSFER, topologyId=10, segments=[21, 12, 29]}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-52630",
+"dest": "tsykora-39173",
+"length": 72,
+"timestamp": 1465975799795,
+"message": "StateRequestCommand{cache=___defaultcache, origin=tsykora-52630, type=START_STATE_TRANSFER, topologyId=10, segments=[16, 13]}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-39173",
+"dest": "tsykora-51778",
+"length": 399,
+"timestamp": 1465975799814,
+"message": "StateResponseCommand{cache=___defaultcache, origin=tsykora-39173, topologyId=10}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-39173",
+"dest": "tsykora-52630",
+"length": 7,
+"timestamp": 1465975799818,
+"message": "SuccessfulResponse{responseValue=true} "
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-52630",
+"dest": "tsykora-39173",
+"length": 230,
+"timestamp": 1465975799813,
+"message": "StateResponseCommand{cache=___defaultcache, origin=tsykora-52630, topologyId=10}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-51778",
+"dest": "tsykora-39173",
+"length": 4,
+"timestamp": 1465975799822,
+"message": "null"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-52630",
+"dest": "tsykora-39173",
+"length": 7,
+"timestamp": 1465975799822,
+"message": "SuccessfulResponse{responseValue=true} "
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-51778",
+"dest": "tsykora-52630",
+"length": 82,
+"timestamp": 1465975799838,
+"message": "StateRequestCommand{cache=___defaultcache, origin=tsykora-51778, type=START_STATE_TRANSFER, topologyId=10, segments=[51, 53, 10, 11]}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-39173",
+"dest": "tsykora-52630",
+"length": 4,
+"timestamp": 1465975799845,
+"message": "null"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-39173",
+"dest": "tsykora-51778",
+"length": 107,
+"timestamp": 1465975799849,
+"message": "StateRequestCommand{cache=___defaultcache, origin=tsykora-39173, type=START_STATE_TRANSFER, topologyId=10, segments=[0, 33, 2, 35, 4, 37, 6, 39, 31]}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-52630",
+"dest": "tsykora-51778",
+"length": 7,
+"timestamp": 1465975799861,
+"message": "SuccessfulResponse{responseValue=true} "
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-51778",
+"dest": "tsykora-39173",
+"length": 7,
+"timestamp": 1465975799861,
+"message": "SuccessfulResponse{responseValue=true} "
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-51778",
+"dest": "tsykora-39173",
+"length": 342,
+"timestamp": 1465975799862,
+"message": "StateResponseCommand{cache=___defaultcache, origin=tsykora-51778, topologyId=10}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-39173",
+"dest": "tsykora-52630",
+"length": 221,
+"timestamp": 1465975799840,
+"message": "StateResponseCommand{cache=___defaultcache, origin=tsykora-39173, topologyId=10}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-52630",
+"dest": "tsykora-51778",
+"length": 107,
+"timestamp": 1465975799878,
+"message": "StateRequestCommand{cache=___defaultcache, origin=tsykora-52630, type=START_STATE_TRANSFER, topologyId=10, segments=[32, 1, 34, 3, 36, 5, 38, 7, 30]}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-39173",
+"dest": "tsykora-51778",
+"length": 67,
+"timestamp": 1465975799881,
+"message": "CacheTopologyControlCommand{cache=___defaultcache, type=REBALANCE_CONFIRM, sender=tsykora-39173, joinInfo=null, topologyId=10, rebalanceId=0, currentCH=null, pendingCH=null, availabilityMode=null, throwable=null, viewId=4}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-52630",
+"dest": "tsykora-39173",
+"length": 4,
+"timestamp": 1465975799877,
+"message": "null"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-51778",
+"dest": "tsykora-52630",
+"length": 7,
+"timestamp": 1465975799885,
+"message": "SuccessfulResponse{responseValue=true} "
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-52630",
+"dest": "tsykora-51778",
+"length": 308,
+"timestamp": 1465975799880,
+"message": "StateResponseCommand{cache=___defaultcache, origin=tsykora-52630, topologyId=10}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-51778",
+"dest": "tsykora-52630",
+"length": 706,
+"timestamp": 1465975799906,
+"message": "StateResponseCommand{cache=___defaultcache, origin=tsykora-51778, topologyId=10}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-39173",
+"dest": "tsykora-51778",
+"length": 4,
+"timestamp": 1465975799903,
+"message": "null"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-51778",
+"dest": "tsykora-52630",
+"length": 4,
+"timestamp": 1465975799927,
+"message": "null"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-52630",
+"dest": "tsykora-51778",
+"length": 4,
+"timestamp": 1465975799912,
+"message": "null"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-52630",
+"dest": "tsykora-51778",
+"length": 67,
+"timestamp": 1465975799912,
+"message": "CacheTopologyControlCommand{cache=___defaultcache, type=REBALANCE_CONFIRM, sender=tsykora-52630, joinInfo=null, topologyId=10, rebalanceId=0, currentCH=null, pendingCH=null, availabilityMode=null, throwable=null, viewId=4}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-51778",
+"dest": "null",
+"length": 3154,
+"timestamp": 1465975799944,
+"message": "CacheTopologyControlCommand{cache=___defaultcache, type=CH_UPDATE, sender=tsykora-51778, joinInfo=null, topologyId=11, rebalanceId=5, currentCH=DefaultConsistentHash{ns = 60, owners = (3)[tsykora-51778: 20+20, tsykora-52630: 20+20, tsykora-39173: 20+20]}, pendingCH=null, availabilityMode=null, throwable=null, viewId=4}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-51778",
+"dest": "null",
+"length": 3154,
+"timestamp": 1465975799947,
+"message": "CacheTopologyControlCommand{cache=___defaultcache, type=CH_UPDATE, sender=tsykora-51778, joinInfo=null, topologyId=11, rebalanceId=5, currentCH=DefaultConsistentHash{ns = 60, owners = (3)[tsykora-51778: 20+20, tsykora-52630: 20+20, tsykora-39173: 20+20]}, pendingCH=null, availabilityMode=null, throwable=null, viewId=4}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-51778",
+"dest": "null",
+"length": 3154,
+"timestamp": 1465975799947,
+"message": "CacheTopologyControlCommand{cache=___defaultcache, type=CH_UPDATE, sender=tsykora-51778, joinInfo=null, topologyId=11, rebalanceId=5, currentCH=DefaultConsistentHash{ns = 60, owners = (3)[tsykora-51778: 20+20, tsykora-52630: 20+20, tsykora-39173: 20+20]}, pendingCH=null, availabilityMode=null, throwable=null, viewId=4}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-51778",
+"dest": "null",
+"length": 3154,
+"timestamp": 1465975799952,
+"message": "CacheTopologyControlCommand{cache=___defaultcache, type=STABLE_TOPOLOGY_UPDATE, sender=tsykora-51778, joinInfo=null, topologyId=11, rebalanceId=5, currentCH=DefaultConsistentHash{ns = 60, owners = (3)[tsykora-51778: 20+20, tsykora-52630: 20+20, tsykora-39173: 20+20]}, pendingCH=null, availabilityMode=null, throwable=null, viewId=4}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-51778",
+"dest": "null",
+"length": 3154,
+"timestamp": 1465975799957,
+"message": "CacheTopologyControlCommand{cache=___defaultcache, type=STABLE_TOPOLOGY_UPDATE, sender=tsykora-51778, joinInfo=null, topologyId=11, rebalanceId=5, currentCH=DefaultConsistentHash{ns = 60, owners = (3)[tsykora-51778: 20+20, tsykora-52630: 20+20, tsykora-39173: 20+20]}, pendingCH=null, availabilityMode=null, throwable=null, viewId=4}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-51778",
+"dest": "null",
+"length": 3154,
+"timestamp": 1465975799951,
+"message": "CacheTopologyControlCommand{cache=___defaultcache, type=STABLE_TOPOLOGY_UPDATE, sender=tsykora-51778, joinInfo=null, topologyId=11, rebalanceId=5, currentCH=DefaultConsistentHash{ns = 60, owners = (3)[tsykora-51778: 20+20, tsykora-52630: 20+20, tsykora-39173: 20+20]}, pendingCH=null, availabilityMode=null, throwable=null, viewId=4}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-51778",
+"dest": "null",
+"length": 2031,
+"timestamp": 1465975800845,
+"message": "CacheTopologyControlCommand{cache=___defaultcache, type=CH_UPDATE, sender=tsykora-51778, joinInfo=null, topologyId=12, rebalanceId=5, currentCH=DefaultConsistentHash{ns = 60, owners = (2)[tsykora-52630: 30+10, tsykora-39173: 30+10]}, pendingCH=null, availabilityMode=null, throwable=null, viewId=4}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-51778",
+"dest": "null",
+"length": 2031,
+"timestamp": 1465975800847,
+"message": "CacheTopologyControlCommand{cache=___defaultcache, type=CH_UPDATE, sender=tsykora-51778, joinInfo=null, topologyId=12, rebalanceId=5, currentCH=DefaultConsistentHash{ns = 60, owners = (2)[tsykora-52630: 30+10, tsykora-39173: 30+10]}, pendingCH=null, availabilityMode=null, throwable=null, viewId=4}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-51778",
+"dest": "null",
+"length": 2031,
+"timestamp": 1465975800847,
+"message": "CacheTopologyControlCommand{cache=___defaultcache, type=CH_UPDATE, sender=tsykora-51778, joinInfo=null, topologyId=12, rebalanceId=5, currentCH=DefaultConsistentHash{ns = 60, owners = (2)[tsykora-52630: 30+10, tsykora-39173: 30+10]}, pendingCH=null, availabilityMode=null, throwable=null, viewId=4}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-51778",
+"dest": "null",
+"length": 5019,
+"timestamp": 1465975800857,
+"message": "CacheTopologyControlCommand{cache=___defaultcache, type=REBALANCE_START, sender=tsykora-51778, joinInfo=null, topologyId=13, rebalanceId=6, currentCH=DefaultConsistentHash{ns = 60, owners = (2)[tsykora-52630: 30+10, tsykora-39173: 30+10]}, pendingCH=DefaultConsistentHash{ns = 60, owners = (2)[tsykora-52630: 30+30, tsykora-39173: 30+30]}, availabilityMode=null, throwable=null, viewId=4}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-51778",
+"dest": "null",
+"length": 5019,
+"timestamp": 1465975800860,
+"message": "CacheTopologyControlCommand{cache=___defaultcache, type=REBALANCE_START, sender=tsykora-51778, joinInfo=null, topologyId=13, rebalanceId=6, currentCH=DefaultConsistentHash{ns = 60, owners = (2)[tsykora-52630: 30+10, tsykora-39173: 30+10]}, pendingCH=DefaultConsistentHash{ns = 60, owners = (2)[tsykora-52630: 30+30, tsykora-39173: 30+30]}, availabilityMode=null, throwable=null, viewId=4}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-51778",
+"dest": "null",
+"length": 5019,
+"timestamp": 1465975800856,
+"message": "CacheTopologyControlCommand{cache=___defaultcache, type=REBALANCE_START, sender=tsykora-51778, joinInfo=null, topologyId=13, rebalanceId=6, currentCH=DefaultConsistentHash{ns = 60, owners = (2)[tsykora-52630: 30+10, tsykora-39173: 30+10]}, pendingCH=DefaultConsistentHash{ns = 60, owners = (2)[tsykora-52630: 30+30, tsykora-39173: 30+30]}, availabilityMode=null, throwable=null, viewId=4}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-39173",
+"dest": "tsykora-52630",
+"length": 163,
+"timestamp": 1465975800871,
+"message": "StateRequestCommand{cache=___defaultcache, origin=tsykora-39173, type=START_STATE_TRANSFER, topologyId=13, segments=[32, 1, 34, 3, 36, 5, 38, 7, 40, 41, 10, 11, 50, 51, 20, 52, 53, 22, 54, 30]}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-52630",
+"dest": "tsykora-39173",
+"length": 163,
+"timestamp": 1465975800873,
+"message": "StateRequestCommand{cache=___defaultcache, origin=tsykora-52630, type=START_STATE_TRANSFER, topologyId=13, segments=[0, 33, 2, 35, 4, 37, 6, 39, 8, 9, 42, 43, 44, 45, 14, 49, 18, 55, 56, 31]}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-52630",
+"dest": "tsykora-39173",
+"length": 7,
+"timestamp": 1465975800878,
+"message": "SuccessfulResponse{responseValue=true} "
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-39173",
+"dest": "tsykora-52630",
+"length": 7,
+"timestamp": 1465975800888,
+"message": "SuccessfulResponse{responseValue=true} "
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-52630",
+"dest": "tsykora-39173",
+"length": 1298,
+"timestamp": 1465975800899,
+"message": "StateResponseCommand{cache=___defaultcache, origin=tsykora-52630, topologyId=13}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-39173",
+"dest": "tsykora-52630",
+"length": 925,
+"timestamp": 1465975800905,
+"message": "StateResponseCommand{cache=___defaultcache, origin=tsykora-39173, topologyId=13}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-52630",
+"dest": "null",
+"length": 51,
+"timestamp": 1465975800908,
+"message": "CacheTopologyControlCommand{cache=null, type=GET_STATUS, sender=tsykora-52630, joinInfo=null, topologyId=0, rebalanceId=0, currentCH=null, pendingCH=null, availabilityMode=null, throwable=null, viewId=5}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-52630",
+"dest": "null",
+"length": 51,
+"timestamp": 1465975800907,
+"message": "CacheTopologyControlCommand{cache=null, type=GET_STATUS, sender=tsykora-52630, joinInfo=null, topologyId=0, rebalanceId=0, currentCH=null, pendingCH=null, availabilityMode=null, throwable=null, viewId=5}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-39173",
+"dest": "tsykora-52630",
+"length": 4,
+"timestamp": 1465975800932,
+"message": "null"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-39173",
+"dest": "tsykora-52630",
+"length": 67,
+"timestamp": 1465975800932,
+"message": "CacheTopologyControlCommand{cache=___defaultcache, type=REBALANCE_CONFIRM, sender=tsykora-39173, joinInfo=null, topologyId=13, rebalanceId=0, currentCH=null, pendingCH=null, availabilityMode=null, throwable=null, viewId=5}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-39173",
+"dest": "tsykora-52630",
+"length": 8067,
+"timestamp": 1465975800931,
+"message": "SuccessfulResponse{responseValue={___defaultcache=StatusResponse{cacheJoinInfo=CacheJoinInfo{consistentHashFactory=org.infinispan.distribution.ch.impl.DefaultConsistentHashFactory@c191151, hashFunction=MurmurHash3, numSegments=60, numOwners=2, timeout=240000, totalOrder=false, distributed=true}, cacheTopology=CacheTopology{id=13, rebalanceId=6, currentCH=DefaultConsistentHash{ns = 60, owners = (2)[tsykora-52630: 30+10, tsykora-39173: 30+10]}, pendingCH=DefaultConsistentHash{ns = 60, owners = (2)[tsykora-52630: 30+30, tsykora-39173: 30+30]}, unionCH=null}, stableTopology=CacheTopology{id=11, rebalanceId=5, currentCH=DefaultConsistentHash{ns = 60, owners = (3)[tsykora-51778: 20+20, tsykora-52630: 20+20, tsykora-39173: 20+20]}, pendingCH=null, unionCH=null}}}} "
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-52630",
+"dest": "tsykora-39173",
+"length": 4,
+"timestamp": 1465975800942,
+"message": "null"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-52630",
+"dest": "tsykora-39173",
+"length": 2031,
+"timestamp": 1465975800963,
+"message": "CacheTopologyControlCommand{cache=___defaultcache, type=CH_UPDATE, sender=tsykora-52630, joinInfo=null, topologyId=14, rebalanceId=6, currentCH=DefaultConsistentHash{ns = 60, owners = (2)[tsykora-52630: 30+10, tsykora-39173: 30+10]}, pendingCH=null, availabilityMode=null, throwable=null, viewId=5}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-52630",
+"dest": "tsykora-39173",
+"length": 3154,
+"timestamp": 1465975800973,
+"message": "CacheTopologyControlCommand{cache=___defaultcache, type=STABLE_TOPOLOGY_UPDATE, sender=tsykora-52630, joinInfo=null, topologyId=11, rebalanceId=5, currentCH=DefaultConsistentHash{ns = 60, owners = (3)[tsykora-51778: 20+20, tsykora-52630: 20+20, tsykora-39173: 20+20]}, pendingCH=null, availabilityMode=null, throwable=null, viewId=5}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-52630",
+"dest": "tsykora-39173",
+"length": 5019,
+"timestamp": 1465975800990,
+"message": "CacheTopologyControlCommand{cache=___defaultcache, type=REBALANCE_START, sender=tsykora-52630, joinInfo=null, topologyId=15, rebalanceId=7, currentCH=DefaultConsistentHash{ns = 60, owners = (2)[tsykora-52630: 30+10, tsykora-39173: 30+10]}, pendingCH=DefaultConsistentHash{ns = 60, owners = (2)[tsykora-52630: 30+30, tsykora-39173: 30+30]}, availabilityMode=null, throwable=null, viewId=5}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-39173",
+"dest": "tsykora-52630",
+"length": 163,
+"timestamp": 1465975801005,
+"message": "StateRequestCommand{cache=___defaultcache, origin=tsykora-39173, type=START_STATE_TRANSFER, topologyId=15, segments=[32, 1, 34, 3, 36, 5, 38, 7, 40, 41, 10, 11, 50, 51, 20, 52, 53, 22, 54, 30]}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-52630",
+"dest": "tsykora-39173",
+"length": 163,
+"timestamp": 1465975801007,
+"message": "StateRequestCommand{cache=___defaultcache, origin=tsykora-52630, type=START_STATE_TRANSFER, topologyId=15, segments=[0, 33, 2, 35, 4, 37, 6, 39, 8, 9, 42, 43, 44, 45, 14, 49, 18, 55, 56, 31]}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-52630",
+"dest": "tsykora-39173",
+"length": 7,
+"timestamp": 1465975801009,
+"message": "SuccessfulResponse{responseValue=true} "
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-52630",
+"dest": "tsykora-39173",
+"length": 1298,
+"timestamp": 1465975801021,
+"message": "StateResponseCommand{cache=___defaultcache, origin=tsykora-52630, topologyId=15}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-39173",
+"dest": "tsykora-52630",
+"length": 7,
+"timestamp": 1465975801022,
+"message": "SuccessfulResponse{responseValue=true} "
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-39173",
+"dest": "tsykora-52630",
+"length": 925,
+"timestamp": 1465975801023,
+"message": "StateResponseCommand{cache=___defaultcache, origin=tsykora-39173, topologyId=15}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-39173",
+"dest": "tsykora-52630",
+"length": 67,
+"timestamp": 1465975801031,
+"message": "CacheTopologyControlCommand{cache=___defaultcache, type=REBALANCE_CONFIRM, sender=tsykora-39173, joinInfo=null, topologyId=15, rebalanceId=0, currentCH=null, pendingCH=null, availabilityMode=null, throwable=null, viewId=5}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-39173",
+"dest": "tsykora-52630",
+"length": 4,
+"timestamp": 1465975801032,
+"message": "null"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-52630",
+"dest": "tsykora-39173",
+"length": 4,
+"timestamp": 1465975801053,
+"message": "null"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-52630",
+"dest": "tsykora-39173",
+"length": 3111,
+"timestamp": 1465975801060,
+"message": "CacheTopologyControlCommand{cache=___defaultcache, type=CH_UPDATE, sender=tsykora-52630, joinInfo=null, topologyId=16, rebalanceId=7, currentCH=DefaultConsistentHash{ns = 60, owners = (2)[tsykora-52630: 30+30, tsykora-39173: 30+30]}, pendingCH=null, availabilityMode=null, throwable=null, viewId=5}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-52630",
+"dest": "tsykora-39173",
+"length": 3111,
+"timestamp": 1465975801066,
+"message": "CacheTopologyControlCommand{cache=___defaultcache, type=STABLE_TOPOLOGY_UPDATE, sender=tsykora-52630, joinInfo=null, topologyId=16, rebalanceId=7, currentCH=DefaultConsistentHash{ns = 60, owners = (2)[tsykora-52630: 30+30, tsykora-39173: 30+30]}, pendingCH=null, availabilityMode=null, throwable=null, viewId=5}"
+}
+{
+"direction": "receiving/up",
+"src": "tsykora-52630",
+"dest": "tsykora-39173",
+"length": 1392,
+"timestamp": 1465975801169,
+"message": "CacheTopologyControlCommand{cache=___defaultcache, type=CH_UPDATE, sender=tsykora-52630, joinInfo=null, topologyId=17, rebalanceId=7, currentCH=DefaultConsistentHash{ns = 60, owners = (1)[tsykora-39173: 60+0]}, pendingCH=null, availabilityMode=null, throwable=null, viewId=5}"
+}
+

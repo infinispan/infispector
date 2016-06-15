@@ -7,8 +7,8 @@
         "parseSpec" : {
           "format" : "json",
           "timestampSpec" : {
-            "column" : "utcdt",
-            "format" : "auto"
+            "column" : "timestamp",
+            "format" : "millis"
           },
           "dimensionsSpec" : {
             "dimensions": ["direction","src","dest","message"],
