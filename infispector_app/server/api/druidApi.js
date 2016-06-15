@@ -361,11 +361,21 @@ exports.getChordDiagramMatrix = function (request, response) {
     var to = request.body.to;
     var numberOfNodes = nodes.length;
     var matrix = [];
+    var promises = [];
     for (var i = 0; i < numberOfNodes; i++) {
-        matrix[i] = [];
         for (var j = 0; j < numberOfNodes; j++) {
-            matrix[i][j] = getMessagesCountIntern(nodes[i], nodes[j]);
+            promises = promises.concat(getMessagesCountIntern(
+                    JSON.parse(nodes[i].nodeName), JSON.parse(nodes[j].nodeName)));
         }
     }
-    response.send({error: 0, matrix: JSON.stringify(matrix)}, 201);
+    
+    RSVP.all(promises).then(function (matrixElements) {
+        for (var i = 0; i < numberOfNodes; i++) {
+            matrix[i] = [];
+            for (var j = 0; j < numberOfNodes; j++) {
+                  matrix[i][j] = JSON.parse(matrixElements[i * numberOfNodes + j][2]);
+            }
+        }
+        response.send({error: 0, matrix: JSON.stringify(matrix)}, 201);
+    });
 };

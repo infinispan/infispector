@@ -32,34 +32,35 @@ app.controller('InfiSpectorCtrl', ['$scope', '$http', function ($scope, $http) {
                     console.log("scope.getNodes: " + response.data.jsonResponseAsString);
 
                     // TODO: better array / string handling, develop some contract
-                    var nodes = response.data.jsonResponseAsString.replace("[", "").replace("]","").split(",");                    
-
-                    var nodesArrayInJson = [];
-                    for (var i = 0; i < nodes.length; i++) {
-                        nodesArrayInJson[i] = {"nodeName": nodes[i]}; 
-                    }
-                    
+                    console.log(response.data.jsonResponseAsString);
+                    var nodes = response.data.jsonResponseAsString.replace("[", "").replace("]","").split(",");    
+                    return nodes;
+//                    var nodesArrayInJson = [];
+//                    for (var i = 0; i < nodes.length; i++) {
+//                        nodesArrayInJson[i] = {"nodeName": nodes[i]}; 
+//                    }
+//                    return nodesArrayInJson;
                     // pass this format -- "nodes": [{"nodeName": "tsykora-5682"},{"nodeName": "tsykora-6332"}]        
                     // /getFlowChartMatrix is prepared to consume that 
-                    var request = $http.post("/getFlowChartMatrix",
-                            {
-                                "nodes": nodesArrayInJson
-                            });
-
-                    request.then(function (response) {
-                        if (response.data.error > 0) {
-                            console.log("ERROR: response.data.error > 0");
-                        } else {                            
-                            var matrix = JSON.parse(response.data.matrix);
-
-                            console.log("-------- library.js get nodes + draw flow chart matrix: " + matrix);
-
-                            messageFlowChart(nodes, matrix);
-                        }
-                    });
-
-                    // nodes
-                    return response.data.jsonResponseAsString;
+//                    var request = $http.post("/getFlowChartMatrix",
+//                            {
+//                                "nodes": nodesArrayInJson
+//                            });
+//
+//                    request.then(function (response) {
+//                        if (response.data.error > 0) {
+//                            console.log("ERROR: response.data.error > 0");
+//                        } else {                            
+//                            var matrix = JSON.parse(response.data.matrix);
+//
+//                            console.log("-------- library.js get nodes + draw flow chart matrix: " + matrix);
+//
+//                            messageFlowChart(nodes, matrix);
+//                        }
+//                    });
+//
+//                    // nodes
+//                    return response.data.jsonResponseAsString;
                 }
             });
 
@@ -70,10 +71,29 @@ app.controller('InfiSpectorCtrl', ['$scope', '$http', function ($scope, $http) {
         $scope.flowChart = function () {            
             var from = document.getElementById("valR").value;
             var to = document.getElementById("valR2").value;
-//            $scope.getNodes().then(function (response) {
-            var nodes = $scope.getNodes(); // logic for flowChart is directly in getNodes() TODO: better design
+            $scope.getNodes().then(function (nodes) {
+                var nodesArrayInJson = [];
+                for (var i = 0; i < nodes.length; i++) {
+                    nodesArrayInJson[i] = {"nodeName": nodes[i]}; 
+                }
+                var request = $http.post("/getFlowChartMatrix",
+                    {
+                        "nodes": nodesArrayInJson
+                    });
+                request.then(function (response) {
+                   if (response.data.error > 0) {
+                       console.log("ERROR: response.data.error > 0");
+                   } 
+                   else {
+                        var matrix = JSON.parse(response.data.matrix);
+
+                        console.log("-------- library.js get nodes + draw flow chart matrix: " + matrix);
+
+                        messageFlowChart(nodes, matrix);
+                   }
+                });
+            });
             return 0;
-//            });
         };
 
         $scope.chordDiagram = function () {
@@ -85,12 +105,16 @@ app.controller('InfiSpectorCtrl', ['$scope', '$http', function ($scope, $http) {
             // TODO: call $http.post('/getNodes'); separately before $http.post("/getChordDiagramMatrix... in one function
             // TODO: use $http.post("/getChordDiagramMatrix", { "nodes": nodesArrayInJson }); to properly pass parameters
             
-            $scope.getNodes().then(function (response) {
-                var nodes = response.data.nodes;
-                var request = $http.post("/getChordDiagramMatrix?" +
-                        "from=" + from +
-                        "&to=" + to +
-                        "&nodes=" + nodes);
+            $scope.getNodes().then(function (nodes) {
+                var nodesArrayInJson = [];
+                for (var i = 0; i < nodes.length; i++) {
+                    nodesArrayInJson[i] = {"nodeName": nodes[i]};
+                    nodes[i] = JSON.parse(nodes[i]);
+                }
+                var request = $http.post("/getChordDiagramMatrix",
+                    {
+                        "nodes": nodesArrayInJson
+                    });
                 return request.then(function (response) {
                     if (response.data.error > 0) {
                         console.log("ERROR: response.data.error > 0");
