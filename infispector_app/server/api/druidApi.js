@@ -269,7 +269,6 @@ exports.getMessagesCountInInterval = function (request, response) {
 /*
  * Stejne jako getMessagesCountInInterval, akorat pro vnitrni pouziti bez nutnosti requestu
  */
-
 var getMessagesCountInIntervalIntern = function (srcNode, destNode, fromTime, toTime) {
 
     return new Promise(function (resolve, reject) {
@@ -317,6 +316,98 @@ var getMessagesCountInIntervalIntern = function (srcNode, destNode, fromTime, to
                 .done();
     }); // promise
 };
+
+
+/**
+* function that returns number of CacheTopologyControlCommand messages
+*/
+exports.getMessagesCountOfControlCache = function (request, response) {
+
+ console.log('getMessagesCountOfControlCachefunction from druidApi.js was called. ');
+      
+   var params = {host: "127.0.0.1:8084", debug: "true"};
+   var druidRequester = require('facetjs-druid-requester').druidRequesterFactory(params);
+
+   druidRequester({
+       query: {
+           "queryType": "topN",
+           "dataSource": "InfiSpectorTopic",
+           "granularity": "all",
+           "dimension": "count",
+           "metric": "length",
+           "threshold": 100000,
+           "filter": {
+          "type": "search",
+          "dimension": "message",
+              "query": {
+                  "type": "insensitive_contains",
+                  "value": "CacheTopologyControlCommand"
+              }
+      },
+           "aggregations": [
+               {"type": "count", "fieldName": "length", "name": "length"}
+           ],
+           "intervals": ["2009-10-01T00:00/2020-01-01T00"]
+       }
+   })
+           .then(function (result) {
+                
+               var test = JSON.stringify(result[0]); 
+               var reg = /(?:"length":)[0-9]+/g; 
+               var messagesCount = test.match(reg);      
+               messagesCount = messagesCount[0].replace('"length":',"");
+               
+               response.send({error: 0, jsonResponseAsString: JSON.stringify(messagesCount)}, 201);
+               console.log("\n\nResult: " + JSON.stringify(messagesCount));
+           })
+           .done();
+};
+
+/**
+* function that returns number of SingleRpcCommand messages
+*/
+exports.getMessagesCountOfSingleRpc = function (request, response) {
+
+ console.log('getMessagesCountOfSingleRpcCommand function from druidApi.js was called. ');
+      
+   var params = {host: "127.0.0.1:8084", debug: "true"};
+   var druidRequester = require('facetjs-druid-requester').druidRequesterFactory(params);
+
+   druidRequester({
+       query: {
+           "queryType": "topN",
+           "dataSource": "InfiSpectorTopic",
+           "granularity": "all",
+           "dimension": "count",
+           "metric": "length",
+           "threshold": 100000,
+           "filter": {
+          "type": "search",
+          "dimension": "message",
+              "query": {
+                  "type": "insensitive_contains",
+                  "value": "SingleRpcCommand"
+              }
+      },
+           "aggregations": [
+               {"type": "count", "fieldName": "length", "name": "length"}
+           ],
+           "intervals": ["2009-10-01T00:00/2020-01-01T00"]
+       }
+   })
+           .then(function (result) {
+                
+               var test = JSON.stringify(result[0]); 
+               var reg = /(?:"length":)[0-9]+/g; 
+               var messagesCount = test.match(reg);      
+               messagesCount = messagesCount[0].replace('"length":',"");
+               
+               response.send({error: 0, jsonResponseAsString: JSON.stringify(messagesCount)}, 201);
+               console.log("\n\nResult: " + JSON.stringify(messagesCount));
+           })
+           .done();
+};
+
 
 exports.getFlowChartMatrix = function (request, response) {
     var nodes = request.body.nodes;
