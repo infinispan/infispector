@@ -25,7 +25,7 @@ exports.queryDruid = function (request, response) {
         }
     })
             .then(function (result) {
-                console.log('***Result: ', result);
+                console.log('***Result: ', result[0]);
 
                 response.send({error: 0, jsonResponseAsString: JSON.stringify(result[0])}, 201);
                 //response.json("{result: " + result[0].result[1] + " }");
@@ -407,6 +407,69 @@ exports.getMessagesCountOfSingleRpc = function (request, response) {
            })
            .done();
 };
+
+
+/**
+* function that returns bottom value of the slider
+*/
+exports.getBottomSliderValue = function (request, response) {
+
+ console.log('getBottomSliderValue function from druidApi.js was called. ');
+      
+   var params = {host: "127.0.0.1:8084", debug: "true"};
+   var druidRequester = require('facetjs-druid-requester').druidRequesterFactory(params);
+
+   druidRequester({
+       query: {
+           "queryType": "timeseries",
+            "dataSource": "InfiSpectorTopic",
+            "granularity": "all",
+            "descending": "true",
+            "aggregations": [
+                {"type": "doubleMin", "fieldName": "timestamp", "name": "__time"}
+            ],
+            "intervals": ["2009-10-01T00:00/2020-01-01T00"]
+       }
+   })
+           .then(function (result) {
+
+               response.send({error: 0, jsonResponseAsString: JSON.stringify(result)}, 201);
+               console.log("\n\nResult: Maximum" + JSON.stringify(result));
+           })
+           .done();
+};
+
+
+/**
+* function that returns top value of the slider
+*/
+exports.getTopSliderValue = function (request, response) {
+
+ console.log('getTopSliderValue function from druidApi.js was called. ');
+      
+   var params = {host: "127.0.0.1:8084", debug: "true"};
+   var druidRequester = require('facetjs-druid-requester').druidRequesterFactory(params);
+
+   druidRequester({
+       query: {
+           "queryType": "timeseries",
+            "dataSource": "InfiSpectorTopic",
+            "granularity": "all",
+            "descending": "true",
+            "aggregations": [
+                {"type": "doubleMax", "fieldName": "timestamp", "name": "__time"}
+            ],
+            "intervals": ["2009-10-01T00:00/2020-01-01T00"]
+       }
+   })
+           .then(function (result) {
+
+               response.send({error: 0, jsonResponseAsString: JSON.stringify(result)}, 201);
+               console.log("\n\nResult: Maximum" + JSON.stringify(result));
+           })
+           .done();
+};
+
 
 
 exports.getFlowChartMatrix = function (request, response) {
