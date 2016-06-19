@@ -1,5 +1,6 @@
 function chordDiagram(options, matrix) {
-
+    unshowFlowDiagram();
+    unshowChordDiagram();
    // initialize the chord configuration variables
    var config = {
       width: 800,
@@ -80,7 +81,8 @@ function chordDiagram(options, matrix) {
                         "translate(" + (outerRadius + textgap) + ")" +
                         (d.angle > Math.PI ? "rotate(180)" : "");
                })
-         .text(function(d) { return gnames[d.index]; });
+         .text(function(d) { return gnames[d.index]; })
+         .on("click", function(d, i) {clickedNode(gnames[d.index]);});
 
    svg.append("g")
          .attr("class", "chord")
@@ -111,6 +113,10 @@ function chordDiagram(options, matrix) {
          a[ i ] = b[ i ];
       }
    }
+   
+   function clickedNode(nodeName) {
+       angular.element(document.getElementById('ctrl')).scope().getNodeInfo(nodeName);
+   }
 
    // Returns an event handler for fading a given chord group.
    function fade(opacity) {
@@ -135,5 +141,8 @@ function chordDiagram(options, matrix) {
 }
 
 function unshowChordDiagram() {
-    document.getElementById("chordDiagram").remove();
+    var element = document.getElementById("chordDiagram");
+    if (element !== null) {
+        element.remove();
+    }
 }

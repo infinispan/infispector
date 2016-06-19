@@ -203,7 +203,8 @@
           target: {
               tasks: ['watch:tpl', 'watch:js', 'watch:assets', 'watch:css', 'shell:nodemon'],
               options: {
-                  logConcurrentOutput: true
+                  logConcurrentOutput: true,
+                  limit: 5
               }
           }
       }

@@ -24,6 +24,10 @@ exports.getChordDiagramMatrix = function(req, res) {
     api.druid.getChordDiagramMatrix(req, res);
 };
 
+exports.getMessagesInfo = function(req, res) {
+    api.druid.getMessagesInfo(req, res);
+};
+
 exports.getEntry = function(req, res) {    
     api.ispn.getEntry(req, res);
 };

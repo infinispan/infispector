@@ -256,6 +256,14 @@
 					.on("mouseover",function(d, i){ return bP.selectSegment(data, p, i); })
 					.on("mouseout",function(d, i){ return bP.deSelectSegment(data, p, i); });	
 			});
+                        [0, 1].forEach(function (p) {
+                           d3.select("#"+biP.id)
+                                   .select(".part"+p)
+                                   .select(".mainbars")
+                                   .selectAll(".mainbar")
+                                   .select(".barlabel")
+                                   .on("click", function(d, i) {return bP.clickedNode(biP.data.keys[p][i]); });
+                        });
 		});	
 	};
 	
@@ -295,11 +303,18 @@
 			selectedBar.select(".barpercent").style('font-weight','normal');
 		});		
 	};
+        
+        bP.clickedNode = function(nodeName) {
+            angular.element(document.getElementById('ctrl')).scope().getNodeInfo(nodeName);
+        };
+        
 	
 	this.bP = bP;
 }();
 
 function messageFlowChart(nodes, matrix) {
+    unshowChordDiagram();
+    unshowFlowDiagram();
     var longest = nodes.sort(function (a, b) { return b.length - a.length; })[0].length;
     var longestCnt = 0;
     matrix.forEach(function (element) {

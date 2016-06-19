@@ -379,3 +379,9 @@ exports.getChordDiagramMatrix = function (request, response) {
         response.send({error: 0, matrix: JSON.stringify(matrix)}, 201);
     });
 };
+
+exports.getMessagesInfo = function (request, response) {
+    var node = request.body.nodeName;
+    // TODO druid request for message
+    console.log(node);
+};

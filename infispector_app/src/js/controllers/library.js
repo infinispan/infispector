@@ -1,6 +1,9 @@
 app.controller('InfiSpectorCtrl', ['$scope', '$http', function ($scope, $http) {
         'use strict';
-
+        
+        $scope.nodeMessagesInfo;
+        $scope.index;
+        
         $scope.connectToDruid = function () {
 
             // see configure-routes.js for the path
@@ -35,40 +38,43 @@ app.controller('InfiSpectorCtrl', ['$scope', '$http', function ($scope, $http) {
                     console.log(response.data.jsonResponseAsString);
                     var nodes = response.data.jsonResponseAsString.replace("[", "").replace("]","").split(",");    
                     return nodes;
-//                    var nodesArrayInJson = [];
-//                    for (var i = 0; i < nodes.length; i++) {
-//                        nodesArrayInJson[i] = {"nodeName": nodes[i]}; 
-//                    }
-//                    return nodesArrayInJson;
-                    // pass this format -- "nodes": [{"nodeName": "tsykora-5682"},{"nodeName": "tsykora-6332"}]        
-                    // /getFlowChartMatrix is prepared to consume that 
-//                    var request = $http.post("/getFlowChartMatrix",
-//                            {
-//                                "nodes": nodesArrayInJson
-//                            });
-//
-//                    request.then(function (response) {
-//                        if (response.data.error > 0) {
-//                            console.log("ERROR: response.data.error > 0");
-//                        } else {                            
-//                            var matrix = JSON.parse(response.data.matrix);
-//
-//                            console.log("-------- library.js get nodes + draw flow chart matrix: " + matrix);
-//
-//                            messageFlowChart(nodes, matrix);
-//                        }
-//                    });
-//
-//                    // nodes
-//                    return response.data.jsonResponseAsString;
                 }
             });
-
-//            return [ "Node1", "Node2", "Node3", "Node4", "Node5", "Node6", "Node7", "Node8",
-//            "Node9", "Node10", "Node11", "Node12", "Node13", "Node14", "Node15", "Node16"];
+        };
+        
+        /*
+         * function gets all messages with info about specific node
+         * @param nodeName contains name of node
+         */
+        
+        $scope.getNodeInfo = function (nodeName) {
+            $scope.index = 0;
+            var request = $http.post('/getMessagesInfo', 
+            {
+                "nodeName": nodeName
+            });
+            request.then(function (response) {
+               $scope.nodeMessageInfo = response.data; 
+            });
+        };
+        
+        /*
+         * function returning 1 message info so it could be displayed
+         */
+        
+        $scope.nextNodeMessageInfo = function() {
+            $scope.index++;
+            if (($scope.index % $scope.nodeMessageInfo.length) === 0) $scope.index = 0;
+            $scope.messageInfo = $scope.nodeMessageInfo[$scope.index];
+        };
+        
+        $scope.prevNodeMessageInfo = function() {
+            $scope.index--;
+            if ($scope.index < 0) $scope.index = 0;
+            $scope.messageInfo = $scope.nodeMessageInfo[$scope.index];
         };
 
-        $scope.flowChart = function () {            
+        $scope.flowChart = function () {
             var from = document.getElementById("valR").value;
             var to = document.getElementById("valR2").value;
             $scope.getNodes().then(function (nodes) {
