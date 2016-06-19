@@ -337,13 +337,13 @@ exports.getMessagesCountOfControlCache = function (request, response) {
            "metric": "length",
            "threshold": 100000,
            "filter": {
-          "type": "search",
-          "dimension": "message",
+           "type": "search",
+           "dimension": "message",
               "query": {
                   "type": "insensitive_contains",
                   "value": "CacheTopologyControlCommand"
               }
-      },
+           },
            "aggregations": [
                {"type": "count", "fieldName": "length", "name": "length"}
            ],
@@ -364,6 +364,56 @@ exports.getMessagesCountOfControlCache = function (request, response) {
 };
 
 /**
+* function that returns number of CacheTopologyControlCommand messages in given interval
+*/
+exports.getMessagesCountOfControlCacheInInterval = function (request, response) {
+
+ console.log('getMessagesCountOfControlCacheInInterval function from druidApi.js was called. '
+        + " " + request.body.fromTime + " " + request.body.toTime);
+      
+   var params = {host: "127.0.0.1:8084", debug: "true"};
+   var druidRequester = require('facetjs-druid-requester').druidRequesterFactory(params);
+
+   var fromTime = request.body.fromTime;
+   var toTime = request.body.toTime;
+
+   druidRequester({
+       query: {
+           "queryType": "topN",
+           "dataSource": "InfiSpectorTopic",
+           "granularity": "all",
+           "dimension": "count",
+           "metric": "length",
+           "threshold": 100000,
+           "filter": {
+           "type": "search",
+           "dimension": "message",
+              "query": {
+                  "type": "insensitive_contains",
+                  "value": "CacheTopologyControlCommand"
+              }
+           },
+           "aggregations": [
+               {"type": "count", "fieldName": "length", "name": "length"}
+           ],
+           "intervals": [fromTime + "/" + toTime]
+       }
+   })
+           .then(function (result) {
+                
+               var test = JSON.stringify(result[0]); 
+               var reg = /(?:"length":)[0-9]+/g; 
+               var messagesCount = test.match(reg);      
+               messagesCount = messagesCount[0].replace('"length":',"");
+               
+               response.send({error: 0, jsonResponseAsString: JSON.stringify(messagesCount)}, 201);
+               console.log("\n\nResult: " + JSON.stringify(messagesCount));
+           })
+           .done();
+};
+
+
+/**
 * function that returns number of SingleRpcCommand messages
 */
 exports.getMessagesCountOfSingleRpc = function (request, response) {
@@ -382,13 +432,13 @@ exports.getMessagesCountOfSingleRpc = function (request, response) {
            "metric": "length",
            "threshold": 100000,
            "filter": {
-          "type": "search",
-          "dimension": "message",
+           "type": "search",
+           "dimension": "message",
               "query": {
                   "type": "insensitive_contains",
                   "value": "SingleRpcCommand"
               }
-      },
+           },
            "aggregations": [
                {"type": "count", "fieldName": "length", "name": "length"}
            ],
@@ -408,6 +458,99 @@ exports.getMessagesCountOfSingleRpc = function (request, response) {
            .done();
 };
 
+/**
+* function that returns number of SingleRpcCommand messages in given interval
+*/
+exports.getMessagesCountOfSingleRpcInInterval = function (request, response) {
+
+ console.log('getMessagesCountOfSingleRpcCommandInInterval function from druidApi.js was called. ');
+      
+   var params = {host: "127.0.0.1:8084", debug: "true"};
+   var druidRequester = require('facetjs-druid-requester').druidRequesterFactory(params);
+   var fromTime = request.body.fromTime;
+   var toTime = request.body.toTime;
+   
+   druidRequester({
+       query: {
+           "queryType": "topN",
+           "dataSource": "InfiSpectorTopic",
+           "granularity": "all",
+           "dimension": "count",
+           "metric": "length",
+           "threshold": 100000,
+           "filter": {
+           "type": "search",
+           "dimension": "message",
+              "query": {
+                  "type": "insensitive_contains",
+                  "value": "SingleRpcCommand"
+              }
+           },
+           "aggregations": [
+               {"type": "count", "fieldName": "length", "name": "length"}
+           ],
+           "intervals": [fromTime + "/" + toTime]
+       }
+   })
+           .then(function (result) {
+                
+               var test = JSON.stringify(result[0]); 
+               var reg = /(?:"length":)[0-9]+/g; 
+               var messagesCount = test.match(reg);      
+               messagesCount = messagesCount[0].replace('"length":',"");
+               
+               response.send({error: 0, jsonResponseAsString: JSON.stringify(messagesCount)}, 201);
+               console.log("\n\nResult: " + JSON.stringify(messagesCount));
+           })
+           .done();
+};
+
+
+/*
+* function that returns messages and timestamp from given node
+*/
+///////////// TO DO dodelat!!!!!!!
+exports.getMessagesAndTimestampFromNode = function (request, response) {
+
+    console.log('getMessagesAndTimestampFromNode function from druidApi.js was called. '
+            + request.body.srcNode);
+
+    var srcNode = "marek-9119";//request.body.srcNode;    
+
+    var params = {host: "127.0.0.1:8084", debug: "true"};
+    var druidRequester = require('facetjs-druid-requester').druidRequesterFactory(params);
+
+    druidRequester({
+        query: {
+            "queryType": "topN",
+            "dataSource": "InfiSpectorTopic",
+            "granularity": "all",
+            "dimension": "message",
+            "metric": "length",
+            "threshold": 100000,
+            "filter": {
+            "type": "search",
+            "dimension": "message",
+              "query": {
+                  "type": "insensitive_contains",
+                  "value": "CacheTopologyControlCommand"
+              }
+            },
+            "aggregations": [
+               {"type": "count", "fieldName": "length", "name": "length"}
+            ],
+            "intervals": ["2009-10-01T00:00/2020-01-01T00"]
+        }
+    })
+            .then(function (result) {
+
+                console.log(JSON.stringify(result));
+                response.send({error: 0, jsonResponseAsString: JSON.stringify(result)}, 201);
+
+
+            })
+            .done();
+};
 
 /**
 * function that returns bottom value of the slider
