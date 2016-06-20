@@ -60,6 +60,7 @@
 			               	Amount: <input type="text" style="margin: 7px 0px 0px 114px;">
 			               	<br><br>
 			               	<input type="button" ng-model="putEntryButton" ng-click="putEntry()" value="Put entry">
+                                        <input type="button" ng-model="clearCacheButton" ng-click="clearCache()" value="Clear">
 			            </fieldset>
 			            <br>
 			            <div id="label">
@@ -77,6 +78,7 @@
 		                Key:<input type="text" ng-model="keyToGet" style="margin: 7px 0px 0px 146px;">
 		                <br><br>
 		                <input type="button" ng-model="getEntryButton" ng-click="getEntry()" value="Get value for a key">
+                                <input type="button" ng-model="clearCacheButton" ng-click="clearCache()" value="Clear">
 			            </fieldset>
 			            <br>	                               
 			            <div id="label">
@@ -104,8 +106,7 @@
 			    
 			};
     		</script>
-                   
-           
+
 	        <script src="//d3js.org/d3.v3.min.js"></script>
 	        <script>
 	            var margin = 20, diameter = 500;

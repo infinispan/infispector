@@ -39,3 +39,7 @@ exports.index = function(req, res){
 exports.operations = function(req, res){
   res.render('operations');
 };
+
+exports.clearCache = function(req, res) {
+   api.ispn.clearCache(req, res);
+};
