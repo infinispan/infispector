@@ -36,6 +36,10 @@ exports.putEntry = function(req, res) {
     api.ispn.putEntry(req, res);
 };
 
+exports.clearCache = function(req, res) {
+   api.ispn.clearCache(req, res);
+};
+
 exports.index = function(req, res){
   res.render('index');
 };

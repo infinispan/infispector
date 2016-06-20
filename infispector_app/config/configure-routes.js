@@ -8,6 +8,7 @@ var app = require('../app'),
 
 function configureRoutes() {
     app.post('/connectDruid', routes.queryDruid);
+    app.post('/clearCache', routes.clearCache);
     app.post('/putEntry', routes.putEntry);
     app.post('/getEntry', routes.getEntry);
     app.post('/getNodes', routes.getNodes);
