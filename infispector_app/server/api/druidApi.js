@@ -129,7 +129,6 @@ exports.getMessagesCount = function (request, response) {
                 messagesCount = messagesCount[0].replace('"length":', "");
 
                 console.log(messagesCount);
-
                 response.send({error: 0, jsonResponseAsString: JSON.stringify(messagesCount)}, 201);
             })
             .done();
@@ -253,14 +252,12 @@ exports.getMessagesCountInInterval = function (request, response) {
         }
     })
             .then(function (result) {
-
                 var test = JSON.stringify(result[0]);
                 var reg = /(?:"length":)[0-9]+/g;
                 var messagesCount = test.match(reg);
                 messagesCount = messagesCount[0].replace('"length":', "");
 
                 console.log(messagesCount);
-
                 response.send({error: 0, jsonResponseAsString: JSON.stringify(messagesCount)}, 201);
             })
             .done();
@@ -412,7 +409,6 @@ exports.getMessagesCountOfControlCacheInInterval = function (request, response) 
            .done();
 };
 
-
 /**
 * function that returns number of SingleRpcCommand messages
 */
@@ -506,16 +502,65 @@ exports.getMessagesCountOfSingleRpcInInterval = function (request, response) {
 };
 
 
+/**
+* function that returns count of putKeyValue commands
+*/
+exports.getMessagesCountOfPutKeyValueCommand = function (request, response) {
+
+ console.log('getMessagesCountOfPutKeyValueCommand  function from druidApi.js was called. ');
+      
+   var params = {host: "127.0.0.1:8084", debug: "true"};
+   var druidRequester = require('facetjs-druid-requester').druidRequesterFactory(params);
+
+   druidRequester({
+       query: {
+           "queryType": "topN",
+           "dataSource": "InfiSpectorTopic",
+           "granularity": "all",
+           "dimension": "count",
+           "metric": "length",
+           "threshold": 100000,
+           "filter": {
+           "type": "search",
+           "dimension": "message",
+              "query": {
+                  "type": "insensitive_contains",
+                  "value": "putKeyValueCommand"
+              }
+           },
+           "aggregations": [
+               {"type": "count", "fieldName": "length", "name": "length"}
+           ],
+           "intervals": ["2009-10-01T00:00/2020-01-01T00"]
+       }
+   })
+           .then(function (result) {
+                
+               var test = JSON.stringify(result[0]); 
+               var reg = /(?:"length":)[0-9]+/g; 
+               var messagesCount = test.match(reg);      
+               messagesCount = messagesCount[0].replace('"length":',"");
+               
+               response.send({error: 0, jsonResponseAsString: JSON.stringify(messagesCount)}, 201);
+               console.log("\n\nResult: " + JSON.stringify(messagesCount));
+           })
+           .done();
+};
+
 /*
 * function that returns messages and timestamp from given node
 */
-///////////// TO DO dodelat!!!!!!!
+
+/*** function that returns field of 2 items. with index 0 === timestamp,
+**** with index 1 the messages from given node
+/// TO DO - do field of pairs - timestamp field -- only if needed
+*/
 exports.getMessagesAndTimestampFromNode = function (request, response) {
 
     console.log('getMessagesAndTimestampFromNode function from druidApi.js was called. '
             + request.body.srcNode);
 
-    var srcNode = "marek-9119";//request.body.srcNode;    
+    var srcNode = request.body.srcNode;    
 
     var params = {host: "127.0.0.1:8084", debug: "true"};
     var druidRequester = require('facetjs-druid-requester').druidRequesterFactory(params);
@@ -546,8 +591,6 @@ exports.getMessagesAndTimestampFromNode = function (request, response) {
 
                 console.log(JSON.stringify(result));
                 response.send({error: 0, jsonResponseAsString: JSON.stringify(result)}, 201);
-
-
             })
             .done();
 };
@@ -675,10 +718,4 @@ exports.getChordDiagramMatrix = function (request, response) {
         }
         response.send({error: 0, matrix: JSON.stringify(matrix)}, 201);
     });
-};
-
-exports.getMessagesInfo = function (request, response) {
-    var node = request.body.nodeName;
-    // TODO druid request for message
-    console.log(node);
 };
