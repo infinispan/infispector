@@ -237,7 +237,7 @@
 	
 	bP.draw = function(data, svg, length, longestCnt){
 		data.forEach(function(biP,s){
-                        s = 0.5;
+                        s = 0.10;
 			svg.append("g")
 				.attr("id", biP.id)
 				.attr("transform","translate("+ (550*s)+",0)");
@@ -323,7 +323,7 @@ function messageFlowChart(nodes, matrix) {
         }
     });
 
-    var width = 1100, height = 610, margin ={b:0, t:40, l:170, r:50};
+    var width = 650, height = 610, margin ={b:0, t:40, l:170, r:50};
 
     var svg = d3.select("body")
             .append("svg").attr('width',width).attr('height',(height+margin.b+margin.t)).attr("id", "messageFlow")

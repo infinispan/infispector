@@ -54,7 +54,14 @@ app.controller('InfiSpectorCtrl', ['$scope', '$http', function ($scope, $http) {
                 "nodeName": nodeName
             });
             request.then(function (response) {
-               $scope.nodeMessageInfo = response.data; 
+//               $scope.nodeMessageInfo = response.data.jsonResponseAsString;
+                var parsed = JSON.parse(response.data.jsonResponseAsString)[0];
+                $scope.nodeMessagesInfo = [];
+                for (var i = 0; i < parsed.result.length; i++) {
+                    $scope.nodeMessagesInfo[i] = "length: " + parsed.result[i].length + "\nmessage: " + parsed.result[i].message;
+                }
+                $scope.messageInfo = $scope.nodeMessagesInfo[0];
+                $scope.messageInfo.replace("^\"", "").replace("$\"", "");
             });
         };
         
@@ -66,12 +73,14 @@ app.controller('InfiSpectorCtrl', ['$scope', '$http', function ($scope, $http) {
             $scope.index++;
             if (($scope.index % $scope.nodeMessageInfo.length) === 0) $scope.index = 0;
             $scope.messageInfo = $scope.nodeMessageInfo[$scope.index];
+            $scope.messageInfo.replace("^\"", "").replace("$\"", "");
         };
         
         $scope.prevNodeMessageInfo = function() {
             $scope.index--;
-            if ($scope.index < 0) $scope.index = 0;
+            if ($scope.index < 0) $scope.index = $scope.nodeMessagesInfo.length;
             $scope.messageInfo = $scope.nodeMessageInfo[$scope.index];
+            $scope.messageInfo.replace("^\"", "").replace("$\"", "");
         };
 
         $scope.flowChart = function () {

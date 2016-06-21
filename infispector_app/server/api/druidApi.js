@@ -510,7 +510,7 @@ exports.getMessagesCountOfSingleRpcInInterval = function (request, response) {
 * function that returns messages and timestamp from given node
 */
 ///////////// TO DO dodelat!!!!!!!
-exports.getMessagesAndTimestampFromNode = function (request, response) {
+exports.getMessagesInfo = function (request, response) {
 
     console.log('getMessagesAndTimestampFromNode function from druidApi.js was called. '
             + request.body.srcNode);
@@ -675,10 +675,4 @@ exports.getChordDiagramMatrix = function (request, response) {
         }
         response.send({error: 0, matrix: JSON.stringify(matrix)}, 201);
     });
-};
-
-exports.getMessagesInfo = function (request, response) {
-    var node = request.body.nodeName;
-    // TODO druid request for message
-    console.log(node);
 };
