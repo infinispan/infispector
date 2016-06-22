@@ -41,9 +41,9 @@ function updateJsonForChart(member) {
                             nodeElement = {
                                 "name": "server_" + port,
                                 "children": nodeChildren
-                            };    
+                            };
                         }
-                        
+
                         resolve(nodeElement);
                     },
                     function (err) {
@@ -72,11 +72,10 @@ exports.putEntry = function (req, res) {
         var members = client.getTopologyInfo().getMembers();
         // Should show all cluster members
         console.log('***** Connected to MEMBERS: ' + JSON.stringify(members) + ' members size ' + members.length);
-        
+
         if (req.body.putNumber === undefined || req.body.putNumber == null) {
             var clientPut = client.put(req.body.keyToPut, req.body.valueToPut);
-        }
-        else {
+        } else {
             var data = [];
             var rndNum = Math.floor((Math.random() * 10000) + 1);
             for (i = 0; i < parseInt(req.body.putNumber); i++) {
@@ -84,7 +83,7 @@ exports.putEntry = function (req, res) {
             }
             var clientPut = client.putAll(data);
         }
-        
+
         var clientStats = clientPut.then(
                 function () {
                     return client.stats();
@@ -92,7 +91,7 @@ exports.putEntry = function (req, res) {
 
         var showStats = clientStats.then(
                 function (stats) {
-                    
+
                     // TODO: put this stuff into standalone function
                     var nodeElements = [];
                     var promises = [];
@@ -125,7 +124,7 @@ exports.putEntry = function (req, res) {
                                 currentNumberOfEntries: stats.currentNumberOfEntries,
                                 clusterMembers: members}}, 201);
 
-                    }).catch(function (reason) {                        
+                    }).catch(function (reason) {
                         console.log("At least one of the promises FAILED: " + reason);
                     });
                 });
@@ -142,25 +141,25 @@ exports.putEntry = function (req, res) {
 
 exports.getEntry = function (req, res) {
     console.log('Operating with Infinispan api.ispn.getEntry.... ' +
-            "key to get: " + req.body.keyToGet);    
-    
+            "key to get: " + req.body.keyToGet);
+
     var connected = infinispan.client({port: 11222, host: '127.0.0.1'});
-    
-    connected.then(function (client) {       
-        
+
+    connected.then(function (client) {
+
         var value = client.get(req.body.keyToGet);
-        
+
         var valueSend = value.then(
-            function(){
-                res.send({error: 0, valueReturned: value._65}, 201);
-            }
+                function () {
+                    res.send({error: 0, valueReturned: value._65}, 201);
+                }
         );
-                
+
         return valueSend.finally(
                 function () {
                     return client.disconnect();
                 });
-        
+
     }).catch(function (error) {
         console.log("***** Got error getEntry: " + error.message);
     });
@@ -168,136 +167,137 @@ exports.getEntry = function (req, res) {
 
 exports.clearCache = function (req, res) {
     console.log('Operating with Infinispan api.ispn.clearCache.... ');
-    
+
     var connected = infinispan.client({port: 11222, host: '127.0.0.1'});
-        
-    connected.then(function (client) {       
+
+    connected.then(function (client) {
 
         var members = client.getTopologyInfo().getMembers();
         var clientClear = client.clear();
-        
+
         var clientStats = clientClear.then(
                 function () {
                     return client.stats();
                 });
-        
+
         var showStats = clientStats.then(
-            function (stats) {
+                function (stats) {
 
-                // TODO: put this stuff into standalone function
-                var nodeElements = [];
-                var promises = [];
+                    // TODO: put this stuff into standalone function
+                    var nodeElements = [];
+                    var promises = [];
 
-                for (i = 0; i < members.length; i++) {
-                    promises[i] = updateJsonForChart(members[i]);
-                }
+                    for (i = 0; i < members.length; i++) {
+                        promises[i] = updateJsonForChart(members[i]);
+                    }
 
-                // each promise returns a nodeElement
-                RSVP.all(promises).then(function (nodeElements) {
-                    // nodeElements now contains an array of results for the given promises 
-                    // gather all results, continue
+                    // each promise returns a nodeElement
+                    RSVP.all(promises).then(function (nodeElements) {
+                        // nodeElements now contains an array of results for the given promises 
+                        // gather all results, continue
 
-                    var newJson = {
-                        "name": "flare",
-                        "children": [
-                            {
-                                "name": "Infinispan Cluster",
-                                "children": nodeElements
-                            }
-                        ]
-                    };
+                        var newJson = {
+                            "name": "flare",
+                            "children": [
+                                {
+                                    "name": "Infinispan Cluster",
+                                    "children": nodeElements
+                                }
+                            ]
+                        };
 
-                    jsonfile.writeFile(file, newJson, function (err) {
-                        console.error(err);
+                        jsonfile.writeFile(file, newJson, function (err) {
+                            console.error(err);
+                        });
+
+                        // after JSON file update, return to client
+                        res.send({error: 0, jsonObjects: {
+                                currentNumberOfEntries: stats.currentNumberOfEntries,
+                                clusterMembers: members}}, 201);
+
+
+                    }).catch(function (reason) {
+                        console.log("At least one of the promises FAILED: " + reason);
                     });
-
-                    // after JSON file update, return to client
-                    res.send({error: 0, jsonObjects: {
-                            currentNumberOfEntries: stats.currentNumberOfEntries,
-                            clusterMembers: members}}, 201);
-                    
-
-                }).catch(function (reason) {                        
-                    console.log("At least one of the promises FAILED: " + reason);
                 });
-            });
-        
+
     }).catch(function (error) {
-        
+
         console.log("***** Got error clearCache: " + error.message);
-        
+
     }).finally(function (client) {
-        
+
         return client.disconnect();
-        
+
     });
 };
 
 exports.initZoomableChart = function (req, res) {
     console.log('Operating with Infinispan api.ispn.initZoomableChart.... ');
-    
+
     var connected = infinispan.client({port: 11222, host: '127.0.0.1'});
-        
-    connected.then(function (client) {       
+
+    connected.then(function (client) {
 
         var members = client.getTopologyInfo().getMembers();
-        
+
         var clientStats = client.stats();
-        
+
         var showStats = clientStats.then(
-            function (stats) {
+                function (stats) {
 
-                // TODO: put this stuff into standalone function
-                var nodeElements = [];
-                var promises = [];
+                    // TODO: put this stuff into standalone function
+                    var nodeElements = [];
+                    var promises = [];
 
-                for (i = 0; i < members.length; i++) {
-                    promises[i] = updateJsonForChart(members[i]);
-                }
+                    for (i = 0; i < members.length; i++) {
+                        promises[i] = updateJsonForChart(members[i]);
+                    }
 
-                // each promise returns a nodeElement
-                RSVP.all(promises).then(function (nodeElements) {
-                    // nodeElements now contains an array of results for the given promises 
-                    // gather all results, continue
+                    // each promise returns a nodeElement
+                    RSVP.all(promises).then(function (nodeElements) {
+                        // nodeElements now contains an array of results for the given promises 
+                        // gather all results, continue
 
-                    var newJson = {
-                        "name": "flare",
-                        "children": [
-                            {
-                                "name": "Infinispan Cluster",
-                                "children": nodeElements
-                            }
-                        ]
-                    };
+                        var newJson = {
+                            "name": "flare",
+                            "children": [
+                                {
+                                    "name": "Infinispan Cluster",
+                                    "children": nodeElements
+                                }
+                            ]
+                        };
 
-                    jsonfile.writeFile(file, newJson, function (err) {
-                        console.error(err);
+                        jsonfile.writeFile(file, newJson, function (err) {
+                            console.error(err);
+                        });
+
+                        // after JSON file update, return to client
+                        res.send({error: 0, jsonObjects: {
+                                currentNumberOfEntries: stats.currentNumberOfEntries,
+                                clusterMembers: members}}, 201);
+
+
+                    }).catch(function (reason) {
+                        console.log("At least one of the promises FAILED: " + reason);
                     });
-
-                    // after JSON file update, return to client
-                    res.send({error: 0, jsonObjects: {
-                            currentNumberOfEntries: stats.currentNumberOfEntries,
-                            clusterMembers: members}}, 201);
-                    
-
-                }).catch(function (reason) {                        
-                    console.log("At least one of the promises FAILED: " + reason);
                 });
-            });
-        
+
     }).catch(function (error) {
-        
+
         console.log("***** Got error initZoomableChart: " + error.message);
-    
-        connected.then(function (client) {       
 
-        return client.clear();        
-    }).catch(function (error) {
-        
-        console.log("***** Got error clearCache: " + error.message);
+        connected.then(function (client) {
 
-    }).finally(function (client) {
-        
-        return client.disconnect();        
+            return client.clear();
+        }).catch(function (error) {
+
+            console.log("***** Got error initZoomableChart: " + error.message);
+
+        }).finally(function (client) {
+
+            return client.disconnect();
+        });
     });
 };
