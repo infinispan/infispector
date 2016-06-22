@@ -13,7 +13,7 @@
 
         <div ng-app="InfiSpector" ng-controller="InfiSpectorCtrl" id="ctrl">
 
-            <div id ="logo">
+            <div id ="logo" style="margin-bottom: 30px;">
                 <center>
                     <img src="../img/logo.png" width="250" alt="logo">
                     <nav id="nav-1">
@@ -34,12 +34,16 @@
                     </div>  
                 </center>
             </div>
-            {{messageInfo}}
+
+            <div id="message_list">
+            	<h1>Message List</h1>
+            	<pre>
+            	{{messageInfo}}
+            	</pre>
+            	<input type="button" ng-click="prevNodeMessageInfo()" value="Previous" style="margin-left:-2px;">
+            	<input type="button" ng-click="nextNodeMessageInfo()" value="Next">
+            </div>            
         </div> 
-
-
-
-
 
         <!-- build:remove:dev -->
         <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.js"></script>
