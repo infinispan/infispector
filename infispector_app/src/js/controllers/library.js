@@ -59,9 +59,9 @@ app.controller('InfiSpectorCtrl', ['$scope', '$http', function ($scope, $http) {
                 $scope.nodeMessagesInfo = [];
                 for (var i = 0; i < parsed.result.length; i++) {
                     $scope.nodeMessagesInfo[i] = "length: " + parsed.result[i].length + "\nmessage: " + parsed.result[i].message;
+                    $scope.nodeMessagesInfo[i] = $scope.nodeMessagesInfo[i].split(",").join("\n").replace("^\"", "").replace("$\"", "");      // funny -> replace didnt work out for me
                 }
                 $scope.messageInfo = $scope.nodeMessagesInfo[0];
-                $scope.messageInfo.replace("^\"", "").replace("$\"", "");
             });
         };
         
@@ -73,14 +73,12 @@ app.controller('InfiSpectorCtrl', ['$scope', '$http', function ($scope, $http) {
             $scope.index++;
             if (($scope.index % $scope.nodeMessageInfo.length) === 0) $scope.index = 0;
             $scope.messageInfo = $scope.nodeMessageInfo[$scope.index];
-            $scope.messageInfo.replace("^\"", "").replace("$\"", "");
         };
         
         $scope.prevNodeMessageInfo = function() {
             $scope.index--;
             if ($scope.index < 0) $scope.index = $scope.nodeMessagesInfo.length;
             $scope.messageInfo = $scope.nodeMessageInfo[$scope.index];
-            $scope.messageInfo.replace("^\"", "").replace("$\"", "");
         };
 
         $scope.flowChart = function () {
