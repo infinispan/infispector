@@ -288,10 +288,16 @@ exports.initZoomableChart = function (req, res) {
     }).catch(function (error) {
         
         console.log("***** Got error initZoomableChart: " + error.message);
+    
+        connected.then(function (client) {       
+
+        return client.clear();        
+    }).catch(function (error) {
         
+        console.log("***** Got error clearCache: " + error.message);
+
     }).finally(function (client) {
         
-        return client.disconnect();
-        
+        return client.disconnect();        
     });
 };

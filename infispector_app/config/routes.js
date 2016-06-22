@@ -48,6 +48,10 @@ exports.index = function(req, res){
   res.render('index');
 };
 
-exports.operations = function(req, res){
-  res.render('operations');
+exports.operations_get = function(req, res){
+  res.render('operations_get');
+};
+
+exports.operations_put = function(req, res){
+  res.render('operations_put');
 };

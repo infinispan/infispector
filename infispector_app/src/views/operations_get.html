@@ -9,7 +9,6 @@
         <link rel="stylesheet" href="css/bootstrap.css"/>
         <link rel="stylesheet" href="css/main.css"/>
 
-
         <style>
             .node {
                 cursor: pointer;
@@ -41,37 +40,13 @@
             	<center>
                 	<img src="../img/logo.png" width="250">
                 	<nav id="nav-1">
-				  <a class="link-1" onclick="showGetValue()">Get value</a>
-				  <a class="link-1" onclick="showPutEntry()">Put entry</a>
-				</nav>
+					  <a class="link-1" href="operations_get.html">Get value</a>
+					  <a class="link-1" href="operations_put.html">Put entry</a>
+					</nav>
                 </center>
             </div>
             <div id="column1" style="border-right: 2px solid; border-color: #333333;"> 
-            		<div id="put_entry">             			
-            		<center>              		         		
-		                <fieldset>
-		    				<legend>Put entry</legend>  
-			               	Key:<input type="text" ng-model="keyToPut" style="margin: 7px 0px 0px 146px;">
-			               	<br>
-			               	Value: <input type="text" ng-model="valueToPut" style="margin: 7px 0px 0px 129px;">
-			               	<br>
-			               	Node HotRod port: <input type="text" ng-model="nodeToPut" style="margin: 7px 0px 0px 40px;">
-			               	<br>
-			               	Amount: <input type="text" ng-model="putNumber" style="margin: 7px 0px 0px 114px;">
-			               	<br><br>
-			               	<input type="button" ng-model="putEntryButton" ng-click="putEntry()" value="Put entry">
-                                        <input type="button" ng-model="clearCacheButton" ng-click="clearCache()" value="Clear">
-			            </fieldset>
-			            <br>
-			            <div id="label">
-			    			Current number of entries after put:  {{currentNumberOfEntriesAfterPut}}
-			    		</div>	                
-			            <div id="label">
-			                Cluster members:  {{clusterMembers}} {{clusterMembers.length}}	                 
-			            </div> 
-			        </center>			           
-			        </div>
-			        <div id="get_value"> 
+            	<div id="get_value"> 
 			        <center>
 			            <fieldset>
 	    				<legend>Get value for a key</legend>          
@@ -85,31 +60,8 @@
 			              	Value: {{valueReturned}}                    
 			            </div>
 			        </center> 				                 
-		        	</div>		        
-		        </div>       
-	        </div>	
-
-	        <script type="text/javascript">
-	    	var div1 = document.getElementById('get_value').innerHTML;
-
-			var div2 = document.getElementById('put_entry').innerHTML;
-			var column1 = document.getElementById('column1');
-
-			column1.innerHTML = div2;
-
-    		function showPutEntry() {
-    			column1.innerHTML = div2;
-    			 $compile(column1.contents())(scope);
-			    
-			};
-
-			function showGetValue() {
-				column1.innerHTML = div1;
-				 $compile(column1.contents())(scope);
-			    
-			};
-    		</script>
-                   
+		        	</div>      
+	        </div>	                  
            
 	        <script src="//d3js.org/d3.v3.min.js"></script>
 	        <script>

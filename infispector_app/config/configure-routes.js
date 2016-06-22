@@ -18,7 +18,8 @@ function configureRoutes() {
     app.post('/getMessagesInfo', routes.getMessagesInfo);
     app.get('/', routes.index);
     app.get('/index.html', routes.index);
-    app.get('/operations.html', routes.operations);
+    app.get('/operations_get.html', routes.operations_get);
+    app.get('/operations_put.html', routes.operations_put);
 }
 
 module.exports = configureRoutes;

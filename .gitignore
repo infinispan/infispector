@@ -11,3 +11,5 @@ infispan_example_app/target/
 /nbproject/private/
 nbproject/
 /infinispan_example_app/target/
+npm-debug.log
+start.sh

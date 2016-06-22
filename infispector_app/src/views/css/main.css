@@ -149,11 +149,13 @@ nav {
 #put_entry {
     text-align: center;
     margin: 30px 0px 0px 50px;
+    visibility: hidden;
 }
 
 #get_value { 
     text-align: center;   
     margin: 30px 0px 0px 50px;
+    visibility: hidden;
 }
 
 input[type=button]{
