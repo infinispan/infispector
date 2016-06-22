@@ -1,3 +1,7 @@
+h1 {
+    color: #a45b36;
+}
+
 svg .state {
     stroke-width: 2;
     stroke: #fff;
@@ -68,39 +72,23 @@ svg .shelf:hover , .shelf.active {
     padding: 5px 0;
 }
 
-/*CSS styles for time sliders*/
-#time_sliders {
-    width: 250px;
-    margin: 20px;
-}
-
-input[type=range] {
-    -webkit-appearance: none;
-    background-color: silver;
-    width: 200px;
-    height:20px;
-}
-
-input[type="range"]::-webkit-slider-thumb {
-    -webkit-appearance: none;
+input[type=button]{
     background-color: #a45b36;
-    opacity: 0.5;
-    width: 10px;
-    height: 26px;
+    border: none;
+    color: white;
+    padding: 12px 25px;
+    margin: 0px 0px 0px 5px;
+    text-decoration: none;
+    cursor: pointer;
 }
 
-#column1{
-    width: 50%;
-    text-align: center;
-    margin-top: 30px; 
-    float: left;
-}
-
-#column2 {
-    width: 50%;
-    text-align: center;
-    margin-top: 40px; 
-    float: left;
+input[type=text] {
+    -webkit-appearance: none;
+    min-width: 120px;
+    height: 45px;
+    font-size: 18px;
+    margin: 0px 0px 10px 0px;
+    padding: 2px 5px 2px 2px;
 }
 
 #logo {
@@ -146,6 +134,21 @@ nav {
   color: #ffffff;
 }
 
+/* Operations.html styles*/
+#column1{
+    width: 50%;
+    text-align: center;
+    margin-top: 30px; 
+    float: left;
+}
+
+#column2 {
+    width: 50%;
+    text-align: center;
+    margin-top: 40px; 
+    float: left;
+}
+
 #put_entry {
     text-align: center;
     margin: 30px 0px 0px 50px;
@@ -154,25 +157,6 @@ nav {
 #get_value { 
     text-align: center;   
     margin: 30px 0px 0px 50px;
-}
-
-input[type=button]{
-    background-color: #a45b36;
-    border: none;
-    color: white;
-    padding: 12px 25px;
-    margin: 0px 0px 0px 5px;
-    text-decoration: none;
-    cursor: pointer;
-}
-
-input[type=text] {
-    -webkit-appearance: none;
-    min-width: 120px;
-    height: 45px;
-    font-size: 18px;
-    margin: 0px 0px 10px 0px;
-    padding: 2px 5px 2px 2px;
 }
 
 legend {
@@ -205,3 +189,37 @@ fieldset {
     text-align: left;
 }
 
+/* Index.html styles*/
+#message_list {
+    float: right;
+    width: 50%;
+    padding-right: 50px;
+}
+
+#time_sliders {
+    width: 250px;
+    margin: 20px;
+}
+
+input[type=range] {
+    -webkit-appearance: none;
+    background-color: silver;
+    width: 200px;
+    height:20px;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    background-color: #a45b36;
+    opacity: 0.5;
+    width: 10px;
+    height: 26px;
+}
+
+pre{
+    white-space: pre-wrap;
+}
+
+svg[id=messageFlow] {
+    margin-left: 40px;
+}

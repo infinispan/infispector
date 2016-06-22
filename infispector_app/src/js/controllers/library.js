@@ -58,8 +58,8 @@ app.controller('InfiSpectorCtrl', ['$scope', '$http', function ($scope, $http) {
                 var parsed = JSON.parse(response.data.jsonResponseAsString)[0];
                 $scope.nodeMessagesInfo = [];
                 for (var i = 0; i < parsed.result.length; i++) {
-                    $scope.nodeMessagesInfo[i] = "length: " + parsed.result[i].length + "\nmessage: " + parsed.result[i].message;
-                    $scope.nodeMessagesInfo[i] = $scope.nodeMessagesInfo[i].split(",").join("\n").replace("^\"", "").replace("$\"", "");      // funny -> replace didnt work out for me
+                    $scope.nodeMessagesInfo[i] = "\ncount: " + parsed.result[i].length + "\nmessage: " + parsed.result[i].message;
+                    //$scope.nodeMessagesInfo[i] = $scope.nodeMessagesInfo[i].split(",").join('\n').replace("^\"", "").replace("$\"", "");      // funny -> replace didnt work out for me
                 }
                 $scope.messageInfo = $scope.nodeMessagesInfo[0];
             });
@@ -71,14 +71,14 @@ app.controller('InfiSpectorCtrl', ['$scope', '$http', function ($scope, $http) {
         
         $scope.nextNodeMessageInfo = function() {
             $scope.index++;
-            if (($scope.index % $scope.nodeMessageInfo.length) === 0) $scope.index = 0;
-            $scope.messageInfo = $scope.nodeMessageInfo[$scope.index];
+            if (($scope.index % $scope.nodeMessagesInfo.length) === 0) $scope.index = 0;
+            $scope.messageInfo = $scope.nodeMessagesInfo[$scope.index];
         };
         
         $scope.prevNodeMessageInfo = function() {
             $scope.index--;
             if ($scope.index < 0) $scope.index = $scope.nodeMessagesInfo.length;
-            $scope.messageInfo = $scope.nodeMessageInfo[$scope.index];
+            $scope.messageInfo = $scope.nodeMessagesInfo[$scope.index];
         };
 
         $scope.flowChart = function () {
