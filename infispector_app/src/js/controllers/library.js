@@ -151,6 +151,7 @@ app.controller('OperationsCtrl', ['$scope', '$http', function ($scope, $http) {
         $scope.valueToPut = "v1";
         $scope.nodeToPut = "11222";
         $scope.keyToGet = "k1";
+        $scope.putNumber = null;
 
         $scope.putEntry = function () {
 
@@ -159,7 +160,8 @@ app.controller('OperationsCtrl', ['$scope', '$http', function ($scope, $http) {
                     {
                         keyToPut: $scope.keyToPut,
                         valueToPut: $scope.valueToPut,
-                        nodeToPut: $scope.nodeToPut
+                        nodeToPut: $scope.nodeToPut,
+                        putNumber: $scope.putNumber
                     });
 
             return request.then(function (response) {
@@ -198,15 +200,36 @@ app.controller('OperationsCtrl', ['$scope', '$http', function ($scope, $http) {
          */
         $scope.clearCache = function () {
             var request = $http.post('/clearCache', {});
-            
+
             return request.then(function (response) {
                 if (response.data.error === 1) {
                     console.log('ERROR: response.data.error === 1');
                 } else {
                     console.log('Post request was called without error.');
+                    $scope.currentNumberOfEntriesAfterPut = response.data.jsonObjects.currentNumberOfEntries;
+                    $scope.clusterMembers = response.data.jsonObjects.clusterMembers;
+                    
                     drawChart();
                 }
             });
         };
+        
+        $scope.initZoomableChart = function () {
+            var request = $http.post('/initZoomableChart', {});
+
+            return request.then(function (response) {
+                if (response.data.error === 1) {
+                    console.log('ERROR: response.data.error === 1');
+                } else {
+                    console.log('Post request was called without error.');
+                    $scope.currentNumberOfEntriesAfterPut = response.data.jsonObjects.currentNumberOfEntries;
+                    $scope.clusterMembers = response.data.jsonObjects.clusterMembers;
+                    
+                    drawChart();
+                }
+            });
+        };
+        
+        $scope.initZoomableChart();
 
     }]);

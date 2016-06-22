@@ -11,6 +11,7 @@ function configureRoutes() {
     app.post('/clearCache', routes.clearCache);
     app.post('/putEntry', routes.putEntry);
     app.post('/getEntry', routes.getEntry);
+    app.post('/initZoomableChart', routes.initZoomableChart);
     app.post('/getNodes', routes.getNodes);
     app.post('/getFlowChartMatrix', routes.getFlowChartMatrix);
     app.post('/getChordDiagramMatrix', routes.getChordDiagramMatrix);

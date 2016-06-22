@@ -32,11 +32,18 @@ function updateJsonForChart(member) {
                             nodeChildren[x] = {"name": "a key", "size": 30};
                         }
 
-                        nodeElement = {
-                            "name": host + "_" + port,
-                            "children": nodeChildren
-                        };
-
+                        if (stats.currentNumberOfEntries === 0) {
+                            nodeElement = {
+                                "name": "server_" + port,
+                                "children": {"name": "server_" + port, "size": 30}
+                            };
+                        } else {
+                            nodeElement = {
+                                "name": "server_" + port,
+                                "children": nodeChildren
+                            };    
+                        }
+                        
                         resolve(nodeElement);
                     },
                     function (err) {
@@ -163,14 +170,124 @@ exports.clearCache = function (req, res) {
     console.log('Operating with Infinispan api.ispn.clearCache.... ');
     
     var connected = infinispan.client({port: 11222, host: '127.0.0.1'});
-    
+        
     connected.then(function (client) {       
 
-        return client.clear();
+        var members = client.getTopologyInfo().getMembers();
+        var clientClear = client.clear();
+        
+        var clientStats = clientClear.then(
+                function () {
+                    return client.stats();
+                });
+        
+        var showStats = clientStats.then(
+            function (stats) {
+
+                // TODO: put this stuff into standalone function
+                var nodeElements = [];
+                var promises = [];
+
+                for (i = 0; i < members.length; i++) {
+                    promises[i] = updateJsonForChart(members[i]);
+                }
+
+                // each promise returns a nodeElement
+                RSVP.all(promises).then(function (nodeElements) {
+                    // nodeElements now contains an array of results for the given promises 
+                    // gather all results, continue
+
+                    var newJson = {
+                        "name": "flare",
+                        "children": [
+                            {
+                                "name": "Infinispan Cluster",
+                                "children": nodeElements
+                            }
+                        ]
+                    };
+
+                    jsonfile.writeFile(file, newJson, function (err) {
+                        console.error(err);
+                    });
+
+                    // after JSON file update, return to client
+                    res.send({error: 0, jsonObjects: {
+                            currentNumberOfEntries: stats.currentNumberOfEntries,
+                            clusterMembers: members}}, 201);
+                    
+
+                }).catch(function (reason) {                        
+                    console.log("At least one of the promises FAILED: " + reason);
+                });
+            });
         
     }).catch(function (error) {
         
         console.log("***** Got error clearCache: " + error.message);
+        
+    }).finally(function (client) {
+        
+        return client.disconnect();
+        
+    });
+};
+
+exports.initZoomableChart = function (req, res) {
+    console.log('Operating with Infinispan api.ispn.initZoomableChart.... ');
+    
+    var connected = infinispan.client({port: 11222, host: '127.0.0.1'});
+        
+    connected.then(function (client) {       
+
+        var members = client.getTopologyInfo().getMembers();
+        
+        var clientStats = client.stats();
+        
+        var showStats = clientStats.then(
+            function (stats) {
+
+                // TODO: put this stuff into standalone function
+                var nodeElements = [];
+                var promises = [];
+
+                for (i = 0; i < members.length; i++) {
+                    promises[i] = updateJsonForChart(members[i]);
+                }
+
+                // each promise returns a nodeElement
+                RSVP.all(promises).then(function (nodeElements) {
+                    // nodeElements now contains an array of results for the given promises 
+                    // gather all results, continue
+
+                    var newJson = {
+                        "name": "flare",
+                        "children": [
+                            {
+                                "name": "Infinispan Cluster",
+                                "children": nodeElements
+                            }
+                        ]
+                    };
+
+                    jsonfile.writeFile(file, newJson, function (err) {
+                        console.error(err);
+                    });
+
+                    // after JSON file update, return to client
+                    res.send({error: 0, jsonObjects: {
+                            currentNumberOfEntries: stats.currentNumberOfEntries,
+                            clusterMembers: members}}, 201);
+                    
+
+                }).catch(function (reason) {                        
+                    console.log("At least one of the promises FAILED: " + reason);
+                });
+            });
+        
+    }).catch(function (error) {
+        
+        console.log("***** Got error initZoomableChart: " + error.message);
         
     }).finally(function (client) {
         

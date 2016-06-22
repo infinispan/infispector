@@ -40,6 +40,10 @@ exports.clearCache = function(req, res) {
    api.ispn.clearCache(req, res);
 };
 
+exports.initZoomableChart = function(req, res) {
+   api.ispn.initZoomableChart(req, res);
+};
+
 exports.index = function(req, res){
   res.render('index');
 };
