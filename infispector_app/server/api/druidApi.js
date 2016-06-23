@@ -515,7 +515,7 @@ exports.getMessagesInfo = function (request, response) {
     console.log('getMessagesAndTimestampFromNode function from druidApi.js was called. '
             + request.body.srcNode);
 
-    var srcNode = "marek-9119";//request.body.srcNode;    
+    var srcNode = request.body.nodeName;
 
     var params = {host: "127.0.0.1:8084", debug: "true"};
     var druidRequester = require('facetjs-druid-requester').druidRequesterFactory(params);
@@ -529,12 +529,22 @@ exports.getMessagesInfo = function (request, response) {
             "metric": "length",
             "threshold": 100000,
             "filter": {
-            "type": "search",
-            "dimension": "message",
-              "query": {
-                  "type": "insensitive_contains",
-                  "value": "CacheTopologyControlCommand"
-              }
+            "type": "and",
+                "fields": [
+                    {
+                        "type": "selector",
+                        "dimension": "src",
+                        "value": srcNode
+                    },
+                    {
+                        "type": "search",
+                        "dimension": "message",
+                        "query": {
+                            "type": "insensitive_contains",
+                            "value": "CacheTopologyControlCommand"
+                        }
+                    }
+                ]            
             },
             "aggregations": [
                {"type": "count", "fieldName": "length", "name": "length"}
