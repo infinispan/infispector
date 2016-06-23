@@ -21,8 +21,7 @@ public class InfinispanDistributed {
 //      builder.clustering().cacheMode(CacheMode.DIST_SYNC);
 //      // Initialize the cache manager
 //      DefaultCacheManager cacheManager = new DefaultCacheManager(global.build(), builder.build());
-
-
+        
       GlobalConfiguration glob = new GlobalConfigurationBuilder().clusteredDefault() // Builds a default clustered
             // configuration
             .transport().addProperty("configurationFile", "jgroups-udp.xml") // provide a specific JGroups configuration
@@ -39,8 +38,15 @@ public class InfinispanDistributed {
 
       // Obtain the default cache
       Cache<String, String> cache = cacheManager.getCache();
+      
+      int numberOfPuts = 10;
+      if (System.getenv("numberOfPuts") != null) {
+         System.out.println("numberOfPuts specified = " + System.getenv("numberOfPuts")); 
+         numberOfPuts = Integer.parseInt(System.getenv("numberOfPuts"));
+      }
+      
       // Store the current node address in some random keys
-      for(int i=0; i < 10; i++) {
+      for(int i=0; i < numberOfPuts; i++) {
          cache.put(UUID.randomUUID().toString(), cacheManager.getNodeAddress());
       }
       // Display the current cache contents for the whole cluster
@@ -49,7 +55,7 @@ public class InfinispanDistributed {
       cache.getAdvancedCache().withFlags(Flag.SKIP_REMOTE_LOOKUP)
             .entrySet().forEach(entry -> System.out.printf("%s = %s\n", entry.getKey(), entry.getValue()));
 
-      Thread.sleep(15000);
+      Thread.sleep(20000);
 
       // Stop the cache manager and release all resources
       cacheManager.stop();
