@@ -58,7 +58,7 @@ app.controller('InfiSpectorCtrl', ['$scope', '$http', function ($scope, $http) {
                 var parsed = JSON.parse(response.data.jsonResponseAsString)[0];
                 $scope.nodeMessagesInfo = [];
                 for (var i = 0; i < parsed.result.length; i++) {
-                    $scope.nodeMessagesInfo[i] = "\ncount: " + parsed.result[i].length + "\nmessage: " + parsed.result[i].message;
+                    $scope.nodeMessagesInfo[i] = "\nnode name: " + nodeName + "\ncount: " + parsed.result[i].length + "\nmessage: " + parsed.result[i].message + "\n\n\t\t\t\t\t\t\t\t" + (i + 1) + "/" + parsed.result.length;
                     //$scope.nodeMessagesInfo[i] = $scope.nodeMessagesInfo[i].split(",").join('\n').replace("^\"", "").replace("$\"", "");      // funny -> replace didnt work out for me
                 }
                 $scope.messageInfo = $scope.nodeMessagesInfo[0];
@@ -77,7 +77,7 @@ app.controller('InfiSpectorCtrl', ['$scope', '$http', function ($scope, $http) {
         
         $scope.prevNodeMessageInfo = function() {
             $scope.index--;
-            if ($scope.index < 0) $scope.index = $scope.nodeMessagesInfo.length;
+            if ($scope.index < 0) $scope.index = $scope.nodeMessagesInfo.length-1;
             $scope.messageInfo = $scope.nodeMessagesInfo[$scope.index];
         };
 
