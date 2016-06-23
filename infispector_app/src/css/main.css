@@ -182,7 +182,7 @@ fieldset {
 #label {
     border: 1px solid #a45b36;
     width: 450px;
-    height: 45px;
+    min-height: 45px;
     font-size: 16px;
     padding: 10px;
     margin: 5px 0px 20px 5px;

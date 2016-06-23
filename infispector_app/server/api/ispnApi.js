@@ -35,7 +35,7 @@ function updateJsonForChart(member) {
                         if (stats.currentNumberOfEntries === 0) {
                             nodeElement = {
                                 "name": "server_" + port,
-                                "children": {"name": "server_" + port, "size": 30}
+                                "children": [{"name": "server_" + port, "size": 30}]
                             };
                         } else {
                             nodeElement = {
@@ -300,4 +300,5 @@ exports.initZoomableChart = function (req, res) {
             return client.disconnect();
         });
     });
+
 };
