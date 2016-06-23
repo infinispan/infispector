@@ -223,3 +223,9 @@ pre{
 svg[id=messageFlow] {
     margin-left: 40px;
 }
+
+svg[id=chordDiagram] {
+    width: 40%;
+    height: 85%;
+    margin-left: 55px;
+}
