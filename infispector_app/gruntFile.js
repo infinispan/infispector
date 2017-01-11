@@ -45,6 +45,7 @@
       app: ['src/js/*.js'],
       chordDiagram: ['src/js/graphs/chordDiagram.js'],
       messageFlowChart: ['src/js/graphs/messageFlowChart.js'],
+      timeLine: ['src/js/graphs/timeLine.js'],
       components: ['src/js/components/*.js'],
       controllers: ['src/js/controllers/*.js'],
       directives: ['src/js/directives/*.js'],
@@ -113,6 +114,7 @@
           '<%= distdir %>/js/app.js':['<%= src.app %>'],
           '<%= distdir %>/js/chordDiagram.js':['<%= src.chordDiagram %>'],
           '<%= distdir %>/js/messageFlowChart.js':['<%= src.messageFlowChart %>'],
+          '<%= distdir %>/js/timeLine.js':['<%= src.timeLine %>'],
           '<%= distdir %>/js/components.js':['<%= src.components %>'],
           '<%= distdir %>/js/controllers.js':['<%= src.controllers %>'],
           '<%= distdir %>/js/directives.js':['<%= src.directives %>'],
@@ -131,6 +133,7 @@
           '<%= distdir %>/js/app.js':['<%= src.app %>','<%= src.components %>','<%= src.controllers %>','<%= src.services %>'],
           '<%= distdir %>/js/chordDiagram.js':['<%= src.chordDiagram %>'],
           '<%= distdir %>/js/messageFlowChart.js':['<%= src.messageFlowChart %>'],
+          '<%= distdir %>/js/timeLine.js':['<%= src.timeLine%>'],
           '<%= distdir %>/js/plugins.js':['<%= src.lib %>plugins/*.js'],
           '<%= distdir %>/js/ngmodules.js':['<%= src.lib %>ngModules/*.js']
         }
@@ -145,6 +148,7 @@
           '<%= distdir %>/js/app.min.js': '<%= distdir %>/js/app.js',
           '<%= distdir %>/js/chordDiagram.min.js': '<%= distdir %>/js/graph/chordDiagram.js',
           '<%= distdir %>/js/messageFlowChart.min.js': '<%= distdir %>/js/graph/messageFlowChart.js',
+          '<%= distdir %>/js/timeLine.min.js': '<%= distdir %>/js/graph/timeLine.js',
           '<%= distdir %>/js/plugins.min.js': '<%= distdir %>/js/plugins.js',
           '<%= distdir %>/js/ngmodules.min.js':['<%= distdir %>/js/ngmodules.js']
         }

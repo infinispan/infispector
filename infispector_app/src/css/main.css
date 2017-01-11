@@ -223,3 +223,18 @@ pre{
 svg[id=messageFlow] {
     margin-left: 40px;
 }
+
+#timeLine {
+    margin-left: 5px;
+    float: left;    
+}
+
+.axis {
+    font-size: 10px;
+}
+
+.axis line, .axis path {
+    fill: none;
+    stroke: #000;
+}
+

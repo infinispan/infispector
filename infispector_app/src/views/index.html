@@ -20,7 +20,8 @@
                         <a class="link-1" ng-click="chordDiagram()">Chord Diagram</a>
                         <a class="link-1" ng-click="flowChart()">MessageFlowChart</a>
                     </nav>
-
+                    
+                    
                     <div>
                         <br><br><br><br><br>
                         <div ng-show="false" id="time_sliders">
@@ -34,7 +35,7 @@
                     </div>  
                 </center>
             </div>
-
+            <div id="timeLine"></div>
             <div id="message_list">
             	<h1>Message List</h1>
             	<pre>
@@ -69,5 +70,11 @@
         <script src="http://d3js.org/d3.v3.min.js"></script>
         <script src="js/chordDiagram.js"></script>
         <script src="js/messageFlowChart.js"></script>
+        <script src="js/timeLine.js"></script>
+        <script>localStorage.clear();
+        localStorage.setItem("multipliers", 1);
+        localStorage.setItem("lowestLayer", 0);
+        timeLine(24, "Hour", 1);
+        </script>
     </body>
 </html>
