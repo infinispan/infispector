@@ -69,7 +69,7 @@ function timeLine(timeStampsArg, timeScaleArg, multiplier) {
             .scale(x)
             .orient("bottom");
 
-    var canvas = d3.select("#timeLine").append("svg")
+    var canvas = d3.select("#timeLineDiv").append("svg")
             .attr("width", width)
             .attr("height", height + 140)                        // need to add some height, so axis and axis description fits in
             .attr("id", "timeLine")
