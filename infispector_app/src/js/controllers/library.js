@@ -80,10 +80,18 @@ app.controller('InfiSpectorCtrl', ['$scope', '$http', function ($scope, $http) {
             if ($scope.index < 0) $scope.index = $scope.nodeMessagesInfo.length-1;
             $scope.messageInfo = $scope.nodeMessagesInfo[$scope.index];
         };
-
+        
+        // TODO: we will need more flowCharts in the dashboard 
+        // TODO: create matrix/array of flowcharts
         $scope.flowChart = function () {
             var from = document.getElementById("valR").value;
             var to = document.getElementById("valR2").value;
+            // TODO: dynamically for each chart on dashboard
+            // SingleRpcCommand, CacheTopologyControlCommand 
+            // StateResponseCommand, StateRequestCommand
+//            var searchMessageText = document.getElementById("searchMessageText").value;
+            var searchMessageText = ""; // "" means show all messages, no filter
+            
             $scope.getNodes().then(function (nodes) {
                 var nodesArrayInJson = [];
                 for (var i = 0; i < nodes.length; i++) {
@@ -91,7 +99,8 @@ app.controller('InfiSpectorCtrl', ['$scope', '$http', function ($scope, $http) {
                 }
                 var request = $http.post("/getFlowChartMatrix",
                     {
-                        "nodes": nodesArrayInJson
+                        "nodes": nodesArrayInJson,
+                        "searchMessageText" : searchMessageText
                     });
                 request.then(function (response) {
                    if (response.data.error > 0) {
