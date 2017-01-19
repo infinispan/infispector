@@ -1,6 +1,5 @@
-function chordDiagram(options, matrix) {
-    unshowFlowDiagram();
-    unshowChordDiagram();
+function chordDiagram(options, matrix, messageType) {
+    //deleteGraphs();
    // initialize the chord configuration variables
    var config = {
       width: 800,
@@ -48,14 +47,16 @@ function chordDiagram(options, matrix) {
    var fill = d3.scale.ordinal()
          .domain(d3.range(matrix.length-1))
          .range(colors);
+ 
+   var div = d3.select("#graphs").append("div").attr("class", "graph");
 
-   var svg = d3.select("body").append("svg")
+   var svg = div.append("svg")
          .attr("id", "visual")
          .attr("viewBox", viewBoxDimensions)
          .attr("preserveAspectRatio", "xMinYMid")    // add viewBox and preserveAspectRatio
          .attr("width", width)
          .attr("height", height)
-         .attr("id", "chordDiagram")
+         .attr("id", messageType)
          .append("g")
          .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
@@ -138,11 +139,4 @@ function chordDiagram(options, matrix) {
    }
 
 
-}
-
-function unshowChordDiagram() {
-    var element = document.getElementById("chordDiagram");
-    if (element !== null) {
-        element.remove();
-    }
 }

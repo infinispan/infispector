@@ -216,7 +216,6 @@ function timeLine(timeStampsArg, timeScaleArg, multiplier) {
             .on("click", function () {
                 higher(d3.select("#button").attr("timeStamp"));
             });
-
 }
 
 /**

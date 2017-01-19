@@ -209,7 +209,7 @@ exports.getFlowChartMatrix = function (request, response) {
         }
 
         debug("\n in getFlowChartMatrix final matrix (stringified): " + JSON.stringify(matrix));
-        response.send({error: 0, matrix: JSON.stringify(matrix)}, 201);
+        response.send({error: 0, matrix: JSON.stringify(matrix), searchMessage: JSON.stringify(searchMessageText)}, 201);
 
     }).catch(function (reason) {
         console.log("At least one of the promises FAILED: " + reason);
@@ -242,7 +242,7 @@ exports.getChordDiagramMatrix = function (request, response) {
                 matrix[i][j] = JSON.parse(matrixElements[i * numberOfNodes + j][2]);
             }
         }
-        response.send({error: 0, matrix: JSON.stringify(matrix)}, 201);
+        response.send({error: 0, matrix: JSON.stringify(matrix), searchMessage: JSON.stringify(searchMessageText)} ,201);
     });
 };
 

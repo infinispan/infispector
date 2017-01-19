@@ -312,9 +312,8 @@
 	this.bP = bP;
 }();
 
-function messageFlowChart(nodes, matrix) {
-    unshowChordDiagram();
-    unshowFlowDiagram();
+function messageFlowChart(nodes, matrix, messageType) {
+    //deleteGraphs();
     var longest = nodes.sort(function (a, b) { return b.length - a.length; })[0].length;
     var longestCnt = 0;
     matrix.forEach(function (element) {
@@ -324,9 +323,12 @@ function messageFlowChart(nodes, matrix) {
     });
 
     var width = 650, height = 610, margin ={b:0, t:40, l:170, r:50};
-
-    var svg = d3.select("body")
-            .append("svg").attr('width',width).attr('height',(height+margin.b+margin.t)).attr("id", "messageFlow")
+    
+    var div = d3.select("#graphs").append("div").attr("class", "graph");
+    
+    var svg = div.append("svg").attr('width',width)
+            .attr('height',(height+margin.b+margin.t))
+            .attr("id", messageType)
             .append("g").attr("transform","translate("+ margin.l+","+margin.t+")");
     var data = [ 
             {data:bP.partData(matrix,2), id:'Comunication', header:["From","To", "Nodes"]}
@@ -334,9 +336,19 @@ function messageFlowChart(nodes, matrix) {
     bP.draw(data, svg, longest, longestCnt * 10 + 4);
 }
 
-function unshowFlowDiagram() {
-    var element = document.getElementById("messageFlow");
-    if (element !== null) {
-        element.remove();
+function deleteGraphs() {
+    var elements = document.getElementsByClassName("graph");
+    for (var numberOfElements = elements.length; numberOfElements > 0; numberOfElements--) {
+        elements[0].remove();
     }
 }
+
+function showGraphs() {
+    deleteGraphs();
+    //zobrazit jednotlive grafy
+}
+
+//function getval() {
+//    var element = document.getElementById("cmn-toggle-7");
+//    console.log(element.checked);
+//}

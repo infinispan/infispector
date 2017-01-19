@@ -1,3 +1,5 @@
+/*jshint loopfunc: true */
+
 app.controller('InfiSpectorCtrl', ['$scope', '$http', function ($scope, $http) {
         'use strict';
         
@@ -81,11 +83,28 @@ app.controller('InfiSpectorCtrl', ['$scope', '$http', function ($scope, $http) {
             $scope.messageInfo = $scope.nodeMessagesInfo[$scope.index];
         };
         
+        $scope.drawGraph = function () {
+            var element = document.getElementById("cmn-toggle-7");
+            if (element.checked) {      //flow chart
+                $scope.flowChart("SingleRpcCommand, CacheTopologyControlCommand, StateResponseCommand, StateRequestCommand");
+            }
+            else {  //chord diagram
+                $scope.chordDiagram("SingleRpcCommand, CacheTopologyControlCommand, StateResponseCommand, StateRequestCommand");
+            }
+        };
+        
         // TODO: we will need more flowCharts in the dashboard 
         // TODO: create matrix/array of flowcharts
-        $scope.flowChart = function () {
-            var from = document.getElementById("valR").value;
-            var to = document.getElementById("valR2").value;
+        $scope.flowChart = function (messages) {
+            if (messages === "add") {
+                messages = document.getElementById("inputFilter").value;
+            }
+            messages = messages.split(",");
+            var times = getSelectedTime();
+            var from = times[0];
+            var to = times[1];
+            //var from = document.getElementById("valR").value;
+            //var to = document.getElementById("valR2").value;
             // TODO: dynamically for each chart on dashboard
             // SingleRpcCommand, CacheTopologyControlCommand 
             // StateResponseCommand, StateRequestCommand
@@ -97,30 +116,41 @@ app.controller('InfiSpectorCtrl', ['$scope', '$http', function ($scope, $http) {
                 for (var i = 0; i < nodes.length; i++) {
                     nodesArrayInJson[i] = {"nodeName": nodes[i]}; 
                 }
-                var request = $http.post("/getFlowChartMatrix",
-                    {
-                        "nodes": nodesArrayInJson,
-                        "searchMessageText" : searchMessageText
+                for (var j = 0; j < messages.length; j++) {
+                    searchMessageText = messages[j];
+                    var request = $http.post("/getFlowChartMatrix",
+                        {
+                            "nodes": nodesArrayInJson,
+                            "searchMessageText" : searchMessageText
+                        });
+                    request.then(function (response) {
+                       if (response.data.error > 0) {
+                           console.log("ERROR: response.data.error > 0");
+                       } 
+                       else {
+                            var matrix = JSON.parse(response.data.matrix);
+                            var searchMessage = JSON.parse(response.data.searchMessage);
+
+                            console.log("-------- library.js get nodes + draw flow chart matrix: " + matrix);
+
+                            messageFlowChart(nodes, matrix, searchMessage);
+                       }
                     });
-                request.then(function (response) {
-                   if (response.data.error > 0) {
-                       console.log("ERROR: response.data.error > 0");
-                   } 
-                   else {
-                        var matrix = JSON.parse(response.data.matrix);
-
-                        console.log("-------- library.js get nodes + draw flow chart matrix: " + matrix);
-
-                        messageFlowChart(nodes, matrix);
-                   }
-                });
+                }
             });
             return 0;
         };
 
-        $scope.chordDiagram = function () {
-            var from = document.getElementById("valR").value;
-            var to = document.getElementById("valR2").value;
+        $scope.chordDiagram = function (messages) {
+            if (messages === "add") {
+                messages = document.getElementById("inputFilter").value;
+            }
+            messages = messages.split(",");
+            var times = getSelectedTime();
+            var from = times[0];
+            var to = times[1];
+            //var from = document.getElementById("valR").value;
+            //var to = document.getElementById("valR2").value;
             
             // @vhais, please, you can follow $scope.getNodes() for flow chart, we will duplicate code for now, probably
             // TODO: the whole function $scope.getNodes() is not a promise
@@ -133,28 +163,32 @@ app.controller('InfiSpectorCtrl', ['$scope', '$http', function ($scope, $http) {
                     nodesArrayInJson[i] = {"nodeName": nodes[i]};
                     nodes[i] = JSON.parse(nodes[i]);
                 }
-                var request = $http.post("/getChordDiagramMatrix",
-                    {
-                        "nodes": nodesArrayInJson
+                for (var j = 0; j < messages.length; j++) {
+                    searchMessageText = messages[j];
+                    var request = $http.post("/getChordDiagramMatrix",
+                        {
+                            "nodes": nodesArrayInJson
+                        });
+                    return request.then(function (response) {
+                        if (response.data.error > 0) {
+                            console.log("ERROR: response.data.error > 0");
+                        } else {
+                            var chord_options = {
+                                "gnames": nodes,
+                                "rotation": -0.7,
+                                "colors": ["rgb(233,222,187)", "rgb(255,205,243)", "rgb(255,255,155)",
+                                    "rgb(0,0,0)", "rgb(87,87,87)", "rgb(173,35,35)",
+                                    "rgb(42,75,215)", "rgb(29,105,20)", "rgb(129,74,25)",
+                                    "rgb(255,146,51)", "rgb(255,238,51)", "rgb(129,38,192)",
+                                    "rgb(160,160,160)", "rgb(129,197,122)", "rgb(157,175,215)",
+                                    "rgb(41,208,208)"]
+                            };
+                            var matrix = JSON.parse(response.data.matrix);
+                            var searchMessage = JSON.parse(response.data.searchMessage);
+                            chordDiagram(chord_options, matrix, searchMessage);
+                        }
                     });
-                return request.then(function (response) {
-                    if (response.data.error > 0) {
-                        console.log("ERROR: response.data.error > 0");
-                    } else {
-                        var chord_options = {
-                            "gnames": nodes,
-                            "rotation": -0.7,
-                            "colors": ["rgb(233,222,187)", "rgb(255,205,243)", "rgb(255,255,155)",
-                                "rgb(0,0,0)", "rgb(87,87,87)", "rgb(173,35,35)",
-                                "rgb(42,75,215)", "rgb(29,105,20)", "rgb(129,74,25)",
-                                "rgb(255,146,51)", "rgb(255,238,51)", "rgb(129,38,192)",
-                                "rgb(160,160,160)", "rgb(129,197,122)", "rgb(157,175,215)",
-                                "rgb(41,208,208)"]
-                        };
-                        var matrix = JSON.parse(response.data.matrix);
-                        chordDiagram(chord_options, matrix);
-                    }
-                });
+                }
             });
         };
 
