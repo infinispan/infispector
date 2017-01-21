@@ -331,7 +331,7 @@ function messageFlowChart(nodes, matrix, messageType) {
             .attr("id", messageType)
             .append("g").attr("transform","translate("+ margin.l+","+margin.t+")");
     var data = [ 
-            {data:bP.partData(matrix,2), id:'Comunication', header:["From","To", "Nodes"]}
+            {data:bP.partData(matrix,2), id:'Comunication' + messageType, header:["From","To", "Nodes"]}
     ];
     bP.draw(data, svg, longest, longestCnt * 10 + 4);
 }

@@ -84,12 +84,13 @@ app.controller('InfiSpectorCtrl', ['$scope', '$http', function ($scope, $http) {
         };
         
         $scope.drawGraph = function () {
+            deleteGraphs();
             var element = document.getElementById("cmn-toggle-7");
             if (element.checked) {      //flow chart
-                $scope.flowChart("SingleRpcCommand, CacheTopologyControlCommand, StateResponseCommand, StateRequestCommand");
+                $scope.flowChart("SingleRpcCommand,CacheTopologyControlCommand,StateResponseCommand,StateRequestCommand");
             }
             else {  //chord diagram
-                $scope.chordDiagram("SingleRpcCommand, CacheTopologyControlCommand, StateResponseCommand, StateRequestCommand");
+                $scope.chordDiagram("SingleRpcCommand,CacheTopologyControlCommand,StateResponseCommand,StateRequestCommand");
             }
         };
         
@@ -156,7 +157,7 @@ app.controller('InfiSpectorCtrl', ['$scope', '$http', function ($scope, $http) {
             // TODO: the whole function $scope.getNodes() is not a promise
             // TODO: call $http.post('/getNodes'); separately before $http.post("/getChordDiagramMatrix... in one function
             // TODO: use $http.post("/getChordDiagramMatrix", { "nodes": nodesArrayInJson }); to properly pass parameters
-            
+            var searchMessageText = "";
             $scope.getNodes().then(function (nodes) {
                 var nodesArrayInJson = [];
                 for (var i = 0; i < nodes.length; i++) {
@@ -167,9 +168,10 @@ app.controller('InfiSpectorCtrl', ['$scope', '$http', function ($scope, $http) {
                     searchMessageText = messages[j];
                     var request = $http.post("/getChordDiagramMatrix",
                         {
-                            "nodes": nodesArrayInJson
+                            "nodes": nodesArrayInJson,
+                            "searchMessageText" : searchMessageText
                         });
-                    return request.then(function (response) {
+                    request.then(function (response) {
                         if (response.data.error > 0) {
                             console.log("ERROR: response.data.error > 0");
                         } else {
@@ -184,6 +186,7 @@ app.controller('InfiSpectorCtrl', ['$scope', '$http', function ($scope, $http) {
                                     "rgb(41,208,208)"]
                             };
                             var matrix = JSON.parse(response.data.matrix);
+                            console.log(response.data.searchMessage);
                             var searchMessage = JSON.parse(response.data.searchMessage);
                             chordDiagram(chord_options, matrix, searchMessage);
                         }

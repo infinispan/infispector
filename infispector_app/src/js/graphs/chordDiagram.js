@@ -47,7 +47,6 @@ function chordDiagram(options, matrix, messageType) {
    var fill = d3.scale.ordinal()
          .domain(d3.range(matrix.length-1))
          .range(colors);
- 
    var div = d3.select("#graphs").append("div").attr("class", "graph");
 
    var svg = div.append("svg")

@@ -242,7 +242,7 @@ exports.getChordDiagramMatrix = function (request, response) {
                 matrix[i][j] = JSON.parse(matrixElements[i * numberOfNodes + j][2]);
             }
         }
-        response.send({error: 0, matrix: JSON.stringify(matrix), searchMessage: JSON.stringify(searchMessageText)} ,201);
+        response.send({error: 0, matrix: JSON.stringify(matrix), searchMessage: JSON.stringify(searchMessageText)}, 201);
     });
 };
 
