@@ -13,6 +13,12 @@ function chordDiagram(options, matrix, messageType) {
    if (options) {
       extend(config, options);
    }
+   var varFloat = "left";
+    var elements = document.getElementsByClassName("graph");
+    if (elements === null) {
+        elements = [];
+    }
+    elements.length%2 ? varFloat = "left" : varFloat = "right";
 
    // set chord visualization variables from the configuration object
    var offset = Math.PI * config.rotation,
@@ -47,7 +53,8 @@ function chordDiagram(options, matrix, messageType) {
    var fill = d3.scale.ordinal()
          .domain(d3.range(matrix.length-1))
          .range(colors);
-   var div = d3.select("#graphs").append("div").attr("class", "graph");
+   var div = d3.select("#graphs").append("div").attr("class", "graph").style("float", varFloat);
+   div.append("h1").text(messageType);
 
    var svg = div.append("svg")
          .attr("id", "visual")

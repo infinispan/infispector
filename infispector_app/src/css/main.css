@@ -323,3 +323,6 @@ svg[id=chordDiagram] {
     height: 85%;
     margin-left: 55px;
 }
+.graph {
+    width: 40%;
+}

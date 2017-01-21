@@ -321,17 +321,23 @@ function messageFlowChart(nodes, matrix, messageType) {
             longestCnt = element[2].length;
         }
     });
-
+    var varFloat = "left";
+    var elements = document.getElementsByClassName("graph");
+    if (elements === null) {
+        elements = [];
+    }
+    elements.length%2 ? varFloat = "left" : varFloat = "right";
     var width = 650, height = 610, margin ={b:0, t:40, l:170, r:50};
     
-    var div = d3.select("#graphs").append("div").attr("class", "graph");
+    var div = d3.select("#graphs").append("div").attr("class", "graph").style("float", varFloat);
+    div.append("h1").text(messageType);
     
     var svg = div.append("svg").attr('width',width)
             .attr('height',(height+margin.b+margin.t))
             .attr("id", messageType)
             .append("g").attr("transform","translate("+ margin.l+","+margin.t+")");
     var data = [ 
-            {data:bP.partData(matrix,2), id:'Comunication' + messageType, header:["From","To", "Nodes"]}
+            {data:bP.partData(matrix,2), id:'Comunication' + messageType, header:["From","To", ""]}
     ];
     bP.draw(data, svg, longest, longestCnt * 10 + 4);
 }

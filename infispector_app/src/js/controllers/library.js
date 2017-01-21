@@ -111,7 +111,6 @@ app.controller('InfiSpectorCtrl', ['$scope', '$http', function ($scope, $http) {
             // StateResponseCommand, StateRequestCommand
 //            var searchMessageText = document.getElementById("searchMessageText").value;
             var searchMessageText = ""; // "" means show all messages, no filter
-            
             $scope.getNodes().then(function (nodes) {
                 var nodesArrayInJson = [];
                 for (var i = 0; i < nodes.length; i++) {
@@ -143,6 +142,7 @@ app.controller('InfiSpectorCtrl', ['$scope', '$http', function ($scope, $http) {
         };
 
         $scope.chordDiagram = function (messages) {
+            
             if (messages === "add") {
                 messages = document.getElementById("inputFilter").value;
             }
