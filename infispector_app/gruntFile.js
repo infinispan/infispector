@@ -198,7 +198,10 @@
               command: 'nodemon <%= serverFile %>',
               options: {
                   stdout: true,
-                  stderr: true
+                  stderr: true,
+                  execOptions: {
+                      maxBuffer: Infinity
+                  }
               }
           }
       },
