@@ -326,3 +326,20 @@ svg[id=chordDiagram] {
 .graph {
     width: 40%;
 }
+
+/*Growl notifications*/
+.growl-notice {
+  display:none;
+  width: 300px;
+  height: 65px;
+  padding: 5px 10px;
+  border-radius: 4px;
+  opacity: .70;
+  font-size: 14px;
+  color: #fff;
+  background: #BF0025;
+  position: fixed;
+  right: 10px;
+  top: 145px;
+  line-height:60px;
+}
