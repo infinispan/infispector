@@ -289,7 +289,8 @@ function higher() {
     var difference;
     var alreadySelected;
     if (timeScale === "Hour") {
-        alert("Unable to go higher!");
+        //alert("Unable to go higher!");
+        displayGrowl('Unable to go higher!');
         return;
     }
     localStorage.setItem("lowestLayer", 0);
@@ -329,7 +330,8 @@ function higher() {
 function getSelectedTime() {
     var selectedValues = localStorage.getItem("selectedTime");
     if (selectedValues === null) {
-        alert("No time selected!");
+        //alert("No time selected!");
+        displayGrowl('No time selected!');
         return 1;
     }
     var scales = localStorage.getItem("scales");
