@@ -18,7 +18,7 @@ function chordDiagram(options, matrix, messageType) {
     if (elements === null) {
         elements = [];
     }
-    elements.length%2 ? varFloat = "left" : varFloat = "right";
+    elements.length%2 ? varFloat = "right" : varFloat = "left";
 
    // set chord visualization variables from the configuration object
    var offset = Math.PI * config.rotation,

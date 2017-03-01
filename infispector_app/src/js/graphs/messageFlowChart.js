@@ -326,7 +326,7 @@ function messageFlowChart(nodes, matrix, messageType) {
     if (elements === null) {
         elements = [];
     }
-    elements.length%2 ? varFloat = "left" : varFloat = "right";
+    elements.length%2 ? varFloat = "right" : varFloat = "left";
     var width = 650, height = 610, margin ={b:0, t:40, l:170, r:50};
     
     var div = d3.select("#graphs").append("div").attr("class", "graph").style("float", varFloat);

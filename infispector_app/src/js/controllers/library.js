@@ -5,6 +5,7 @@ app.controller('InfiSpectorCtrl', ['$scope', '$http', function ($scope, $http) {
         
         $scope.nodeMessagesInfo;
         $scope.index;
+        $scope.hidden = true;
         
         $scope.connectToDruid = function () {
 
@@ -34,7 +35,6 @@ app.controller('InfiSpectorCtrl', ['$scope', '$http', function ($scope, $http) {
                 if (response.data.error === 1) {
                     console.log('ERROR: response.data.error === 1');
                 } else {
-                    console.log("scope.getNodes: " + response.data.jsonResponseAsString);
 
                     // TODO: better array / string handling, develop some contract
                     console.log(response.data.jsonResponseAsString);
@@ -83,23 +83,28 @@ app.controller('InfiSpectorCtrl', ['$scope', '$http', function ($scope, $http) {
             $scope.messageInfo = $scope.nodeMessagesInfo[$scope.index];
         };
         
-        $scope.drawGraph = function () {
-            deleteGraphs();
+        $scope.drawGraph = function (addedFilter) {
+            var filters = "";
+            if (addedFilter) {
+                filters = document.getElementById("inputFilter").value;
+                filters = filters.replace(" ", "");
+            }
+            else {
+                deleteGraphs();
+                filters = "SingleRpcCommand,CacheTopologyControlCommand,StateResponseCommand,StateRequestCommand";
+            }
             var element = document.getElementById("cmn-toggle-7");
             if (element.checked) {      //flow chart
-                $scope.flowChart("SingleRpcCommand,CacheTopologyControlCommand,StateResponseCommand,StateRequestCommand");
+                $scope.flowChart(filters);
             }
             else {  //chord diagram
-                $scope.chordDiagram("SingleRpcCommand,CacheTopologyControlCommand,StateResponseCommand,StateRequestCommand");
+                $scope.chordDiagram(filters);
             }
         };
         
         // TODO: we will need more flowCharts in the dashboard 
         // TODO: create matrix/array of flowcharts
         $scope.flowChart = function (messages) {
-            if (messages === "add") {
-                messages = document.getElementById("inputFilter").value;
-            }
             messages = messages.split(",");
             var times = getSelectedTime();
             var from = times[0];
@@ -131,21 +136,16 @@ app.controller('InfiSpectorCtrl', ['$scope', '$http', function ($scope, $http) {
                             var matrix = JSON.parse(response.data.matrix);
                             var searchMessage = JSON.parse(response.data.searchMessage);
 
-                            console.log("-------- library.js get nodes + draw flow chart matrix: " + matrix);
-
                             messageFlowChart(nodes, matrix, searchMessage);
                        }
                     });
                 }
             });
+            $scope.hidden = false;
             return 0;
         };
 
         $scope.chordDiagram = function (messages) {
-            
-            if (messages === "add") {
-                messages = document.getElementById("inputFilter").value;
-            }
             messages = messages.split(",");
             var times = getSelectedTime();
             var from = times[0];
@@ -186,13 +186,13 @@ app.controller('InfiSpectorCtrl', ['$scope', '$http', function ($scope, $http) {
                                     "rgb(41,208,208)"]
                             };
                             var matrix = JSON.parse(response.data.matrix);
-                            console.log(response.data.searchMessage);
                             var searchMessage = JSON.parse(response.data.searchMessage);
                             chordDiagram(chord_options, matrix, searchMessage);
                         }
                     });
                 }
             });
+            $scope.hidden = false;
         };
 
     }]);
