@@ -323,8 +323,34 @@ svg[id=chordDiagram] {
     height: 85%;
     margin-left: 55px;
 }
+
+#graphs {
+    display:inline-block;
+}
+
 .graph {
     width: 40%;
+}
+
+.drawButton {
+    font-family: "Roboto Slab", serif;
+    font-size: 20px;
+    text-align: center;
+    font-weight: bold;
+    outline: 0;
+}
+
+#addNewGraphContainer {
+    width: 30%;
+    margin-left: 140px;
+    margin-right: 140px;
+    margin-top: 60px;
+}
+
+#addNewGraph {
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 5px;
 }
 
 /*Growl notifications*/

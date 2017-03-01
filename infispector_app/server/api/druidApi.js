@@ -6,7 +6,7 @@ var druidRequester = require('facetjs-druid-requester').druidRequesterFactory(pa
 
 // TODO: pass this as a parameter when starting grunt to enable/disable log messages
 // without the need of code change here
-var druid_debug_enabled = true;
+var druid_debug_enabled = false;
 var debug = function (msg) {
     if (druid_debug_enabled) {
         console.log(msg);
