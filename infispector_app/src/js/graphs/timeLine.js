@@ -48,7 +48,7 @@ function timeLine(timeStampsArg, timeScaleArg, multiplier) {
     }
     var data = [];
     for (var j = 0; j < timeStamps; j++) {
-        data[j] = {"timeStamp": (j + 1) * multiplier, "numberOfMessages": Math.floor(Math.random() * 100)}; //random for now. Will be replaced with druid request
+        data[j] = {"timeStamp": (j + 1) * multiplier, "numberOfMessages": Math.floor(Math.random() * 1000000000)}; //random for now. Will be replaced with druid request
     }
     highestValue = getHighestValue(data);
     var histogram = d3.layout.histogram()
@@ -75,6 +75,10 @@ function timeLine(timeStampsArg, timeScaleArg, multiplier) {
     
     var yAxis = d3.svg.axis()
                 .scale(y)
+                .tickFormat(function (d) {
+                    var prefix = d3.formatPrefix(d);
+                    return prefix.scale(d) + prefix.symbol;
+                })
                 .orient("left");
 
     var canvas = d3.select("#timeLineDiv").append("svg")
@@ -94,13 +98,13 @@ function timeLine(timeStampsArg, timeScaleArg, multiplier) {
                     .attr("class", "axis")
                     .call(yAxis);
 
-            canvas.append("text")
-                    .attr("x", -50)
-                    .attr("y", -30)
-                    .attr("transform", "rotate(270)")
-                    .style("text-anchor", "middle")
-                    .text("Number of messages");
-
+    canvas.append("text")
+            .attr("x", -50)
+            .attr("y", -45)
+            .attr("transform", "rotate(270)")
+            .style("text-anchor", "middle")
+            .text("Number of messages");
+    
     canvas.append("text")                                           // adding axis description
             .attr("x", width / 2)
             .attr("y", height + 30)
@@ -133,6 +137,7 @@ function timeLine(timeStampsArg, timeScaleArg, multiplier) {
             .attr("fill", "steelblue")
             .on("mouseover", function () {
                 var thisBar = d3.select(this);
+                thisBar[0][0].nextSibling.setAttribute("style", "opacity: 1"); //show value
                 if (parseInt(thisBar.attr("selected"), 10) === 0) {
                     thisBar.transition()
                             .attr("fill", "red");
@@ -140,6 +145,7 @@ function timeLine(timeStampsArg, timeScaleArg, multiplier) {
             })
             .on("mouseout", function () {
                 var thisBar = d3.select(this);
+                thisBar[0][0].nextSibling.setAttribute("style", "opacity: 0"); // hide value
                 if (parseInt(thisBar.attr("selected"), 10) === 0) {
                     thisBar.transition()
                             .attr("fill", "steelblue");
@@ -196,16 +202,15 @@ function timeLine(timeStampsArg, timeScaleArg, multiplier) {
             .attr("x", function (d) {
                 return d.x;
             })
-            .attr("y", function (d) {
-                return height - (d.y / highestValue * height);
-            })
+            .attr("y", -25)
             .attr("dy", "20px")
             .attr("dx", function (d) {
                 return d.dx / 2;
             })
-            .attr("fill", "#FFF")
+            .attr("fill", "#000")
             .attr("text-anchor", "middle")
-            .attr("font-size", "8px")
+            .attr("font-size", "10px")
+            .style("opacity", 0)
             .text(function (d) {
                 return d.y;
             });
