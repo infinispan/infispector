@@ -13,3 +13,4 @@ nbproject/
 /infinispan_example_app/target/
 npm-debug.log
 start.sh
+node_modules/
