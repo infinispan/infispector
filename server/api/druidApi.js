@@ -333,7 +333,7 @@ exports.queryDruid = function (request, response) {
             + request.body.payload + " " + request.body.myQuery);
 
     var params = {host: "druid-solo:8084", debug: "true"};
-    var druidRequester = require('facetjs-druid-requester').druidRequesterFactory(params);
+    var druidRequester = require('plywood-druid-requester').druidRequesterFactory(params);
 
     druidRequester({
         query: {
@@ -365,8 +365,8 @@ exports.getNodes = function (request, response) {
 
     console.log('getNodes function from druidApi.js was called.');
 
-    var params = {host: "127.0.0.1:8084", debug: "true"};
-    var druidRequester = require('facetjs-druid-requester').druidRequesterFactory(params);
+    var params = {host: "druid-solo:8084", debug: "true"};
+    var druidRequester = require('plywood-druid-requester').druidRequesterFactory(params);
 
     druidRequester({
         query: {
@@ -413,8 +413,8 @@ exports.getMessagesCount = function (request, response) {
     var srcNode = request.body.srcNode;
     var destNode = request.body.destNode;
 
-    var params = {host: "127.0.0.1:8084", debug: "true"};
-    var druidRequester = require('facetjs-druid-requester').druidRequesterFactory(params);
+    var params = {host: "druid-solo:8084", debug: "true"};
+    var druidRequester = require('plywood-druid-requester').druidRequesterFactory(params);
 
     druidRequester({
         query: {
@@ -468,8 +468,8 @@ var getMessagesCountIntern = function (srcNode, destNode) {
     
     return new Promise(function (resolve, reject) {
 
-    var params = {host: "127.0.0.1:8084", debug: "true"};
-    var druidRequester = require('facetjs-druid-requester').druidRequesterFactory(params);
+    var params = {host: "druid-solo:8084", debug: "true"};
+    var druidRequester = require('plywood-druid-requester').druidRequesterFactory(params);
 
     // when dimension is "message" we can get aggregation through different messages and their count
     druidRequester({
@@ -545,8 +545,8 @@ exports.getMessagesCountInInterval = function (request, response) {
     var fromTime = request.body.fromTime;
     var toTime = request.body.toTime;
 
-    var params = {host: "127.0.0.1:8084", debug: "true"};
-    var druidRequester = require('facetjs-druid-requester').druidRequesterFactory(params);
+    var params = {host: "druid-solo:8084", debug: "true"};
+    var druidRequester = require('plywood-druid-requester').druidRequesterFactory(params);
 
     druidRequester({
         query: {
@@ -598,8 +598,8 @@ var getMessagesCountInIntervalIntern = function (srcNode, destNode, fromTime, to
 
     return new Promise(function (resolve, reject) {
 
-        var params = {host: "127.0.0.1:8084", debug: "true"};
-        var druidRequester = require('facetjs-druid-requester').druidRequesterFactory(params);
+        var params = {host: "druid-solo:8084", debug: "true"};
+        var druidRequester = require('plywood-druid-requester').druidRequesterFactory(params);
 
         druidRequester({
             query: {
@@ -650,8 +650,8 @@ exports.getMessagesCountOfControlCache = function (request, response) {
 
  console.log('getMessagesCountOfControlCachefunction from druidApi.js was called. ');
       
-   var params = {host: "127.0.0.1:8084", debug: "true"};
-   var druidRequester = require('facetjs-druid-requester').druidRequesterFactory(params);
+   var params = {host: "druid-solo:8084", debug: "true"};
+   var druidRequester = require('plywood-druid-requester').druidRequesterFactory(params);
 
    druidRequester({
        query: {
@@ -696,8 +696,8 @@ exports.getMessagesCountOfControlCacheInInterval = function (request, response) 
  console.log('getMessagesCountOfControlCacheInInterval function from druidApi.js was called. '
         + " " + request.body.fromTime + " " + request.body.toTime);
       
-   var params = {host: "127.0.0.1:8084", debug: "true"};
-   var druidRequester = require('facetjs-druid-requester').druidRequesterFactory(params);
+   var params = {host: "druid-solo:8084", debug: "true"};
+   var druidRequester = require('plywood-druid-requester').druidRequesterFactory(params);
 
    var fromTime = request.body.fromTime;
    var toTime = request.body.toTime;
@@ -745,8 +745,8 @@ exports.getMessagesCountOfSingleRpc = function (request, response) {
 
  console.log('getMessagesCountOfSingleRpcCommand function from druidApi.js was called. ');
       
-   var params = {host: "127.0.0.1:8084", debug: "true"};
-   var druidRequester = require('facetjs-druid-requester').druidRequesterFactory(params);
+   var params = {host: "druid-solo:8084", debug: "true"};
+   var druidRequester = require('plywood-druid-requester').druidRequesterFactory(params);
 
    druidRequester({
        query: {
@@ -790,8 +790,8 @@ exports.getMessagesCountOfSingleRpcInInterval = function (request, response) {
 
  console.log('getMessagesCountOfSingleRpcCommandInInterval function from druidApi.js was called. ');
       
-   var params = {host: "127.0.0.1:8084", debug: "true"};
-   var druidRequester = require('facetjs-druid-requester').druidRequesterFactory(params);
+   var params = {host: "druid-solo:8084", debug: "true"};
+   var druidRequester = require('plywood-druid-requester').druidRequesterFactory(params);
    var fromTime = request.body.fromTime;
    var toTime = request.body.toTime;
    
@@ -842,8 +842,8 @@ exports.getMessagesAndTimestampFromNode = function (request, response) {
 
     var srcNode = "marek-9119";//request.body.srcNode;    
 
-    var params = {host: "127.0.0.1:8084", debug: "true"};
-    var druidRequester = require('facetjs-druid-requester').druidRequesterFactory(params);
+    var params = {host: "druid-solo:8084", debug: "true"};
+    var druidRequester = require('plywood-druid-requester').druidRequesterFactory(params);
 
     druidRequester({
         query: {
@@ -884,8 +884,8 @@ exports.getBottomSliderValue = function (request, response) {
 
  console.log('getBottomSliderValue function from druidApi.js was called. ');
       
-   var params = {host: "127.0.0.1:8084", debug: "true"};
-   var druidRequester = require('facetjs-druid-requester').druidRequesterFactory(params);
+   var params = {host: "druid-solo:8084", debug: "true"};
+   var druidRequester = require('plywood-druid-requester').druidRequesterFactory(params);
 
    druidRequester({
        query: {
@@ -915,8 +915,8 @@ exports.getTopSliderValue = function (request, response) {
 
  console.log('getTopSliderValue function from druidApi.js was called. ');
       
-   var params = {host: "127.0.0.1:8084", debug: "true"};
-   var druidRequester = require('facetjs-druid-requester').druidRequesterFactory(params);
+   var params = {host: "druid-solo:8084", debug: "true"};
+   var druidRequester = require('plywood-druid-requester').druidRequesterFactory(params);
 
    druidRequester({
        query: {
