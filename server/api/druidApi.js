@@ -1,7 +1,7 @@
 var app = require('../../app.js');
 var RSVP = require('rsvp');
 
-var params = {host: "127.0.0.1:8084", debug: "true"};
+var params = {host: "druid-solo:8084", debug: "true"};
 var druidRequester = require('facetjs-druid-requester').druidRequesterFactory(params);
 
 // TODO: pass this as a parameter when starting grunt to enable/disable log messages
