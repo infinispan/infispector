@@ -8,30 +8,20 @@ He monitors that data flow.<br/>
 Send the entries, let it grow,<br/>
 InfiSpector makes the show!
 
-## What is InfiSpector:
+#### What is InfiSpector:
 
 Our intention is to graphically represent JGroups communication
 happening between Infinispan nodes in a cluster to help users and developers
 better understand what's happening inside during data replication/distribution.
 
-## Project structure
+#### How to run the application:
 
-### infinispan_example_app    
+'npm install'
 
-Infinispan example application that is ready to be run in multiple terminals,
-creating Infinispan cluster.
+Install Grunt locally if you don't have it already
 
+Run 'grunt' to build out the app directory (check the gruntfile for more tasks)
 
-### infispector_app
+'node app.js'
 
-Our InfiSpector application for visualization data flows.
-
-
-### kafka_druid_infrastructure
-
-Helper files and configurations for setting up our Lambda Architecture: 
-Zookeper, Apache Kafka and Druid.
-
-## Scheme of Infispector architecture
-
-<img src="https://raw.githubusercontent.com/infinispan/infispector/master/infispector_architecture.png" width="880">
+Access app locally: http://localhost:3000/index.html
