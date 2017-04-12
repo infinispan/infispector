@@ -8,7 +8,8 @@ var express = require('express'),
 // Configuration
 app.configure(function() {
     app.config = require('./config/config')[env];
-    app.set('port', process.env.PORT || 3000);
+    app.set('port', process.env.PORT || process.env.OPENSHIFT_NODEJS_PORT || 8080);
+    app.set('ip', process.env.IP || process.env.OPENSHIFT_NODEJS_IP || '0.0.0.0');	
     app.engine('html', require('ejs').renderFile);
     app.set('views', __dirname + '/app/views');
     app.set('view engine', 'html');
