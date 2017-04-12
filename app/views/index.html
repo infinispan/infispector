@@ -1,0 +1,81 @@
+<html ng-app="InfiSpector">
+    <head>
+        <meta charset="utf-8">
+        <title>InfiSpector</title>
+        <link rel="stylesheet" href="css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="css/bootstrap-responsive.min.css"/>
+        <link rel="stylesheet" href="css/toastr.min.css"/>
+        <link rel="stylesheet" href="css/app.css"/>
+        <link rel="stylesheet" href="css/bootstrap.css"/>
+        <link rel="stylesheet" href="css/main.css"/>
+    </head>
+    <body>
+
+        <div ng-app="InfiSpector" ng-controller="InfiSpectorCtrl" id="ctrl">
+
+            <div id ="logo" style="margin-bottom: 30px;">
+                <center>
+                    <img src="../img/logo.png" width="250" alt="logo">
+                    <nav id="nav-1">
+<!--                        <a class="link-1" ng-click="chordDiagram('SingleRpcCommand, CacheTopologyControlCommand, StateResponseCommand, StateRequestCommand')">Chord Diagram</a>
+                        <a class="link-1" ng-click="flowChart('SingleRpcCommand, CacheTopologyControlCommand, StateResponseCommand, StateRequestCommand')">MessageFlowChart</a>-->
+                        <input id="cmn-toggle-7" class="cmn-toggle cmn-toggle-yes-no" type="checkbox">
+                        <label for="cmn-toggle-7" data-on="Flow Chart" data-off="Chord Diagram"></label>
+                        <input  class="drawButton" type="button" ng-click="drawGraph()" value="Draw">
+                    </nav>
+                    
+                    <div>
+                        <br><br><br><br><br>
+                        <div ng-show="false" id="time_sliders">
+                            Start time: <input type="text" value="0" id="start_input" onchange="changeSlider(this.value)">
+                            <input id="valR" type="range" min="0" max="100" value="0" step="1" oninput="showVal(this.value)" onchange="showVal(this.value)" />                        
+                            End time: <input type="text" value="0" id="end_input" onchange="changeSlider2(this.value)">
+                            <input id="valR2" type="range" min="0" max="100" value="0" step="1" oninput="showVal2(this.value)" onchange="showVal2(this.value)" />                        
+                            <input type="button" ng-model="connectToDruidButton" ng-click="connectToDruid()" value="Connect to druid">
+                            <div> connectToDruid results: {{queryResults}}</div>
+                        </div>
+                    </div>  
+                </center>
+            </div>
+
+            <div class="growl-notice"></div>
+             
+            <div id="timeLineDiv"></div>
+            <div id="message_list">
+            	<h1>Message List</h1>
+            	<pre>
+            	{{messageInfo}}
+            	</pre>
+            	<input type="button" ng-click="prevNodeMessageInfo()" value="Previous" style="margin-left:-2px;">
+            	<input type="button" ng-click="nextNodeMessageInfo()" value="Next">
+            </div>
+            <!--<input  type="button" ng-click="drawGraph()" value="Draw">-->
+            <center><div id="graphs"></div></center>
+            <div id="addNewGraph"></div>
+        </div>
+
+        <!-- build:remove:dist -->
+        <script src="js/angular.js"></script>
+        <script src="js/ngmodules.js"></script>
+        <script src="js/jquery.js"></script>
+        <script src="js/plugins.js"></script>
+        <script src="js/app.js"></script>
+        <script src="js/controllers.js"></script>
+        <script src="js/components.js"></script>
+        <script src="js/services.js"></script>
+
+        <script src="js/controllers.js"></script>
+        <script src="js/directives.js"></script>
+        <!-- /build -->
+        <script src="http://d3js.org/d3.v3.min.js"></script>
+        <script src="js/chordDiagram.js"></script>
+        <script src="js/messageFlowChart.js"></script>
+        <script src="js/timeLine.js"></script>
+         <script src="js/growl_notifications.js"></script>
+        <script>localStorage.clear();
+        localStorage.setItem("multipliers", 1);
+        localStorage.setItem("lowestLayer", 0);
+        timeLine(24, "Hour", 1);
+        </script>
+    </body>
+</html>

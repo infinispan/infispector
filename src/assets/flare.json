@@ -1,0 +1,25 @@
+{
+ "name": "flare",
+ "children": [
+  {
+   "name": "Infinispan Cluster",
+   "children": [
+    {
+     "name": "node0",
+     "children": [
+     ]
+    },    
+    {
+     "name": "node1",
+     "children": [
+     ]
+    }
+   ]
+  }
+ ]
+}
+
+
+
+
+
