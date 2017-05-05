@@ -20,6 +20,10 @@ exports.getFlowChartMatrix = function(req, res) {
     api.druid.getFlowChartMatrix(req, res);
 };
 
+exports.getFlowChartMatrixGroups = function(req, res) {    
+    api.druid.getFlowChartMatrixGroups(req, res);
+};
+
 exports.getChordDiagramMatrix = function(req, res) {    
     api.druid.getChordDiagramMatrix(req, res);
 };

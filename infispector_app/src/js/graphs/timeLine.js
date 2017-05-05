@@ -48,14 +48,14 @@ function timeLine(timeStampsArg, timeScaleArg, multiplier) {
     }
     var data = [];
     for (var j = 0; j < timeStamps; j++) {
-        data[j] = {"timeStamp": (j + 1) * multiplier, "numberOfMessages": Math.floor(Math.random() * 1000000000)}; //random for now. Will be replaced with druid request
+        data[j] = {"timeStamp": (j + 1) * multiplier, "numberOfMessages": Math.floor(Math.random() * 1000)}; //random for now. Will be replaced with druid request
     }
     highestValue = getHighestValue(data);
     var histogram = d3.layout.histogram()
             .bins(timeStamps)(data);            // creating histogram layout
     for (var i = 0; i < timeStamps; i++) {              // filling variable histogram with OUR data
         histogram[i].dx = width / timeStamps;           // width of bar
-        histogram[i].x = (data[i].timeStamp / multiplier) * barWidth - barWidth;   // placing on x axis
+        histogram[i].x = i * barWidth;   // placing on x axis
         histogram[i].y = data[i].numberOfMessages;       // placing on y axis
         histogram[i].d = data[i].timeStamp;             // time
     }
@@ -157,7 +157,7 @@ function timeLine(timeStampsArg, timeScaleArg, multiplier) {
                 var difference;
                 if (parseInt(thisBar.attr("selected"), 10) === 0) {        //bar selected
                     if (parseInt(localStorage.getItem("lowestLayer"), 10) === 1) {
-                        alert("Unable to select more than 2 bars");
+                        displayGrowl("Unable to select more than 2 bars");
                         return;
                     }
                     thisBar.attr("selected", 1);
@@ -258,7 +258,7 @@ function clicked(timeScale, multiplierArg) {
             break;
         case "Minute":
             //if multiplier is greater than 60, we have no need in changing level
-            if (multiplier > 60) {
+            if (multiplier >= 60) {
                 multiplier /= 60;   //calculating next range of 1 bar
                 timeScaleNext = "Minute";
             } else {
@@ -267,7 +267,7 @@ function clicked(timeScale, multiplierArg) {
             break;
         case "Second":
             //same as for minute
-            if (multiplier > 60) {
+            if (multiplier >= 60) {
                 multiplier /= 60;
                 timeScaleNext = "Second";
             } else {
@@ -282,7 +282,7 @@ function clicked(timeScale, multiplierArg) {
                 multiplier /= 60;
                 timeScaleNext = "Milisecond";
             } else {
-                alert("Unable to go any further!");
+                displayGrowl("Unable to go any further!");
                 localStorage.setItem("lowestLayer", 1);
                 return;
             }
@@ -340,8 +340,7 @@ function higher() {
     storage = localStorage.getItem("selectedTime");
     storage = storage.split(",");
     difference = storage.length - ((storage2.length + 1) * 2);
-    alreadySelected = storage.length % 2;
-    storage.splice(storage.length - 2 - alreadySelected - difference, 2 + alreadySelected + difference);
+    storage.splice(storage.length - 2 - difference, 2 + difference);
     if (storage.length === 0) {
         localStorage.removeItem("selectedTime");
     } else {
@@ -370,7 +369,7 @@ function getSelectedTime() {
     var selectedValuesLength = selectedValues.length;
     scales = scales.split(",");
     if (selectedValues === null) {
-        alert("Error! No time selected");
+        displayGrowl('No time selected!');
         return null;
     }
     from = (selectedValues[0] - 1) * 3600000;

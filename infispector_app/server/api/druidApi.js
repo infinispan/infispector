@@ -58,11 +58,10 @@ exports.getNodes = function (request, response) {
  * @param fromTime (format: 2000-10-01T00:00)
  * @param toTime (format: 2000-10-01T00:00)
  */
-var getMessagesCountIntern = function (srcNode, destNode, searchMessageText, fromTime, toTime) {
+var getMessagesCountIntern = function (srcNode, destNode, searchMessageText, fromTime, toTime/*zmena*/, group1, group2/*konec*/) {
 
     return new Promise(function (resolve, reject) {
         debug('getMessagesCountIntern function from druidApi.js was called.');
-
         // dimension is "src" now
         // when dimension would be "message" we can get aggregation through
         // different messages and their count
@@ -70,12 +69,14 @@ var getMessagesCountIntern = function (srcNode, destNode, searchMessageText, fro
         setFilterToDruidQueryBase(druidQueryJson, "and", srcNode, destNode, searchMessageText);
         setAggregationsToDruidQueryBase(druidQueryJson, "count", "length", "length");
         setIntervalsToDruidQueryBase(druidQueryJson, fromTime, toTime); // no from/toTime, use default
-
         druidRequester(druidQueryJson).then(function (result) {
             var res = JSON.stringify(result[0]);
             var reg = /(?:"length":)[0-9]+/g;
+            /* zmena */
+            srcNode = group1;
+            destNode = group2;
+            /* konec */
             var messagesCount = res.match(reg);
-
             if (messagesCount === null) {
                 // resolve with 0 messages count for now
                 // TODO -- look here at proper handling                        
@@ -173,6 +174,69 @@ exports.getMaximumMessageTime = function (request, response) {
                 console.log("\n\nResult: Maximum" + JSON.stringify(result));
             })
             .done();
+};
+
+exports.getFlowChartMatrixGroups = function (request, response) {
+    var groups = request.body.nodes;
+    var from = request.body.from;
+    var to = request.body.to;
+    var searchMessageText = request.body.searchMessageText;
+    var numberOfGroups = groups.length;
+    var matrix = [];
+    var promises = [];
+    var srcGroup = "";
+    var dstGroup = "";
+    for (var i1 = 0; i1 < numberOfGroups; i1++) {
+        for (var i2 = 0; i2 < groups[i1].length; i2++) {
+           for (var i3 = 0; i3 < numberOfGroups; i3++) {
+               for (var i4 = 0; i4 < groups[i3].length; i4++) {
+                   if (groups[i1].length === 1) {
+                       srcGroup = groups[i1][i2].nodeName;
+                       srcGroup = srcGroup.substr(1);
+                       srcGroup = srcGroup.substr(0, srcGroup.length-1);
+                       console.log(srcGroup + "\n\n\n");
+                   }
+                   else {
+                       srcGroup = "group" + i1.toString();
+                   }
+                   if (groups[i3].length === 1) {
+                       dstGroup = groups[i3][i4].nodeName;
+                       dstGroup = dstGroup.substr(1);
+                       dstGroup = dstGroup.substr(0, dstGroup.length-1);
+                   }
+                   else {
+                       dstGroup = "group" + i3.toString();
+                   }
+                   promises = promises.concat(getMessagesCountIntern(
+                           JSON.parse(groups[i1][i2].nodeName), JSON.parse(groups[i3][i4].nodeName),
+                           searchMessageText, from, to, srcGroup, dstGroup));
+               }
+           }
+        }
+    }
+    
+    RSVP.all(promises).then(function (matrixElements) {
+        for (var x = 0; x < matrixElements.length; x++) {
+            matrix[x] = matrixElements[x];
+        }
+        var tmp = 0;
+        for (var i = 0; i < matrix.length; i++) {
+            for (var j = 0; j < matrix.length; j++) {
+                if (i === j) {
+                    continue;
+                }
+                if (matrix[i][0] === matrix[j][0] && matrix[i][1] === matrix[j][1]) {
+                    tmp = matrix[j][2];
+                    matrix.splice(j, 1);
+                    matrix[i][2] = parseInt(tmp) + parseInt(matrix[i][2]);
+                }
+            }
+        }
+        response.send({error: 0, matrix: JSON.stringify(matrix), searchMessage: JSON.stringify(searchMessageText)}, 201);
+
+    }).catch(function (reason) {
+        console.log("At least one of the promises FAILED: " + reason);
+    });
 };
 
 // TODO -- move to chartingApi.js and require druidApi.js  
