@@ -38,7 +38,7 @@ app.controller('InfiSpectorCtrl', ['$scope', '$http', function ($scope, $http) {
 
                     // TODO: better array / string handling, develop some contract
                     console.log(response.data.jsonResponseAsString);
-                    var nodes = response.data.jsonResponseAsString.replace("[", "").replace("]","").split(",");    
+                    var nodes = response.data.jsonResponseAsString.replace("[", "").replace("]","").split(",");
                     return nodes;
                 }
             });
@@ -117,13 +117,29 @@ app.controller('InfiSpectorCtrl', ['$scope', '$http', function ($scope, $http) {
 //            var searchMessageText = document.getElementById("searchMessageText").value;
             var searchMessageText = ""; // "" means show all messages, no filter
             $scope.getNodes().then(function (nodes) {
+                var numberOfNodesInGroup = 1;
                 var nodesArrayInJson = [];
-                for (var i = 0; i < nodes.length; i++) {
-                    nodesArrayInJson[i] = {"nodeName": nodes[i]}; 
+                var tmp = 0;
+                var index1 = nodes.indexOf("\"null\"");
+                nodes.splice(index1, 1);
+                if (numberOfNodesInGroup >= 1) {
+                    for (var index = 0; index < nodes.length; index++) {
+                        tmp = Math.floor(index / numberOfNodesInGroup);
+                        if (Math.ceil(index / numberOfNodesInGroup) - tmp === 0) {
+                            nodesArrayInJson[tmp] = [];
+                        }
+                        nodesArrayInJson[tmp][index % numberOfNodesInGroup] = {"nodeName": nodes[index]};
+                    }
+                    nodesArrayInJson.push([]);
+                    nodesArrayInJson[nodesArrayInJson.length - 1][0] = {"nodeName": "\"null\""};
                 }
+                else {
+                    displayGrowl('Number of nodes in group must be greater than 0');
+                }
+                console.log(nodesArrayInJson);
                 for (var j = 0; j < messages.length; j++) {
                     searchMessageText = messages[j];
-                    var request = $http.post("/getFlowChartMatrix",
+                    var request = $http.post("/getFlowChartMatrixGroups",
                         {
                             "nodes": nodesArrayInJson,
                             "searchMessageText" : searchMessageText
@@ -135,7 +151,6 @@ app.controller('InfiSpectorCtrl', ['$scope', '$http', function ($scope, $http) {
                        else {
                             var matrix = JSON.parse(response.data.matrix);
                             var searchMessage = JSON.parse(response.data.searchMessage);
-
                             messageFlowChart(nodes, matrix, searchMessage);
                        }
                     });
