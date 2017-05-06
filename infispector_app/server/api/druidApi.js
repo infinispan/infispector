@@ -176,7 +176,8 @@ exports.getMaximumMessageTime = function (request, response) {
             .done();
 };
 
-exports.getFlowChartMatrixGroups = function (request, response) {
+// TODO -- move to chartingApi.js and require druidApi.js  
+exports.getFlowChartMatrix = function (request, response) {
     var groups = request.body.nodes;
     var from = request.body.from;
     var to = request.body.to;
@@ -214,7 +215,9 @@ exports.getFlowChartMatrixGroups = function (request, response) {
            }
         }
     }
-    
+    // one matrix element is an [srcNode, destNode, messagesCount] array
+    // each promise returns such an array
+    // matrixElements is array of those arrays, ordered as executed and returned
     RSVP.all(promises).then(function (matrixElements) {
         for (var x = 0; x < matrixElements.length; x++) {
             matrix[x] = matrixElements[x];
@@ -237,48 +240,6 @@ exports.getFlowChartMatrixGroups = function (request, response) {
     }).catch(function (reason) {
         console.log("At least one of the promises FAILED: " + reason);
     });
-};
-
-// TODO -- move to chartingApi.js and require druidApi.js  
-exports.getFlowChartMatrix = function (request, response) {
-    var nodes = request.body.nodes;
-    var from = request.body.from;
-    var to = request.body.to;
-    // we will create one chart for every significant message type / pattern 
-    var searchMessageText = request.body.searchMessageText;
-    var numberOfNodes = nodes.length;
-    var matrix = [];
-
-    var promises = [];
-
-    for (var i = 0; i < numberOfNodes; i++) {
-        for (var j = 0; j < numberOfNodes; j++) {
-            // we concatenate N*N promises for 2D matrix into 1D array
-            promises = promises.concat(getMessagesCountIntern(
-                    JSON.parse(nodes[i].nodeName), JSON.parse(nodes[j].nodeName),
-                    searchMessageText, from, to));
-            // console.log("Promises length = " + promises.length + " at i-j: " + i + "-" + j);
-        }
-    }
-
-    // one matrix element is an [srcNode, destNode, messagesCount] array
-    // each promise returns such an array
-    // matrixElements is array of those arrays, ordered as executed and returned
-    RSVP.all(promises).then(function (matrixElements) {
-        debug("\n in getFlowChartMatrix matrixElements after all promises resolved (stringified): " +
-                JSON.stringify(matrixElements));
-
-        for (var x = 0; x < i * j; x++) {
-            matrix[x] = matrixElements[x];
-        }
-
-        debug("\n in getFlowChartMatrix final matrix (stringified): " + JSON.stringify(matrix));
-        response.send({error: 0, matrix: JSON.stringify(matrix), searchMessage: JSON.stringify(searchMessageText)}, 201);
-
-    }).catch(function (reason) {
-        console.log("At least one of the promises FAILED: " + reason);
-    });
-
 };
 
 // TODO -- move to chartingApi.js and require druidApi.js

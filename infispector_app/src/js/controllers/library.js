@@ -139,7 +139,7 @@ app.controller('InfiSpectorCtrl', ['$scope', '$http', function ($scope, $http) {
                 console.log(nodesArrayInJson);
                 for (var j = 0; j < messages.length; j++) {
                     searchMessageText = messages[j];
-                    var request = $http.post("/getFlowChartMatrixGroups",
+                    var request = $http.post("/getFlowChartMatrix",
                         {
                             "nodes": nodesArrayInJson,
                             "searchMessageText" : searchMessageText
