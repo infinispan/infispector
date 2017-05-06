@@ -365,14 +365,21 @@ svg[id=chordDiagram] {
     outline: 0;
 }
 
-#addNewGraphContainer {
-    width: 30%;
-    margin-left: 140px;
-    margin-right: 140px;
-    margin-top: 60px;
+#addNewGraphContainer{
+    margin-left: 20px;
+    height: 60px;
+    vertical-align: top;
 }
 
-#addNewGraph {
+#legendContainer {
+   font-family: "Roboto Slab", serif;
+   font-size: 20px;
+   text-align: center;
+   font-weight: bold;
+   width: 30%;
+}
+
+.borderedContainer{
     border-style: solid;
     border-width: 1px;
     border-radius: 5px;
