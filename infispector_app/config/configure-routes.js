@@ -14,7 +14,6 @@ function configureRoutes() {
     app.post('/initZoomableChart', routes.initZoomableChart);
     app.post('/getNodes', routes.getNodes);
     app.post('/getFlowChartMatrix', routes.getFlowChartMatrix);
-    app.post('/getFlowChartMatrixGroups', routes.getFlowChartMatrixGroups);
     app.post('/getChordDiagramMatrix', routes.getChordDiagramMatrix);
     app.post('/getMessagesInfo', routes.getMessagesInfo);
     app.get('/', routes.index);
