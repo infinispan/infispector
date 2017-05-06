@@ -17,13 +17,14 @@
                 <center>
                     <img src="../img/logo.png" width="250" alt="logo">
                     <nav id="nav-1">
-<!--                        <a class="link-1" ng-click="chordDiagram('SingleRpcCommand, CacheTopologyControlCommand, StateResponseCommand, StateRequestCommand')">Chord Diagram</a>
-                        <a class="link-1" ng-click="flowChart('SingleRpcCommand, CacheTopologyControlCommand, StateResponseCommand, StateRequestCommand')">MessageFlowChart</a>-->
                         <input id="cmn-toggle-7" class="cmn-toggle cmn-toggle-yes-no" type="checkbox" style="vertical-align:top;">
                         <label for="cmn-toggle-7" data-on="Flow Chart" data-off="Chord Diagram"></label>
                         <input  class="drawButton" type="button" ng-click="drawGraph(false)" value="Draw" style="vertical-align:top; height: 60px;">
                         <input type="text" id="nodesInGroupTxt" value="number of nodes in a group:" style="vertical-align:top; height: 60px;" disabled />
                         <input type="text" id="nodesInGroup" value="1" style="vertical-align:top; height: 60px;" />
+                        <input ng-hide="hidden" type="text" id="inputFilter" placeholder="new filters" value="" style="vertical-align:top; height: 60px;" />
+                        <input ng-hide="hidden" class="drawButton" type="button" ng-click="drawGraph(true)" value="add new filter" style="vertical-align:top; height: 60px;" />
+                        
                     </nav>
                     
                     <div>
@@ -53,14 +54,15 @@
             </div>
             <!--<input  type="button" ng-click="drawGraph()" value="Draw">-->
             <center><div id="graphs"></div></center>
-            <div ng-hide="hidden" id="addNewGraphContainer">
-                <div id="addNewGraph" ng-hide="hidden">
-                    <center>
-                    <input type="text" id="inputFilter" value="" style="vertical-align:top; margin-top: 5px; height: 52px;" />
-                    <input class="drawButton" type="button" ng-click="drawGraph(true)" value="add new filter" style="vertical-align:top; margin-top: 5px;" />
-                    </center>
+            <center>
+                <div ng-hide="legendHidden" id="legendContainer">
+                    <div class="borderedContainer" ng-hide="legendHidden">
+                            <pre>
+                                    {{groupLegend}}
+                            </pre>
+                    </div>
                 </div>
-            </div>
+            </center>
         </div> 
 
         <!-- build:remove:dev -->

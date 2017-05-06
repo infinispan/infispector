@@ -6,6 +6,7 @@ app.controller('InfiSpectorCtrl', ['$scope', '$http', function ($scope, $http) {
         $scope.nodeMessagesInfo;
         $scope.index;
         $scope.hidden = true;
+        $scope.legendHidden = true;
         
         $scope.connectToDruid = function () {
 
@@ -121,6 +122,7 @@ app.controller('InfiSpectorCtrl', ['$scope', '$http', function ($scope, $http) {
                 var nodesArrayInJson = [];
                 var tmp = 0;
                 var index1 = nodes.indexOf("\"null\"");
+                $scope.groupLegend = "";
                 nodes.splice(index1, 1);
                 if (numberOfNodesInGroup >= 1) {
                     for (var index = 0; index < nodes.length; index++) {
@@ -136,7 +138,18 @@ app.controller('InfiSpectorCtrl', ['$scope', '$http', function ($scope, $http) {
                 else {
                     displayGrowl('Number of nodes in group must be greater than 0');
                 }
-                console.log(nodesArrayInJson);
+                if (numberOfNodesInGroup > 1) {
+                        for (var i = 0; i < nodesArrayInJson.length; i++) {
+                            if (nodesArrayInJson[i].length > 1) {
+                                $scope.groupLegend += "\ngroup" + i.toString() + ":\n";
+                                for (var j1 = 0; j1 < nodesArrayInJson[i].length; j1++) {
+                                    $scope.groupLegend += nodesArrayInJson[i][j1].nodeName + "\n";
+                                }
+                                $scope.groupLegend += "\n";
+                            }
+                        }
+                        $scope.legendHidden = false;
+                    }
                 for (var j = 0; j < messages.length; j++) {
                     searchMessageText = messages[j];
                     var request = $http.post("/getFlowChartMatrix",
