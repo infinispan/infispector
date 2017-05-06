@@ -117,7 +117,7 @@ app.controller('InfiSpectorCtrl', ['$scope', '$http', function ($scope, $http) {
 //            var searchMessageText = document.getElementById("searchMessageText").value;
             var searchMessageText = ""; // "" means show all messages, no filter
             $scope.getNodes().then(function (nodes) {
-                var numberOfNodesInGroup = 1;
+                var numberOfNodesInGroup = document.getElementById("nodesInGroup").value;
                 var nodesArrayInJson = [];
                 var tmp = 0;
                 var index1 = nodes.indexOf("\"null\"");

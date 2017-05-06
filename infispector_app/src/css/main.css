@@ -82,9 +82,34 @@ input[type=button]{
     cursor: pointer;
 }
 
+input[type="text"]#nodesInGroup{
+    -webkit-appearance:none!important;
+    color:#a45b36;
+    text-align:left;
+    width:75px;
+    border:1px solid gray;
+    border-left:0px;
+    margin:0 0 0 -7px;
+    background:white;
+    font-family: "Roboto Slab", serif;
+    font-size: 20px;
+    font-weight: bold;
+}
+input[type="text"]#nodesInGroupTxt{
+    -webkit-appearance:none!important;
+    border:1px solid gray;
+    border-right:0px;
+    outline:none;
+    width: 255px;
+    background:white;
+    font-family: "Roboto Slab", serif;
+    font-size: 20px;
+    text-align: center;
+    font-weight: bold;
+}
+
 input[type=text] {
     -webkit-appearance: none;
-    min-width: 120px;
     height: 45px;
     font-size: 18px;
     margin: 0px 0px 10px 0px;
