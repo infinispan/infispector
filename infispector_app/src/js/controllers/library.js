@@ -50,11 +50,13 @@ app.controller('InfiSpectorCtrl', ['$scope', '$http', function ($scope, $http) {
          * @param nodeName contains name of node
          */
         
-        $scope.getNodeInfo = function (nodeName) {
+        $scope.getNodeInfo = function (nodeName, filter) {
             $scope.index = 0;
+            console.log(filter);
             var request = $http.post('/getMessagesInfo', 
             {
-                "nodeName": nodeName
+                "nodeName": nodeName,
+                "filter": filter
             });
             request.then(function (response) {
 //               $scope.nodeMessageInfo = response.data.jsonResponseAsString;
@@ -149,7 +151,10 @@ app.controller('InfiSpectorCtrl', ['$scope', '$http', function ($scope, $http) {
                             }
                         }
                         $scope.legendHidden = false;
-                    }
+                }
+                else {
+                    $scope.legendHidden = true;
+                }
                 for (var j = 0; j < messages.length; j++) {
                     searchMessageText = messages[j];
                     var request = $http.post("/getFlowChartMatrix",
