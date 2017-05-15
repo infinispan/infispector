@@ -262,7 +262,7 @@
                                    .select(".mainbars")
                                    .selectAll(".mainbar")
                                    .select(".barlabel")
-                                   .on("click", function(d, i) {return bP.clickedNode(biP.data.keys[p][i]); });
+                                   .on("click", function(d, i) {return bP.clickedNode(biP.data.keys[p][i] + "," + biP.id); });
                         });
 		});	
 	};
@@ -304,8 +304,9 @@
 		});		
 	};
         
-        bP.clickedNode = function(nodeName) {
-            angular.element(document.getElementById('ctrl')).scope().getNodeInfo(nodeName);
+        bP.clickedNode = function(nodeNameFilter) {
+            var args = nodeNameFilter.split(",");
+            angular.element(document.getElementById('ctrl')).scope().getNodeInfo(args[0], args[1]);
         };
         
 	
@@ -334,10 +335,10 @@ function messageFlowChart(nodes, matrix, messageType) {
     
     var svg = div.append("svg").attr('width',width)
             .attr('height',(height+margin.b+margin.t))
-            .attr("id", messageType)
+            .attr("id", 'Comunication' + messageType)
             .append("g").attr("transform","translate("+ margin.l+","+margin.t+")");
     var data = [ 
-            {data:bP.partData(matrix,2), id:'Comunication' + messageType, header:["From","To", ""]}
+            {data:bP.partData(matrix,2), id:messageType, header:["From","To", ""]}
     ];
     bP.draw(data, svg, longest, longestCnt * 10 + 4);
 }

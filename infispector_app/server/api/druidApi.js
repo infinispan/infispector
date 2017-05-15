@@ -101,8 +101,9 @@ exports.getMessagesInfo = function (request, response) {
             + request.body.nodeName);
 
     var srcNode = request.body.nodeName;
+    //var filter = request.body.filter;
     var destNode = null;
-    var searchMessageText = request.body.searchMessageText;
+    var searchMessageText = request.body.filter;
 
     var druidQueryJson = createGeneralTopNDruidQueryBase("message", "length");
     setFilterToDruidQueryBase(druidQueryJson, "and", srcNode, destNode, searchMessageText);
