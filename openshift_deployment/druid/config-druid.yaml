@@ -1,0 +1,75 @@
+kind: List
+apiVersion: v1
+metadata: {}
+
+items:
+
+- apiVersion: v1
+  kind: Template
+  metadata:
+    name: druid-solo
+    annotations:
+      description: 1-pod Druid
+      tags: messaging, db, NoSQL, database, druid
+  parameters:
+  - name: NAME
+    description: Name prefix for each object created
+    required: true
+    value: druid-solo
+  - name: IMAGE
+    description: Image with Druid
+    required: true
+    value: 172.30.47.227:5000/is-os2/druid-is
+  - name: VOLUME_CAPACITY
+    description: Persistent volume capacity per pod, e.g. 512Mi, 2Gi
+    required: true
+    value: 256Mi
+  objects:  
+  - apiVersion: v1
+    kind: DeploymentConfig
+    metadata:
+      name: ${NAME}
+    spec:
+      replicas: 1
+      selector:
+        deploymentconfig: ${NAME}
+      template:
+        metadata:
+          labels:
+            deploymentconfig: ${NAME}
+        spec:
+          containers:
+          - name: druid
+            image: ${IMAGE}
+            command:
+            - java
+            args:
+            - -Xmx256m
+            - -XX:MaxDirectMemorySize=200000000
+            - -Ddruid.zk.service.host=apache-kafka
+            - -Duser.timezone=UTC
+            - -Dfile.encoding=UTF-8
+            - -Ddruid.realtime.specFile=/opt/druid/config/infispectorDruid.spec
+            - -classpath
+            - "/opt/druid/config/_common:/opt/druid/config/realtime:/opt/druid/lib/*"
+            - io.druid.cli.Main
+            - server
+            - realtime            
+            volumeMounts:
+            - mountPath: /tmp/druid-logs
+              name: druid-logs
+            ports:
+            - containerPort: 8084        
+          volumes:          
+          - name: druid-logs
+            emptyDir: {}
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      name: ${NAME}
+    spec:
+      ports:      
+      - name: druid
+        port: 8084
+      selector:
+        deploymentconfig: ${NAME}
