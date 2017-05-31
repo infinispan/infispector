@@ -1,0 +1,84 @@
+kind: List
+apiVersion: v1
+metadata: {}
+
+items:
+
+- apiVersion: v1
+  kind: Template
+  metadata:
+    name: apache-kafka
+    annotations:
+      description: 1-pod Apache Kafka + ZooKeeper
+      tags: messaging,streaming,kafka
+  parameters:
+  - name: NAME
+    description: Name prefix for each object created
+    required: true
+    value: apache-kafka
+  - name: IMAGE
+    description: Image with Apache Kafka and Apache ZooKeeper
+    required: true
+    value: 172.30.47.227:5000/is-os2/kafka-is
+  - name: VOLUME_CAPACITY
+    description: Persistent volume capacity per pod, e.g. 512Mi, 2Gi
+    required: true
+    value: 256Mi
+  objects:
+  - apiVersion: v1
+    kind: DeploymentConfig
+    metadata:
+      name: ${NAME}
+    spec:
+      replicas: 1
+      selector:
+        deploymentconfig: ${NAME}
+      template:
+        metadata:
+          labels:
+            deploymentconfig: ${NAME}
+        spec:
+          containers:
+          - name: apache-zookeeper
+            image: ${IMAGE}
+            command:
+            - kafka/bin/zookeeper-server-start.sh
+            args:
+            - kafka/config/zookeeper.properties
+            volumeMounts:
+            - mountPath: /kafka/tmp/zookeeper
+              name: zookeeper
+            ports:
+            - containerPort: 2181
+          - name: apache-kafka
+            image: ${IMAGE}
+            command:
+            - kafka/bin/kafka-server-start.sh
+            args:
+            - kafka/config/server.properties 
+            - --override
+            - advertised.host.name=${NAME}
+            - --override
+            - zookeeper.connect=apache-kafka
+            volumeMounts:
+            - mountPath: /kafka/tmp/kafka-logs
+              name: kafka-logs
+            ports:
+            - containerPort: 9092              
+          volumes:
+          - name: kafka-logs
+            emptyDir: {}
+          - name: zookeeper
+            emptyDir: {}
+  - apiVersion: v1
+    kind: Service
+    metadata:
+      name: ${NAME}
+    spec:
+      ports:
+      - name: kafka
+        port: 9092
+      - name: zookeeper
+        port: 2181
+      selector:
+        deploymentconfig: ${NAME}
