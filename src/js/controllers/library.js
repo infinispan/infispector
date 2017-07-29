@@ -16,7 +16,6 @@ app.controller('InfiSpectorCtrl', ['$scope', '$http', function ($scope, $http) {
                     "&myQuery=" + 'my custom query' +
                     "&attribute=" + 'some other attributes'
                     );
-
             return request.then(function (response) {
                 if (response.data.error === 1) {
                     console.log('ERROR: response.data.error === 1');
@@ -36,7 +35,6 @@ app.controller('InfiSpectorCtrl', ['$scope', '$http', function ($scope, $http) {
                 if (response.data.error === 1) {
                     console.log('ERROR: response.data.error === 1');
                 } else {
-
                     // TODO: better array / string handling, develop some contract
                     console.log(response.data.jsonResponseAsString);
                     var nodes = response.data.jsonResponseAsString.replace("[", "").replace("]","").split(",");
@@ -168,6 +166,7 @@ app.controller('InfiSpectorCtrl', ['$scope', '$http', function ($scope, $http) {
                        } 
                        else {
                             var matrix = JSON.parse(response.data.matrix);
+                            console.log(matrix);
                             var searchMessage = JSON.parse(response.data.searchMessage);
                             messageFlowChart(nodes, matrix, searchMessage);
                        }

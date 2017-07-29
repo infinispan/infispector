@@ -1,12 +1,13 @@
 var app = require('../../app.js');
 var RSVP = require('rsvp');
+var localhost = true; // set false if not working locally
 
-var params = {host: "druid-solo:8084", debug: "true"};
+var params = (localhost) ? {host: "127.0.0.1:8084", debug: "true"} : {host: "druid-solo:8084", debug: "true"};
 var druidRequester = require('plywood-druid-requester').druidRequesterFactory(params);
 
 // TODO: pass this as a parameter when starting grunt to enable/disable log messages
 // without the need of code change here
-var druid_debug_enabled = false;
+var druid_debug_enabled = true;
 var debug = function (msg) {
     if (druid_debug_enabled) {
         console.log(msg);
@@ -196,7 +197,6 @@ exports.getFlowChartMatrix = function (request, response) {
                        srcGroup = groups[i1][i2].nodeName;
                        srcGroup = srcGroup.substr(1);
                        srcGroup = srcGroup.substr(0, srcGroup.length-1);
-                       console.log(srcGroup + "\n\n\n");
                    }
                    else {
                        srcGroup = "group" + i1.toString();
@@ -223,6 +223,7 @@ exports.getFlowChartMatrix = function (request, response) {
         for (var x = 0; x < matrixElements.length; x++) {
             matrix[x] = matrixElements[x];
         }
+        console.log(matrix);
         var tmp = 0;
         for (var i = 0; i < matrix.length; i++) {
             for (var j = 0; j < matrix.length; j++) {
@@ -324,17 +325,75 @@ var createGeneralTopNDruidQueryBase = function (dimension, metric) {
     queryJson.query.dataSource = "InfiSpectorTopic";
     queryJson.query.granularity = "all";
     queryJson.query.dimension = dimension;
-    var app = require('../../app.js');
-    var RSVP = require('rsvp');
-};
+    queryJson.query.metric = metric;
+    queryJson.query.threshold = "100000"; // TODO: check -- is this enough?
+    return queryJson;
+}
+
+/**
+ * @param queryJson - mandatory
+ * @param filterOperand - use 'and' or 'or'
+ * @param srcNode - mandatory
+ * @param destNode - optional
+ * @param searchMessageText - optional - runs 'insensitive_contains' on dimension 'message'
+ */
+var setFilterToDruidQueryBase = function (queryJson, filterOperand, srcNode, destNode, searchMessageText) {
+
+    queryJson.query.filter = {};
+    queryJson.query.filter.type = filterOperand;
+    queryJson.query.filter.fields = [];
+
+    queryJson.query.filter.fields.push({
+        "type": "selector",
+        "dimension": "src",
+        "value": srcNode});
+
+    if (destNode) {
+        queryJson.query.filter.fields.push({
+            "type": "selector",
+            "dimension": "dest",
+            "value": destNode});
+    }
+
+    if (searchMessageText) {
+        queryJson.query.filter.fields.push({
+            "type": "search",
+            "dimension": "message",
+            "query": {
+                "type": "insensitive_contains",
+                "value": searchMessageText
+            }});
+    }
+}
+
+/**
+ * @param queryJson - mandatory
+ * @param type - mandatory
+ * @param fieldName - mandatory
+ * @param name - mandatory
+ */
+var setAggregationsToDruidQueryBase = function (queryJson, type, fieldName, name) {
+    queryJson.query.aggregations = [];
+    queryJson.query.aggregations.push({"type": type, "fieldName": fieldName, "name": name});
+}
+
+var setIntervalsToDruidQueryBase = function (queryJson, fromTime, toTime) {
+    if (fromTime && toTime) {
+        queryJson.query.intervals = [fromTime + "/" + toTime];
+    } else {
+        console.log("In setIntervalsToDruidQueryBase: fromTime or toTime not specified, using default 50 years (2000-2050).")
+        queryJson.query.intervals = ["2000-10-01T00:00/2050-01-01T00"];
+    }
+}
+
 //specimen 
     exports.queryDruid = function (request, response) {
 
         console.log('queryDruid function from druidApi.js was called. '
             + request.body.payload + " " + request.body.myQuery);
 
-        var params = {host: "druid-solo:8084", debug: "true"};
-        var druidRequester = require('plywood-druid-requester').druidRequesterFactory(params);
+        //var params = {host: "127.0.0.1:8084", debug: "true"};
+        //var druidRequester = require('plywood-druid-requester').druidRequesterFactory(params);
 
         druidRequester({
             query: {
@@ -366,8 +425,8 @@ var createGeneralTopNDruidQueryBase = function (dimension, metric) {
 
         console.log('getNodes function from druidApi.js was called.');
 
-        var params = {host: "druid-solo:8084", debug: "true"};
-        var druidRequester = require('plywood-druid-requester').druidRequesterFactory(params);
+        //var params = {host: "127.0.0.1:8084", debug: "true"};
+        //var druidRequester = require('plywood-druid-requester').druidRequesterFactory(params);
 
         druidRequester({
             query: {
@@ -414,8 +473,8 @@ var createGeneralTopNDruidQueryBase = function (dimension, metric) {
         var srcNode = request.body.srcNode;
         var destNode = request.body.destNode;
 
-        var params = {host: "druid-solo:8084", debug: "true"};
-        var druidRequester = require('plywood-druid-requester').druidRequesterFactory(params);
+        //var params = {host: "127.0.0.1:8084", debug: "true"};
+        //var druidRequester = require('plywood-druid-requester').druidRequesterFactory(params);
 
         druidRequester({
             query: {
@@ -469,8 +528,8 @@ var createGeneralTopNDruidQueryBase = function (dimension, metric) {
 
         return new Promise(function (resolve, reject) {
 
-            var params = {host: "druid-solo:8084", debug: "true"};
-            var druidRequester = require('plywood-druid-requester').druidRequesterFactory(params);
+            //var params = {host: "127.0.0.1:8084", debug: "true"};
+            //var druidRequester = require('plywood-druid-requester').druidRequesterFactory(params);
 
             // when dimension is "message" we can get aggregation through different messages and their count
             druidRequester({
@@ -546,8 +605,8 @@ var createGeneralTopNDruidQueryBase = function (dimension, metric) {
         var fromTime = request.body.fromTime;
         var toTime = request.body.toTime;
 
-        var params = {host: "druid-solo:8084", debug: "true"};
-        var druidRequester = require('plywood-druid-requester').druidRequesterFactory(params);
+        //var params = {host: "127.0.0.1:8084", debug: "true"};
+        //var druidRequester = require('plywood-druid-requester').druidRequesterFactory(params);
 
         druidRequester({
             query: {
@@ -599,8 +658,8 @@ var createGeneralTopNDruidQueryBase = function (dimension, metric) {
 
         return new Promise(function (resolve, reject) {
 
-            var params = {host: "druid-solo:8084", debug: "true"};
-            var druidRequester = require('plywood-druid-requester').druidRequesterFactory(params);
+            //var params = {host: "127.0.0.1:8084", debug: "true"};
+            //var druidRequester = require('plywood-druid-requester').druidRequesterFactory(params);
 
             druidRequester({
                 query: {
@@ -651,8 +710,8 @@ var createGeneralTopNDruidQueryBase = function (dimension, metric) {
 
         console.log('getMessagesCountOfControlCachefunction from druidApi.js was called. ');
 
-        var params = {host: "druid-solo:8084", debug: "true"};
-        var druidRequester = require('plywood-druid-requester').druidRequesterFactory(params);
+        //var params = {host: "127.0.0.1:8084", debug: "true"};
+        //var druidRequester = require('plywood-druid-requester').druidRequesterFactory(params);
 
         druidRequester({
             query: {
@@ -697,8 +756,8 @@ var createGeneralTopNDruidQueryBase = function (dimension, metric) {
         console.log('getMessagesCountOfControlCacheInInterval function from druidApi.js was called. '
             + " " + request.body.fromTime + " " + request.body.toTime);
 
-        var params = {host: "druid-solo:8084", debug: "true"};
-        var druidRequester = require('plywood-druid-requester').druidRequesterFactory(params);
+        //var params = {host: "127.0.0.1:8084", debug: "true"};
+        //var druidRequester = require('plywood-druid-requester').druidRequesterFactory(params);
 
         var fromTime = request.body.fromTime;
         var toTime = request.body.toTime;
@@ -746,8 +805,8 @@ var createGeneralTopNDruidQueryBase = function (dimension, metric) {
 
         console.log('getMessagesCountOfSingleRpcCommand function from druidApi.js was called. ');
 
-        var params = {host: "druid-solo:8084", debug: "true"};
-        var druidRequester = require('plywood-druid-requester').druidRequesterFactory(params);
+        //var params = {host: "127.0.0.1:8084", debug: "true"};
+        //var druidRequester = require('plywood-druid-requester').druidRequesterFactory(params);
 
         druidRequester({
             query: {
@@ -791,8 +850,8 @@ var createGeneralTopNDruidQueryBase = function (dimension, metric) {
 
         console.log('getMessagesCountOfSingleRpcCommandInInterval function from druidApi.js was called. ');
 
-        var params = {host: "druid-solo:8084", debug: "true"};
-        var druidRequester = require('plywood-druid-requester').druidRequesterFactory(params);
+        //var params = {host: "127.0.0.1:8084", debug: "true"};
+        //var druidRequester = require('plywood-druid-requester').druidRequesterFactory(params);
         var fromTime = request.body.fromTime;
         var toTime = request.body.toTime;
 
@@ -843,8 +902,8 @@ var createGeneralTopNDruidQueryBase = function (dimension, metric) {
 
         var srcNode = "marek-9119";//request.body.srcNode;
 
-        var params = {host: "druid-solo:8084", debug: "true"};
-        var druidRequester = require('plywood-druid-requester').druidRequesterFactory(params);
+        //var params = {host: "127.0.0.1:8084", debug: "true"};
+        //var druidRequester = require('plywood-druid-requester').druidRequesterFactory(params);
 
         druidRequester({
             query: {
@@ -885,8 +944,8 @@ var createGeneralTopNDruidQueryBase = function (dimension, metric) {
 
         console.log('getBottomSliderValue function from druidApi.js was called. ');
 
-        var params = {host: "druid-solo:8084", debug: "true"};
-        var druidRequester = require('plywood-druid-requester').druidRequesterFactory(params);
+        //var params = {host: "127.0.0.1:8084", debug: "true"};
+        //var druidRequester = require('plywood-druid-requester').druidRequesterFactory(params);
 
         druidRequester({
             query: {
@@ -916,8 +975,8 @@ var createGeneralTopNDruidQueryBase = function (dimension, metric) {
 
         console.log('getTopSliderValue function from druidApi.js was called. ');
 
-        var params = {host: "druid-solo:8084", debug: "true"};
-        var druidRequester = require('plywood-druid-requester').druidRequesterFactory(params);
+        //var params = {host: "127.0.0.1:8084", debug: "true"};
+        //var druidRequester = require('plywood-druid-requester').druidRequesterFactory(params);
 
         druidRequester({
             query: {
@@ -937,73 +996,4 @@ var createGeneralTopNDruidQueryBase = function (dimension, metric) {
                 console.log("\n\nResult: Maximum" + JSON.stringify(result));
             })
             .done();
-    };
-
-
-    exports.getFlowChartMatrix = function (request, response) {
-        var nodes = request.body.nodes;
-        var from = request.body.from;
-        var to = request.body.to;
-        var numberOfNodes = nodes.length;
-        var matrix = [];
-
-        var promises = [];
-
-        for (var i = 0; i < numberOfNodes; i++) {
-            for (var j = 0; j < numberOfNodes; j++) {
-                // we concatenate N*N promises for 2D matrix into 1D array
-                promises = promises.concat(getMessagesCountIntern(
-                    JSON.parse(nodes[i].nodeName), JSON.parse(nodes[j].nodeName)));
-                // console.log("Promises length = " + promises.length + " at i-j: " + i + "-" + j);
-            }
-        }
-
-        // one matrix element is an [srcNode, destNode, messagesCount] array
-        // each promise returns such an array
-        // matrixElements is array of those arrays, ordered as executed and returned
-        RSVP.all(promises).then(function (matrixElements) {
-            console.log("\n in getFlowChartMatrix matrixElements after all promises resolved (stringified): " + JSON.stringify(matrixElements));
-
-            for (var x = 0; x < i * j; x++) {
-                matrix[x] = matrixElements[x];
-            }
-
-            console.log("\n in getFlowChartMatrix final matrix (stringified): " + JSON.stringify(matrix));
-            response.send({error: 0, matrix: JSON.stringify(matrix)}, 201);
-
-        }).catch(function (reason) {
-            console.log("At least one of the promises FAILED: " + reason);
-        });
-
-    };
-
-    exports.getChordDiagramMatrix = function (request, response) {
-        var nodes = request.body.nodes;
-        var from = request.body.from;
-        var to = request.body.to;
-        var numberOfNodes = nodes.length;
-        var matrix = [];
-        var promises = [];
-        for (var i = 0; i < numberOfNodes; i++) {
-            for (var j = 0; j < numberOfNodes; j++) {
-                promises = promises.concat(getMessagesCountIntern(
-                    JSON.parse(nodes[i].nodeName), JSON.parse(nodes[j].nodeName)));
-            }
-        }
-
-        RSVP.all(promises).then(function (matrixElements) {
-            for (var i = 0; i < numberOfNodes; i++) {
-                matrix[i] = [];
-                for (var j = 0; j < numberOfNodes; j++) {
-                    matrix[i][j] = JSON.parse(matrixElements[i * numberOfNodes + j][2]);
-                }
-            }
-            response.send({error: 0, matrix: JSON.stringify(matrix)}, 201);
-        });
-    };
-
-    exports.getMessagesInfo = function (request, response) {
-        var node = request.body.nodeName;
-        // TODO druid request forapp/ message
-        console.log(node);
     };
