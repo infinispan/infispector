@@ -60,7 +60,6 @@ exports.getNodes = function (request, response) {
  * @param toTime (format: 2000-10-01T00:00)
  */
 var getMessagesCountIntern = function (srcNode, destNode, searchMessageText, fromTime, toTime/*zmena*/, group1, group2/*konec*/) {
-
     return new Promise(function (resolve, reject) {
         debug('getMessagesCountIntern function from druidApi.js was called.');
         // dimension is "src" now
@@ -208,8 +207,8 @@ exports.getFlowChartMatrix = function (request, response) {
                    }
                    else {
                        dstGroup = "group" + i3.toString();
-                   }
-                   promises = promises.concat(getMessagesCountIntern(
+                    }
+                    promises = promises.concat(getMessagesCountIntern(
                            JSON.parse(groups[i1][i2].nodeName), JSON.parse(groups[i3][i4].nodeName),
                            searchMessageText, from, to, srcGroup, dstGroup));
                }
@@ -223,7 +222,6 @@ exports.getFlowChartMatrix = function (request, response) {
         for (var x = 0; x < matrixElements.length; x++) {
             matrix[x] = matrixElements[x];
         }
-        console.log(matrix);
         var tmp = 0;
         for (var i = 0; i < matrix.length; i++) {
             for (var j = 0; j < matrix.length; j++) {
@@ -513,76 +511,11 @@ var setIntervalsToDruidQueryBase = function (queryJson, fromTime, toTime) {
                 var messagesCount = test.match(reg);
                 messagesCount = messagesCount[0].replace('"length":', "");
 
-                console.log(messagesCount);
+                //console.log(messagesCount);
 
                 response.send({error: 0, jsonResponseAsString: JSON.stringify(messagesCount)}, 201);
             })
             .done();
-    };
-
-    /*
-     * Same as getMessagesCount for internal usage without a need of HTTP request
-     */
-
-    var getMessagesCountIntern = function (srcNode, destNode) {
-
-        return new Promise(function (resolve, reject) {
-
-            //var params = {host: "127.0.0.1:8084", debug: "true"};
-            //var druidRequester = require('plywood-druid-requester').druidRequesterFactory(params);
-
-            // when dimension is "message" we can get aggregation through different messages and their count
-            druidRequester({
-                query: {
-                    "queryType": "topN",
-                    "dataSource": "InfiSpectorTopic",
-                    "granularity": "all",
-                    "dimension": "src",
-                    "metric": "length",
-                    "threshold": "10000",
-                    "filter": {
-                        "type": "and",
-                        "fields": [
-                            {
-                                "type": "selector",
-                                "dimension": "src",
-                                "value": srcNode
-                            },
-                            {
-                                "type": "selector",
-                                "dimension": "dest",
-                                "value": destNode
-                            }
-                        ]
-                    },
-                    "aggregations": [
-                        {"type": "count", "fieldName": "length", "name": "length"}
-                    ],
-                    "intervals": ["2009-10-01T00:00/2020-01-01T00"]
-                }
-            })
-                .then(function (result) {
-                    var test = JSON.stringify(result[0]);
-                    var reg = /(?:"length":)[0-9]+/g;
-                    var messagesCount = test.match(reg);
-
-                    if (messagesCount === null) {
-                        // resolve with 0 messages count for now
-                        // TODO -- look here at proper handling
-                        var matrixElement = [srcNode, destNode, 0];
-                        resolve(matrixElement);
-                    } else {
-                        messagesCount = messagesCount[0].replace('"length":', "");
-
-                        console.log("in getMessagesCountIntern extracted messagesCount from: "
-                            + test + " = " + messagesCount);
-
-                        var matrixElement = [srcNode, destNode, messagesCount];
-                        resolve(matrixElement);
-                    }
-                })
-                .done();
-        }); // promise
     };
 
     /*
