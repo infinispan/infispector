@@ -166,7 +166,6 @@ app.controller('InfiSpectorCtrl', ['$scope', '$http', function ($scope, $http) {
                        } 
                        else {
                             var matrix = JSON.parse(response.data.matrix);
-                            console.log(matrix);
                             var searchMessage = JSON.parse(response.data.searchMessage);
                             messageFlowChart(nodes, matrix, searchMessage);
                        }
