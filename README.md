@@ -16,12 +16,16 @@ better understand what's happening inside during data replication/distribution.
 
 #### How to run the application:
 
-'npm install'
+chmod +x install.sh
 
-Install Grunt locally if you don't have it already
+./install.sh - script will install dependencies and set everything for your comfort. Script will need password to create a file in /etc/bash\_completion.d/ folder for the autocomplete possibility
 
-Run 'grunt' to build out the app directory (check the gruntfile for more tasks)
+run:
 
-'node app.js'
+infispector prepare
 
-Access app locally: http://localhost:3000/index.html
+(optional) infispector nodes NUMBER - simulate NUMBER of nodes with communication
+
+infispector start
+
+Access app locally: http://localhost:8080/index.html

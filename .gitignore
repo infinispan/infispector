@@ -1,9 +1,12 @@
 app/
 infispector_app/
-infispan_example_app/target/
+infinispan_example_app/target/
+infinispan_example_app/nohup*
 .idea
 nbproject/
 npm-debug.log
 node_modules/
 *.iml
 ideas
+*_err.log
+*.swp
