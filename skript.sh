@@ -3,6 +3,7 @@
 if [ "$#" -ne 2 ]
 then
 	echo "Skript takes 2 arguments. 1st is path to kafka, 2nd is path to druid."
+	exit 1
 fi
 
 PATH_TO_KAFKA=`realpath $1`
