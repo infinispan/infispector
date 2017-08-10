@@ -1,0 +1,14 @@
+_infispector_complete() {
+	local words cur
+	cur="${COMP_WORDS[COMP_CWORD]}"
+	COMPREPLY=()
+	words="prepare start nodes help"
+	if [ ${COMP_CWORD} -eq 1 ]
+	then
+		COMPREPLY=( $(compgen -W "${words}" -- $cur) )
+	else
+		COMPREPLY=()
+	fi
+	return 0
+}
+complete -F _infispector_complete infispector
