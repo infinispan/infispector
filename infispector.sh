@@ -22,6 +22,13 @@ then
 	exit 1
 fi
 
+if [ "$#" -gt "2" ] || { [ "$#" -eq "2" ] && [ "$1" != "nodes"  ]; }
+#if [ \( "$#" -gt "2" \) -o \( "$g" "$#" -eq "2" -a "$1" -ne "nodes" \) ]
+then
+	printf "Invalid number of arguments!\n"
+	exit 1
+fi
+
 if [ "$#" -eq "0" ] || [ $1 == "help" ]
 then
 printf " |_   _|        / _|(_)                        | |              
@@ -91,6 +98,7 @@ if [ $1 == "start" ]
 then
 	cd $INFISPECTOR_LOCATION
 	grunt
+	exit 0
 fi
 
 if [ $1 == "nodes" ]
@@ -130,7 +138,12 @@ then
 	if [ $? -eq 0 ]
 	then
 		printf " ${GREEN}OK${NC}\n"
+		exit 0
 	else
 		printf " ${RED}FAIL${NC}\n"
+		exit 1
 	fi
 fi
+
+printf "Invalid argument!\n"
+exit 1
