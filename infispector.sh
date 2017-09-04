@@ -18,14 +18,14 @@ TIMEOUT="0"
 
 if [[ $EUID -eq 0 ]]
 then
-	printf "Please, run this as a ${WHITE}normal${NC} user, not root.\n"
+	printf "Please, run this as a ${WHITE}normal${NC} user, not root.\n" >$2
 	exit 1
 fi
 
 if [ "$#" -gt "2" ] || { [ "$#" -eq "2" ] && [ "$1" != "nodes"  ]; }
 #if [ \( "$#" -gt "2" \) -o \( "$g" "$#" -eq "2" -a "$1" -ne "nodes" \) ]
 then
-	printf "Invalid number of arguments!\n"
+	printf "Invalid number of arguments!\n" >$2
 	exit 1
 fi
 
@@ -107,7 +107,7 @@ then
 	then
 		if ! [[ $2 =~ $NUMBER_CHECK ]]
 		then
-			printf "Second argument must be a number\n"
+			printf "Second argument must be a number\n" >&2
 			exit 1
 		fi
 		DEFAULT=$2
@@ -145,5 +145,5 @@ then
 	fi
 fi
 
-printf "Invalid argument!\n"
+printf "Invalid argument!\n" >&2
 exit 1

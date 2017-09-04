@@ -33,15 +33,14 @@ fi
 
 if [ -z "$druid_location" ]
 then
-	printf "Downloading druid 0.8.3 ...."
-	wget --quiet "http://static.druid.io/artifacts/releases/druid-0.8.3-bin.tar.gz" > /dev/null
+	wget -q --show-progress "http://static.druid.io/artifacts/releases/druid-0.8.3-bin.tar.gz"
 	if [ $? -eq 0 ]
 	then
-		printf " ${GREEN}OK${NC}\n"
 		tar -xvzf /druid-0.8.3-bin.tar.gz -C $HOME > /dev/null
 		/bin/rm -rf druid-0.8.3-bin.tar.gz > /dev/null
 	else
-		printf " ${RED}FAIL${NC}\n"
+		printf "Druid download failed\n" >&2
+		exit 1
 	fi
 fi
 
@@ -53,16 +52,14 @@ fi
 
 if [ -z "$kafka_location" ]
 then
-	printf "Downloading kafka 2.10-0.8.2.0 ...."
-	wget --quiet "http://mirror.hosting90.cz/apache/kafka/0.8.2.0/kafka_2.10-0.8.2.0.tgz" > /dev/null
+	wget -q --show-progress "http://mirror.hosting90.cz/apache/kafka/0.8.2.0/kafka_2.10-0.8.2.0.tgz"
 	if [ $? -eq 0 ]
 	then
-		printf " ${GREEN}OK${NC}\n"
 		tar -xvzf kafka_2.10-0.8.2.0.tgz -C $HOME > /dev/null
 		/bin/rm -rf kafka_2.10-0.8.2.0.tgz > /dev/null
 		chmod +x $HOME/kafka_2.10-0.8.2.0/bin/*.sh
 	else
-		printf " ${RED}FAIL${NC}\n"
+		printf "Kafka download failed\n" >&2
 	fi
 fi
 
