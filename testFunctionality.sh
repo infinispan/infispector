@@ -3,6 +3,8 @@
 cleanUp() {
 	pkill -f app.js
 	pkill -f grunt
+	cat tmp
+	cat tmp2
 	rm tmp
 	rm tmp2
 }
