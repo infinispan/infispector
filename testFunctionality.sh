@@ -18,6 +18,7 @@ do
 	fi
 	if [ -s tmp2 ]
 	then
+		cat tmp2
 		cleanUp
 		exit 1
 	fi

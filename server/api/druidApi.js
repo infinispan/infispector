@@ -116,7 +116,7 @@ exports.getMessagesInfo = function (request, response) {
                 response.send({error: 0, jsonResponseAsString: JSON.stringify(result)}, 201);
             })
             .done();
-// };
+};
 
 /**
  * Returns the time of the first message in monitored communication
