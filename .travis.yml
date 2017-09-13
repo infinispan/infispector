@@ -1,6 +1,6 @@
 language: node_js
 install:
-        - npm install
-        - mvn clean install -f ./infinispan_example_app/
-script: testFunctionality.sh
+        - npm -s install
+        - mvn -q clean install -f ./infinispan_example_app/
+script: sh testFunctionality.sh
 
