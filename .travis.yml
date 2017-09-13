@@ -1,0 +1,6 @@
+language: node_js
+install:
+        - npm install
+        - mvn clean install
+script: testFunctionality.sh
+
