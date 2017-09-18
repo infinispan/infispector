@@ -1,12 +1,19 @@
-<img src="https://raw.githubusercontent.com/infinispan/infispector/master_angular2_backup/img/logo.jpg" width="276" height="109">
 
+<p align="center">
+<img src="https://raw.githubusercontent.com/infinispan/infispector/master_angular2_backup/img/logo.jpg" width="276" height="109">
+</p>
+
+<p align="center">
 Infinispan messages history,<br/>
 is never more a mystery.<br/>
+</p>
 
+<p align="center">
 Meet InfiSpector, say hello!<br/>
 He monitors that data flow.<br/>
 Send the entries, let it grow,<br/>
 InfiSpector makes the show!
+</p>
 
 #### What is InfiSpector:
 
@@ -16,16 +23,18 @@ better understand what's happening inside during data replication/distribution.
 
 #### How to run the application:
 
-chmod +x install.sh
+- `chmod +x install.sh`
 
-./install.sh - script will install dependencies and set everything for your comfort. Script will need password to create a file in /etc/bash\_completion.d/ folder for the autocomplete possibility
+- `./install.sh`
+   
+   * script will install dependencies and set everything for your comfort. Script will need password to create a file in */etc/bash\_completion.d/* folder for the autocomplete possibility
 
-run:
+- `infispector prepare`
+   * start necessary dependecies
 
-infispector prepare
+- `infispector nodes NUMBER` (optional)
+   * simulate **NUMBER** of nodes with communication
 
-(optional) infispector nodes NUMBER - simulate NUMBER of nodes with communication
+- `infispector start`
 
-infispector start
-
-Access app locally: http://localhost:8080/index.html
+- then you can access app locally at: http://localhost:8080/
