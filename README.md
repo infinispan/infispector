@@ -27,12 +27,13 @@ better understand what's happening inside during data replication/distribution.
 
 - `./install.sh`
    
-  * script will install dependencies and set everything for your comfort. Script will need password to create a file in */etc/bash\_completion.d/* folder for the autocomplete possibility
+   * script will install dependencies and set everything for your comfort. Script will need password to create a file in */etc/bash\_completion.d/* folder for the autocomplete possibility
 
 - `infispector prepare`
+   * start necessary dependecies
 
 - `infispector nodes NUMBER` (optional)
-  * simulate NUMBER of nodes with communication
+   * simulate **NUMBER** of nodes with communication
 
 - `infispector start`
 
