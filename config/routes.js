@@ -16,6 +16,10 @@ exports.getNodes = function(req, res) {
     api.druid.getNodes(req, res);
 };
 
+exports.getMsgCnt = function(req, res) {
+    api.druid.getMsgCnt(req, res);
+};
+
 exports.getFlowChartMatrix = function(req, res) {    
     api.druid.getFlowChartMatrix(req, res);
 };

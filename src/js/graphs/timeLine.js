@@ -1,450 +1,190 @@
-/**
- *   function return highest value from JSON data. Highest value is used as conversion for height of bars
- **/
+function timeLine(units) {
+    var numberOfBars = allUnits[units].value;
+    var margin = {top: 20, right: 30, bottom: 30, left: 80},
+            width = 900 - margin.left - margin.right,
+            height = 300 - margin.top - margin.bottom;
 
-function getHighestValue(data) {
-    var max = 0;
-    data.forEach(function (d) {
-        if (max < d.numberOfMessages) {
-            max = d.numberOfMessages;
-        }
+    var data = [];
+    var selectedValues = [];
+    for (var j = 0; j <= numberOfBars; j++) {
+        data[j] = {"time": j * valueOfOneBar, "value": Math.random()};
+    }
+
+    var numberOfSelected = 0;
+
+    var x = d3.scale.ordinal()
+        .rangeBands([0, width], 0.1);
+
+    var y = d3.scale.linear()
+        .range([height, 0]);
+
+    var xAxis = d3.svg.axis()
+        .scale(x)
+        .tickFormat(function (d) {
+            var prefix = d3.formatPrefix(d);
+            return prefix.scale(d) + prefix.symbol;
+        })
+        .orient("bottom");
+
+    var yAxis = d3.svg.axis()
+        .scale(y)
+        .tickFormat(function (d) {
+            var prefix = d3.formatPrefix(d);
+            return prefix.scale(d) + prefix.symbol;
+        })
+        .orient("left");
+
+    var chart = d3.select("#timeLineDiv").append("svg")
+        .attr("id", "timeLine")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+    x.domain(data.map(function (d) {
+        return d.time;
+    }));
+    y.domain([0, d3.max(data, function (d) {
+        return d.value;
+    })]);
+
+    chart.append("g")
+        .attr("class", "x axis")
+        .attr("transform", "translate(0," + height + ")")
+        .call(xAxis);
+
+    chart.append("g")
+        .attr("class", "y axis")
+        .call(yAxis);
+
+    var bars = chart.selectAll(".bar")
+        .data(data)
+        .enter().append("g");
+
+    bars.append("rect")
+        .attr("class", "bar")
+        .attr("selected", false)
+        .attr("fill", "steelblue")
+        .attr("time", function(d) { return d.time; })       // workaround
+        .attr("x", function (d) {
+            return x(d.time / 1);
+        })
+        .attr("y", function (d) {
+            return y(d.value);
+        })
+        .attr("height", function (d) {
+            return height - y(d.value);
+        })
+        .attr("width", x.rangeBand())
+        .on("mouseover", function () {
+            var thisBar = d3.select(this);
+            thisBar[0][0].nextSibling.setAttribute("style", "opacity: 1");
+            if (thisBar.attr("selected") === "false") { thisBar.attr("fill", "red"); }
+        })
+        .on("mouseout", function () {
+            var thisBar = d3.select(this);
+            thisBar[0][0].nextSibling.setAttribute("style", "opacity: 0");
+            if (thisBar.attr("selected") === "false") { thisBar.attr("fill", "steelblue"); }
+        })
+        .on("click", function () {
+            var thisBar = d3.select(this);
+            if (thisBar.attr("selected") === "false") {
+                if (numberOfSelected === 2) {
+                    displayGrowl("Unable to select more than 2 bars");
+                }
+                else {
+                    thisBar.attr("selected", true).attr("fill", "green");
+                    if (!numberOfSelected) {
+                        selectedValues[0] = thisBar.attr("time");
+                        dateFrom = setTime(units, thisBar.attr("time"));
+                    }
+                    else {
+                        selectedValues[1] = thisBar.attr("time");
+                        dateTo = setTime(units, thisBar.attr("time"));
+                        validateOrder();
+                        timeLineDestroy();
+                        timeLine(decideUnits(units, selectedValues));
+                    }
+                    getTime();
+                    numberOfSelected++;
+                }
+            }
+            else {
+                thisBar.attr("selected", false);
+                numberOfSelected--;
+                selectedValues.pop();
+            }
+        });
+
+    bars.append("text")
+        .attr("x", function (d) {
+            return x(d.time / valueOfOneBar);
+        })
+        .attr("y", -25)
+        .attr("dy", "20px")
+        .attr("fill", "#000")
+        .attr("text-anchor", "middle")
+        .attr("font-size", "10px")
+        .style("opacity", 0)
+        .text(function (d) {
+            return d.value;
     });
-    return max;
+
+    d3.select("#timeLine").attr("height", height + margin.top + margin.bottom + 60)
+        .attr("width", width + margin.left + margin.right + 60);
+
+    chart.append("text")
+        .attr("x", -(height / 2))
+        .attr("y", -45)
+        .attr("transform", "rotate(270)")
+        .style("text-anchor", "middle")
+        .text("Number of messages");
+
+    chart.append("text")                                           // adding axis description
+        .attr("x", width / 2)
+        .attr("y", height + 60)
+        .attr("id", units)
+        .style("text-anchor", "middle")
+        .text(units);
+
+    var ticks = d3.selectAll(".tick");
+    for (var i = 1; i < numberOfBars + 1; i += 2) {
+        ticks[0][i].childNodes[0].setAttribute("y2", 17);
+        ticks[0][i].childNodes[1].setAttribute("y", 20);
+    }
+
+    var button = chart.append("g");
+    button.append("rect")
+        .attr("x", width - 60)
+        .attr("y", height + 40)
+        .attr("rx", 5)
+        .attr("ry", 5)
+        .attr("width", 70)
+        .attr("height", 20)
+        .attr("fill", "#e6e6e6")
+        .attr("border", 2)
+        .attr("stroke", "black")
+        .attr("id", "button")
+        .on("click", function () {
+            higher();
+        });
+    button.append("text")
+        .attr("x", width - 40)
+        .attr("y", height + 55)
+        .attr("fill", "black")
+        .style("cursor", "default")
+        .text("back")
+        .on("click", function () {
+            higher();
+        });
 }
 
 /**
- *   destroys time line graph, so we can recreate it
- **/
-
-function destroyTimeLine() {
+ * Destroys time line diagram
+ */
+function timeLineDestroy() {
     var element = document.getElementById("timeLine");
     if (element !== null) {
         element.remove();
     }
-}
-
-/**
- *   graph itself
- *   @arg timeStampsArg - set to 24 or 60 dependig on current time visualization (24 for hours, 60 for minutes)
- *   @arg timeScaleArg - serves as naming of axis. Values - "Hour", "Minute", "Second"
- *   @arg multiplier - selected range (if user selects from 6 to 10, multiplier will be equal to 4)
- **/
-
-function timeLine(timeStampsArg, timeScaleArg, multiplier) {
-    var width = 500;
-    var height = 100;
-    var timeStamps = timeStampsArg;
-    var barWidth;                                           // width of 1 bar
-    var highestValue;
-    timeStamps > 24 ? barWidth = 9.55 : barWidth = 24;      // conversions discovered by method attempt/fault
-    var timeScale = timeScaleArg;
-    var storage = localStorage.getItem("scales");
-    if (storage === null) {
-        localStorage.setItem("scales", timeScale);
-    } else {
-        storage = storage.split(",");
-        storage.push(timeScale);
-        localStorage.setItem("scales", storage);
-    }
-    var data = [];
-    for (var j = 0; j < timeStamps; j++) {
-        data[j] = {"timeStamp": (j + 1) * multiplier, "numberOfMessages": Math.floor(Math.random() * 1000)}; //random for now. Will be replaced with druid request
-    }
-    highestValue = getHighestValue(data);
-    var histogram = d3.layout.histogram()
-            .bins(timeStamps)(data);            // creating histogram layout
-    for (var i = 0; i < timeStamps; i++) {              // filling variable histogram with OUR data
-        histogram[i].dx = width / timeStamps;           // width of bar
-        histogram[i].x = i * barWidth;   // placing on x axis
-        histogram[i].y = data[i].numberOfMessages;       // placing on y axis
-        histogram[i].d = data[i].timeStamp;             // time
-    }
-    width += 80;              // now we resize width, so everything fit in
-
-    var x = d3.scale.linear()
-            .domain([0, timeStamps * multiplier])
-            .range([0, width - 5]);
-    
-    var y = d3.scale.linear()
-            .domain([highestValue, 0])
-            .range([0, height]);
-
-    var xAxis = d3.svg.axis()           //x axis
-            .scale(x)
-            .orient("bottom");
-    
-    var yAxis = d3.svg.axis()
-                .scale(y)
-                .tickFormat(function (d) {
-                    var prefix = d3.formatPrefix(d);
-                    return prefix.scale(d) + prefix.symbol;
-                })
-                .orient("left");
-
-    var canvas = d3.select("#timeLineDiv").append("svg")
-            .attr("width", width + 100)
-            .attr("height", height + 140)                        // need to add some height, so axis and axis description fits in
-            .attr("id", "timeLine")
-            .append("g")
-            .attr("transform", "translate(60,60)");       //creating canvas
-
-    var group = canvas.append("g")
-            .attr("transform", "translate(-0," + (height) + ")")
-            .attr("class", "axis")
-            .call(xAxis);                                       // adding axis
-
-    canvas.append("g")
-                    .attr("transform", "translate(-1,0)")
-                    .attr("class", "axis")
-                    .call(yAxis);
-
-    canvas.append("text")
-            .attr("x", -50)
-            .attr("y", -45)
-            .attr("transform", "rotate(270)")
-            .style("text-anchor", "middle")
-            .text("Number of messages");
-    
-    canvas.append("text")                                           // adding axis description
-            .attr("x", width / 2)
-            .attr("y", height + 30)
-            .attr("id", timeScale)
-            .style("text-anchor", "middle")
-            .text(timeScale);
-
-    var bars = canvas.selectAll(".bar")                 // creating element "g" for each bar
-            .data(histogram)
-            .enter()
-            .append("g");
-
-    bars.append("rect")                                 // creating bars
-            .attr("x", function (d) {
-                return d.x;
-            })
-            .attr("y", function (d) {
-                return height - (d.y / highestValue * height);
-            })      // highest value gets maximum height, others are set opposite to this
-            .attr("width", function (d) {
-                return d.dx;
-            })
-            .attr("height", function (d) {
-                return d.y / highestValue * height;
-            })
-            .attr("time", function (d) {
-                return d.d;
-            })
-            .attr("selected", 0)
-            .attr("fill", "steelblue")
-            .on("mouseover", function () {
-                var thisBar = d3.select(this);
-                thisBar[0][0].nextSibling.setAttribute("style", "opacity: 1"); //show value
-                if (parseInt(thisBar.attr("selected"), 10) === 0) {
-                    thisBar.transition()
-                            .attr("fill", "red");
-                }
-            })
-            .on("mouseout", function () {
-                var thisBar = d3.select(this);
-                thisBar[0][0].nextSibling.setAttribute("style", "opacity: 0"); // hide value
-                if (parseInt(thisBar.attr("selected"), 10) === 0) {
-                    thisBar.transition()
-                            .attr("fill", "steelblue");
-                }
-            })
-            .on("click", function () {
-                var thisBar = d3.select(this);
-                var storage = localStorage.getItem("selectedTime");
-                var difference;
-                if (parseInt(thisBar.attr("selected"), 10) === 0) {        //bar selected
-                    if (parseInt(localStorage.getItem("lowestLayer"), 10) === 1) {
-                        displayGrowl("Unable to select more than 2 bars");
-                        return;
-                    }
-                    thisBar.attr("selected", 1);
-                    thisBar.transition().attr("fill", "green");
-                    if (storage === null) {
-                        localStorage.setItem("selectedTime", thisBar.attr("time"));
-                    } else {
-                        //we need to store every selected value, not just the last one
-                        storage = storage.split(",");
-                        storage.push(thisBar.attr("time"));
-                        localStorage.setItem("selectedTime", storage);
-                        if ((storage.length % 2) === 0) {        //if storage length is even, we are going to change level (2 values selected)
-                            //we need to calculate difference between selected bars, so we can calculate, if change of scale is necessary
-                            //first we must sort last 2 selected values
-                            if (parseInt(storage[storage.length - 2], 10) > parseInt(storage[storage.length - 1], 10)) {
-                                var x = storage[storage.length - 2];
-                                storage[storage.length - 2] = storage[storage.length - 1];
-                                storage[storage.length - 1] = x;
-                                localStorage.setItem("selectedTime", storage);
-                            }
-                            difference = Math.abs(storage[storage.length - 1] - storage[storage.length - 2]) + (1 * multiplier);
-                            clicked(timeScale, difference);
-                        }
-                    }
-                } else {      //bar deselected
-                    localStorage.setItem("lowestLayer", 0);
-                    thisBar.attr("selected", 0);
-                    thisBar.transition().attr("fill", "steelblue");
-                    storage = storage.split(",");
-                    var index = storage.lastIndexOf(thisBar.attr("time"));  //find index of deselected bar
-                    storage.splice(index, 1);   //remove deselected bar from array
-                    if (storage.length === 0) {  //no more selected bars (needs to be checked only in hour layer)
-                        localStorage.removeItem("selectedTime");
-                    } else {
-                        localStorage.setItem("selectedTime", storage);
-                    }
-                }
-            });
-
-    //adding text with number of messages to bars 
-    bars.append("text")
-            .attr("x", function (d) {
-                return d.x;
-            })
-            .attr("y", -25)
-            .attr("dy", "20px")
-            .attr("dx", function (d) {
-                return d.dx / 2;
-            })
-            .attr("fill", "#000")
-            .attr("text-anchor", "middle")
-            .attr("font-size", "10px")
-            .style("opacity", 0)
-            .text(function (d) {
-                return d.y;
-            });
-
-    //button for returning to higher lvl
-    var button = canvas.append("g");
-    button.append("rect")
-            .attr("x", 504)
-            .attr("y", 120)
-            .attr("rx", 5)
-            .attr("ry", 5)
-            .attr("width", 70)
-            .attr("height", 20)
-            .attr("fill", "#e6e6e6")
-            .attr("border", 2)
-            .attr("stroke", "black")
-            .attr("id", "button")
-            .attr("timeStamp", timeScale)
-            .on("click", function () {
-                higher(d3.select(this).attr("timeStamp"));
-            });
-    button.append("text")
-            .attr("x", 525)
-            .attr("y", 135)
-            .attr("fill", "black")
-            .style("cursor", "default")
-            .text("back")
-            .on("click", function () {
-                higher(d3.select("#button").attr("timeStamp"));
-            });
-}
-
-/**
- *   function redraw graph with new time scaling
- *   @arg timeScale - past time scale. Needed so we can switch to next
- **/
-
-function clicked(timeScale, multiplierArg) {
-    var timeScaleNext;
-    var multiplier = multiplierArg;
-    var multi = localStorage.getItem("multipliers");
-    switch (timeScale) {
-        case "Hour":
-            timeScaleNext = "Minute";
-            break;
-        case "Minute":
-            //if multiplier is greater than 60, we have no need in changing level
-            if (multiplier >= 60) {
-                multiplier /= 60;   //calculating next range of 1 bar
-                timeScaleNext = "Minute";
-            } else {
-                timeScaleNext = "Second";
-            }
-            break;
-        case "Second":
-            //same as for minute
-            if (multiplier >= 60) {
-                multiplier /= 60;
-                timeScaleNext = "Second";
-            } else {
-                timeScaleNext = "Milisecond";
-                multiplier *= 16.6666666666;
-                /*alert("Unable to go any further");
-                 return;*/
-            }
-            break;
-        case "Milisecond":
-            if (multiplier > 60) {
-                multiplier /= 60;
-                timeScaleNext = "Milisecond";
-            } else {
-                displayGrowl("Unable to go any further!");
-                localStorage.setItem("lowestLayer", 1);
-                return;
-            }
-    }
-    //and now store multiplier, so we can implement returning to higher layer
-    if (multi === null) {
-        localStorage.setItem("multipliers", multiplier);
-    } else {
-        multi = multi.split(",");
-        multi.push(multiplier);
-        localStorage.setItem("multipliers", multi);
-    }
-    destroyTimeLine();
-    timeLine(60, timeScaleNext, multiplier);
-}
-
-/**
- *   function redraw graph with time scaling one level higher
- **/
-
-function higher() {
-    var element = d3.select("#button");
-    var timeScale = element.attr("timeStamp");
-    var timeScaleNext;
-    var ticks;
-    var storage;
-    var storage2;
-    var multiply;
-    var difference;
-    var alreadySelected;
-    if (timeScale === "Hour") {
-        //alert("Unable to go higher!");
-        displayGrowl('Unable to go higher!');
-        return;
-    }
-    localStorage.setItem("lowestLayer", 0);
-    storage = localStorage.getItem("multipliers");
-    storage = storage.split(",");
-    storage.splice(storage.length - 1, 1);
-    if (storage.length === 0) {
-        localStorage.removeItem("multipliers");
-    } else {
-        localStorage.setItem("multipliers", storage);
-    }
-    multiply = storage[storage.length - 1];
-    storage2 = localStorage.getItem("scales");
-    storage2 = storage2.split(",");
-    timeScaleNext = storage2[storage2.length - 2];
-    storage2.splice(storage2.length - 2, 2);
-    if (storage2.length === 0) {
-        localStorage.removeItem("scales");
-    } else {
-        localStorage.setItem("scales", storage2);
-    }
-    storage = localStorage.getItem("selectedTime");
-    storage = storage.split(",");
-    difference = storage.length - ((storage2.length + 1) * 2);
-    storage.splice(storage.length - 2 - difference, 2 + difference);
-    if (storage.length === 0) {
-        localStorage.removeItem("selectedTime");
-    } else {
-        localStorage.setItem("selectedTime", storage);
-    }
-    timeScaleNext === "Hour" ? ticks = 24 : ticks = 60;
-    destroyTimeLine();
-    timeLine(ticks, timeScaleNext, multiply);
-}
-
-function getSelectedTime() {
-    var selectedValues = localStorage.getItem("selectedTime");
-    if (selectedValues === null) {
-        //alert("No time selected!");
-        displayGrowl('No time selected!');
-        return 1;
-    }
-    var scales = localStorage.getItem("scales");
-    var multipliers = localStorage.getItem("multipliers");
-    multipliers = multipliers.split(",");
-    var returnArray = [];
-    var index;
-    var from;
-    var to;
-    selectedValues = selectedValues.split(",");
-    var selectedValuesLength = selectedValues.length;
-    scales = scales.split(",");
-    if (selectedValues === null) {
-        displayGrowl('No time selected!');
-        return null;
-    }
-    from = (selectedValues[0] - 1) * 3600000;
-    //to = from;
-    if (selectedValuesLength < 2) {
-        to = from + 3600000;
-        returnArray[0] = from;
-        returnArray[1] = to;
-        return returnArray;
-    }
-    to = (selectedValues[0] - multipliers[0]) * 3600000;
-    //to = from;
-    index = scales.lastIndexOf("Minute");
-    if (index < 0 || selectedValuesLength === 2) {
-        returnArray[0] = from;
-        returnArray[1] = selectedValues[1] * 3600000;
-        return returnArray;
-    }
-    if ((index * 2 + 1) > selectedValuesLength) {
-        returnArray[0] = from + (selectedValues[selectedValuesLength - 2] - multipliers[index - 1]) * 60000;
-        returnArray[1] = to + selectedValues[selectedValuesLength - 1] * 60000;
-        return returnArray;
-    }
-    if ((index * 2) === selectedValuesLength - 1) {
-        from += (selectedValues[selectedValuesLength - 1] - multipliers[index]) * 60000;
-        returnArray[0] = from;
-        returnArray[1] = from + (60000 * multipliers[index]);
-        return returnArray;
-    }
-    from += (selectedValues[index * 2] - multipliers[index]) * 60000;
-    to += (selectedValues[index * 2 + 1]) * 60000;
-    //to = from;
-    if ((index * 2 + 2) === selectedValuesLength) {
-        returnArray[0] = from;
-        returnArray[1] = to;
-        return returnArray;
-    }
-    to = from;
-    index = scales.lastIndexOf("Second");
-    if ((index * 2 + 1) > selectedValuesLength) {
-        returnArray[0] = from + (selectedValues[selectedValuesLength - 2] - multipliers[index - 1]) * 1000;
-        returnArray[1] = to + selectedValues[selectedValuesLength - 1] * 1000;
-        return returnArray;
-    }
-    if ((index * 2 + 1) === selectedValuesLength) {
-        from += (selectedValues[selectedValuesLength - 1] - multipliers[index]) * 1000;
-        returnArray[0] = from;
-        returnArray[1] = from + (1000 * multipliers[index]);
-        return returnArray;
-    }
-    from += (selectedValues[index * 2] - multipliers[index]) * 1000;
-    to += selectedValues[index * 2 + 1] * 1000;
-    //to = from;
-    if ((index * 2 + 2) === selectedValuesLength) {
-        returnArray[0] = from;
-        returnArray[1] = to;
-        return returnArray;
-    }
-    to = from;
-    index = scales.lastIndexOf("Milisecond");
-    if ((index * 2 + 1) > selectedValuesLength) {
-        returnArray[0] = from + (selectedValues[selectedValuesLength - 2] - multipliers[index - 1]);
-        returnArray[1] = parseInt(to, 10) + parseInt(selectedValues[selectedValuesLength - 1], 10);
-        return returnArray;
-    }
-    if ((index * 2 + 1) === selectedValuesLength) {
-        from += (selectedValues[selectedValuesLength - 1] - multipliers[index]);
-        returnArray[0] = from;
-        from = parseInt(from, 10) + parseInt(multipliers[index], 10);
-        returnArray[1] = from;
-        return returnArray;
-    }
-    from += selectedValues[index * 2] - multipliers[index];
-    to += parseInt(selectedValues[(index * 2) + 1], 10);
-    returnArray[0] = from;
-    returnArray[1] = to;
-    return returnArray;
 }

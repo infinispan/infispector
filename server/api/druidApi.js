@@ -49,10 +49,10 @@ exports.getNodes = function (request, response) {
 /**
  * Function that returns final count of messages from src node
  * to dest node in a given time interval with respective filter
- * 
- * Possible Infinispan related filters (for more charts on dashboard) -- 
+ *
+ * Possible Infinispan related filters (for more charts on dashboard) --
  * [SingleRpcCommand, CacheTopologyControlCommand, StateResponseCommand, StateRequestCommand]
- * 
+ *
  * @param srcNode
  * @param destNode
  * @param searchMessageText
@@ -79,7 +79,7 @@ var getMessagesCountIntern = function (srcNode, destNode, searchMessageText, fro
             var messagesCount = res.match(reg);
             if (messagesCount === null) {
                 // resolve with 0 messages count for now
-                // TODO -- look here at proper handling                        
+                // TODO -- look here at proper handling
                 resolve([srcNode, destNode, 0]);
             } else {
                 messagesCount = messagesCount[0].replace('"length":', "");
@@ -90,6 +90,27 @@ var getMessagesCountIntern = function (srcNode, destNode, searchMessageText, fro
             }
         }).done();
     }); // promise
+};
+
+var getMsgCnt = function (fromTime, toTime) {
+    return new Promise(function (resolve, reject) {
+        debug('getMsgCnt function from druidApi.js was called.');
+        var druidQueryJson = createGeneralTopNDruidQueryBase("src", "length");
+        setIntervalsToDruidQueryBase(druidQueryJson, fromTime, toTime);
+        druidRequester(druidQueryJson).then(function (result) {
+            var res = JSON.stringify(result[0]);
+            var reg = /(?:"length":)[0-9]+/g;
+            var messagesCount = res.match(reg);
+            if (messagesCount == null) {
+                resolve(0);
+            }
+            else {
+                messagesCount = messagesCount[0].replace('"length":', "");
+                debug("in getMsgCnt extracted messagesCount from: " + res + "=" + messagesCount);
+                resolve(messagesCount);
+            }
+        }).done();
+    });
 };
 
 /*
@@ -120,7 +141,7 @@ exports.getMessagesInfo = function (request, response) {
 
 /**
  * Returns the time of the first message in monitored communication
- * 
+ *
  * TODO: adjust our query "builder" in druidApi.js if needed
  */
 exports.getMinimumMessageTime = function (request, response) {
@@ -150,7 +171,7 @@ exports.getMinimumMessageTime = function (request, response) {
 
 /**
  * Returns the time of the last message in monitored communication
- * 
+ *
  * TODO: adjust our query "builder" in druidApi.js if needed
  */
 exports.getMaximumMessageTime = function (request, response) {
@@ -177,7 +198,7 @@ exports.getMaximumMessageTime = function (request, response) {
             .done();
 };
 
-// TODO -- move to chartingApi.js and require druidApi.js  
+// TODO -- move to chartingApi.js and require druidApi.js
 exports.getFlowChartMatrix = function (request, response) {
     var groups = request.body.nodes;
     var from = request.body.from;
@@ -247,7 +268,7 @@ exports.getChordDiagramMatrix = function (request, response) {
     var nodes = request.body.nodes;
     var from = request.body.from;
     var to = request.body.to;
-    // we will create one chart for every significant message type / pattern 
+    // we will create one chart for every significant message type / pattern
     var searchMessageText = request.body.searchMessageText;
     var numberOfNodes = nodes.length;
     var matrix = [];
@@ -310,9 +331,9 @@ exports.getChordDiagramMatrix = function (request, response) {
 // QUERY JSON BUILDER SECTION
 
 /**
- * @param dimension - mandatory - dimension to query (Druid: A String or 
+ * @param dimension - mandatory - dimension to query (Druid: A String or
  * JSON object defining the dimension that you want the top taken for.)
- * 
+ *
  * @param metric - mandatory - metric to query (Druid: A String or JSON object
  * specifying the metric to sort by for the top list.)
  */
@@ -384,7 +405,7 @@ var setIntervalsToDruidQueryBase = function (queryJson, fromTime, toTime) {
     }
 }
 
-//specimen 
+//specimen
     exports.queryDruid = function (request, response) {
 
         console.log('queryDruid function from druidApi.js was called. '
@@ -417,7 +438,7 @@ var setIntervalsToDruidQueryBase = function (queryJson, fromTime, toTime) {
     };
 
 
-// function that returns field of nodes 
+// function that returns field of nodes
 //// add null to nodes in .getNodes method
     exports.getNodes = function (request, response) {
 
