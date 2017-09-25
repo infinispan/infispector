@@ -95,12 +95,13 @@ app.controller('InfiSpectorCtrl', ['$scope', '$http', function ($scope, $http) {
                 filters = "SingleRpcCommand,CacheTopologyControlCommand,StateResponseCommand,StateRequestCommand";
             }
             var element = document.getElementById("cmn-toggle-7");
-            if (element.checked) {      //flow chart
-                $scope.flowChart(filters);
-            }
-            else {  //chord diagram
-                $scope.chordDiagram(filters);
-            }
+            $scope.flowChart(filters)
+            // if (element.checked) {      //flow chart
+            //     $scope.flowChart(filters);
+            // }
+            // else {  //chord diagram
+            //     $scope.chordDiagram(filters);
+            // }
         };
         
         // TODO: we will need more flowCharts in the dashboard 
@@ -175,57 +176,6 @@ app.controller('InfiSpectorCtrl', ['$scope', '$http', function ($scope, $http) {
             $scope.hidden = false;
             return 0;
         };
-
-        $scope.chordDiagram = function (messages) {
-            messages = messages.split(",");
-            var times = getSelectedTime();
-            var from = times[0];
-            var to = times[1];
-            //var from = document.getElementById("valR").value;
-            //var to = document.getElementById("valR2").value;
-            
-            // @vhais, please, you can follow $scope.getNodes() for flow chart, we will duplicate code for now, probably
-            // TODO: the whole function $scope.getNodes() is not a promise
-            // TODO: call $http.post('/getNodes'); separately before $http.post("/getChordDiagramMatrix... in one function
-            // TODO: use $http.post("/getChordDiagramMatrix", { "nodes": nodesArrayInJson }); to properly pass parameters
-            var searchMessageText = "";
-            $scope.getNodes().then(function (nodes) {
-                var nodesArrayInJson = [];
-                for (var i = 0; i < nodes.length; i++) {
-                    nodesArrayInJson[i] = {"nodeName": nodes[i]};
-                    nodes[i] = JSON.parse(nodes[i]);
-                }
-                for (var j = 0; j < messages.length; j++) {
-                    searchMessageText = messages[j];
-                    var request = $http.post("/getChordDiagramMatrix",
-                        {
-                            "nodes": nodesArrayInJson,
-                            "searchMessageText" : searchMessageText
-                        });
-                    request.then(function (response) {
-                        if (response.data.error > 0) {
-                            console.log("ERROR: response.data.error > 0");
-                        } else {
-                            var chord_options = {
-                                "gnames": nodes,
-                                "rotation": -0.7,
-                                "colors": ["rgb(233,222,187)", "rgb(255,205,243)", "rgb(255,255,155)",
-                                    "rgb(0,0,0)", "rgb(87,87,87)", "rgb(173,35,35)",
-                                    "rgb(42,75,215)", "rgb(29,105,20)", "rgb(129,74,25)",
-                                    "rgb(255,146,51)", "rgb(255,238,51)", "rgb(129,38,192)",
-                                    "rgb(160,160,160)", "rgb(129,197,122)", "rgb(157,175,215)",
-                                    "rgb(41,208,208)"]
-                            };
-                            var matrix = JSON.parse(response.data.matrix);
-                            var searchMessage = JSON.parse(response.data.searchMessage);
-                            chordDiagram(chord_options, matrix, searchMessage);
-                        }
-                    });
-                }
-            });
-            $scope.hidden = false;
-        };
-
     }]);
 
 app.controller('OperationsCtrl', ['$scope', '$http', function ($scope, $http) {

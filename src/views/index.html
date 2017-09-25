@@ -17,8 +17,8 @@
                 <center>
                     <img src="../img/logo.png" width="250" alt="logo">
                     <nav id="nav-1">
-                        <input id="cmn-toggle-7" class="cmn-toggle cmn-toggle-yes-no" type="checkbox" style="vertical-align:top;">
-                        <label for="cmn-toggle-7" data-on="Flow Chart" data-off="Chord Diagram"></label>
+                        <!--<input id="cmn-toggle-7" class="cmn-toggle cmn-toggle-yes-no" type="checkbox" style="vertical-align:top;">-->
+                        <!--<label for="cmn-toggle-7" data-on="Flow Chart" data-off="Chord Diagram"></label>-->
                         <input  class="drawButton" type="button" ng-click="drawGraph(false)" value="Draw" style="vertical-align:top; height: 60px;">
                         <input type="text" id="nodesInGroupTxt" value="number of nodes in a group:" style="vertical-align:top; height: 60px; width: 250px" disabled />
                         <input type="text" id="nodesInGroup" value="1" style="vertical-align:top; height: 60px;" />
@@ -89,12 +89,11 @@
         <script src="http://d3js.org/d3.v3.min.js"></script>
         <script src="js/chordDiagram.js"></script>
         <script src="js/messageFlowChart.js"></script>
-        <script src="js/timeLine.js"></script>
+        <!--<script src="js/timeLine.js"></script>-->
+        <script src="js/timeLineNew.js"></script>
          <script src="js/growl_notifications.js"></script>
-        <script>localStorage.clear();
-        localStorage.setItem("multipliers", 1);
-        localStorage.setItem("lowestLayer", 0);
-        timeLine(24, "Hour", 1);
+        <script>
+            timeLine("hours", valueOfOneBar);
         </script>
     </body>
 </html>

@@ -6,29 +6,15 @@ WHITE='\033[1;37m'
 GREEN='\033[0;32m'
 RED='\033[0;31m'
 
-#paths
-DRUID_LOCATION=`find / -type d -name druid-0.8.3 2> /dev/null`
-KAFKA_LOCATION=`find / -type d -name kafka_2.10-0.8.2.0 2> /dev/null`
-INFISPECTOR_LOCATION=`find / -type d -iname infispector 2> /dev/null | awk '{ print length, $0 }' | sort -n -s | head -n1 | cut -f 2 -d ' '`
-
-DEFAULT="4"
-NUMBER_CHECK='^[0-9]+$'
-cnt="0"
-TIMEOUT="0"
-
-if [[ $EUID -eq 0 ]]
-then
-	printf "Please, run this as a ${WHITE}normal${NC} user, not root.\n"
-	exit 1
-fi
-
 if [ "$#" -eq "0" ] || [ $1 == "help" ]
 then
-printf " |_   _|        / _|(_)                        | |              
-   | |   _ __  | |_  _  ___  _ __    ___   ___ | |_  ___   _ __ 
-   | |  | '_ \ |  _|| |/ __|| '_ \  / _ \ / __|| __|/ _ \ | '__|
-  _| |_ | | | || |  | |\__ \| |_) ||  __/| (__ | |_| (_) || |   
- |_____||_| |_||_|  |_||___/| .__/  \___| \___| \__|\___/ |_|   
+printf "
+  _____          __  _                          _ 
+ |_   _|        / _|(_)                        | |              
+   | |   _ __  | |_  _  ___  _ __    ___   ___ | |_   ___   _ __ 
+   | |  | '_ \ |  _|| |/ __|| '_ \  / _ \ / __|| __| / _ \ | '__|
+  _| |_ | | | || |  | |\__ \| |_) ||  __/| (__ | |_ | (_) || |   
+ |_____||_| |_||_|  |_||___/| .__/  \___| \___| \__| \___/ |_|   
                             | |                                 
                             |_|                                 
 
@@ -42,6 +28,48 @@ ${GREEN}infispector nodes ${RED}NUMBER${NC} - starts specified ${RED}NUMBER${NC}
 "
 	exit 0
 fi
+
+#paths
+DRUID_LOCATION=`find /home -type d -name druid-0.8.3 2> /dev/null`
+KAFKA_LOCATION=`find /home -type d -name kafka_2.10-0.8.2.0 2> /dev/null`
+INFISPECTOR_LOCATION=`find /home -type d -iname infispector 2> /dev/null | awk '{ print length, $0 }' | sort -n -s | head -n1 | cut -f 2 -d ' '`
+
+DEFAULT="4"
+NUMBER_CHECK='^[0-9]+$'
+cnt="0"
+TIMEOUT="0"
+
+if [ -z $DRUID_LOCATION ]
+then
+	printf "Druid not found. Druid must be in /home/* directory\n" >&2
+	exit 1
+fi
+
+if [ -z $KAFKA_LOCATION ]
+then
+	printf "Kafka not found. Kafka must be in /home/* directory\n" >&2
+	exit 1
+fi
+
+if [ -z $INFISPECTOR_LOCATION ]
+then
+	printf "Infispector not found. Infispector must be in /home/* directory\n" >&2
+	exit 1
+fi
+
+if [ $EUID -eq 0 ]
+then
+	printf "Please, run this as a ${WHITE}normal${NC} user, not root.\n" >$2
+	exit 1
+fi
+
+if [ "$#" -gt "2" ] || { [ "$#" -eq "2" ] && [ "$1" != "nodes"  ]; }
+#if [ \( "$#" -gt "2" \) -o \( "$g" "$#" -eq "2" -a "$1" -ne "nodes" \) ]
+then
+	printf "Invalid number of arguments!\n" >$2
+	exit 1
+fi
+
 
 if [ $1 == "prepare" ]
 then
@@ -76,7 +104,7 @@ then
 		fi
 		if [ $TIMEOUT -eq "10" ]
 		then
-			printf " ${RED}FAIL${NC}"
+			printf " ${RED}FAIL${NC}\n"
 			exit 1
 		fi
 		TIMEOUT=$[$TIMEOUT + 1]
@@ -91,6 +119,7 @@ if [ $1 == "start" ]
 then
 	cd $INFISPECTOR_LOCATION
 	grunt
+	exit 0
 fi
 
 if [ $1 == "nodes" ]
@@ -99,7 +128,7 @@ then
 	then
 		if ! [[ $2 =~ $NUMBER_CHECK ]]
 		then
-			printf "Second argument must be a number\n"
+			printf "Second argument must be a number\n" >&2
 			exit 1
 		fi
 		DEFAULT=$2
@@ -130,7 +159,12 @@ then
 	if [ $? -eq 0 ]
 	then
 		printf " ${GREEN}OK${NC}\n"
+		exit 0
 	else
 		printf " ${RED}FAIL${NC}\n"
+		exit 1
 	fi
 fi
+
+printf "Invalid argument!\n" >&2
+exit 1

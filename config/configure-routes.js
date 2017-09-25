@@ -13,6 +13,7 @@ function configureRoutes() {
     app.post('/getEntry', routes.getEntry);
     app.post('/initZoomableChart', routes.initZoomableChart);
     app.post('/getNodes', routes.getNodes);
+    app.post('/getMsgCnt', routes.getMsgCnt);
     app.post('/getFlowChartMatrix', routes.getFlowChartMatrix);
     app.post('/getChordDiagramMatrix', routes.getChordDiagramMatrix);
     app.post('/getMessagesInfo', routes.getMessagesInfo);
