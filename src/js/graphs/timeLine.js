@@ -1,3 +1,8 @@
+/**
+ * Displays new time line diagram
+ * @param units - current units to be dispayed
+ */
+
 function timeLine(units) {
     var numberOfBars = allUnits[units].value;
     var margin = {top: 20, right: 30, bottom: 30, left: 80},
@@ -97,6 +102,7 @@ function timeLine(units) {
                     if (!numberOfSelected) {
                         selectedValues[0] = thisBar.attr("time");
                         dateFrom = setTime(units, thisBar.attr("time"));
+                        dateTo = new Date(dateFrom.getTime());
                     }
                     else {
                         selectedValues[1] = thisBar.attr("time");
@@ -105,7 +111,7 @@ function timeLine(units) {
                         timeLineDestroy();
                         timeLine(decideUnits(units, selectedValues));
                     }
-                    getTime();
+                    getTime(units);
                     numberOfSelected++;
                 }
             }
