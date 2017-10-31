@@ -6,6 +6,11 @@ NC='\033[0m'		#normal color
 GREEN='\033[0;32m'
 WHITE='\033[1;37m'
 
+#urls
+URL_DRUID="http://static.druid.io/artifacts/releases/druid-0.8.3-bin.tar.gz"
+URL_KAFKA="http://mirror.hosting90.cz/apache/kafka/0.8.2.0/kafka_2.10-0.8.2.0.tgz"
+URL_MAVEN="http://mirror.hosting90.cz/apache/maven/maven-3/3.5.2/binaries/apache-maven-3.5.2-bin.tar.gz"
+
 if [[ $EUID -eq 0 ]]
 then
 	printf "Please, run this script as a ${WHITE}superuser${NC}, not root.\n" >&2
@@ -31,7 +36,7 @@ fi
 if [ -z "$druid_location" ]
 then
 	printf " ${RED}NOT FOUND${NC}.\n"
-	wget -q --show-progress "http://static.druid.io/artifacts/releases/druid-0.8.3-bin.tar.gz"
+	wget -q --show-progress $URL_DRUID
 	if [ $? -eq 0 ]
 	then
 		tar -xvzf /druid-0.8.3-bin.tar.gz -C $HOME > /dev/null
@@ -56,7 +61,7 @@ fi
 if [ -z "$kafka_location" ]
 then
 	printf " ${RED}NOT FOUND${NC}.\n"
-	wget -q --show-progress "http://mirror.hosting90.cz/apache/kafka/0.8.2.0/kafka_2.10-0.8.2.0.tgz"
+	wget -q --show-progress $URL_KAFKA
 	if [ $? -eq 0 ]
 	then
 		tar -xvzf kafka_2.10-0.8.2.0.tgz -C $HOME > /dev/null
@@ -100,7 +105,7 @@ fi
 if ! ls /etc/bash_completion.d/ | grep "infispectorAutocomplete" > /dev/null
 then
 	printf "Moving autocomplete file to /etc/bash_completion.d/ (requires permission) ...."
-	sudo cp $infispector_location/infispectorAutocomplete /etc/bash_completion.d/ #zmenit na mv!
+	sudo cp $infispector_location/infispectorAutocomplete /etc/bash_completion.d/
 	if [ $? -eq 1 ]
 	then
 		printf " ${RED}FAIL${NC}\n"
@@ -138,24 +143,40 @@ then
 fi
 
 #check if mvn is installed
+java -version
+if [ $? -ne 0 ]
+then
+	printf "Please install java and run this script again\n" >&2
+	exit 1
+fi
+
 mvn --version > /dev/null
 if [ $? -ne 0 ]
 then
-	printf "${RED}mvn is required${NC}\n"
-	printf "Please install mvn and run this script again\n" >&2
-	exit 1
+	printf "Maven is necessary to run infispector.\n"
+	printf "Downloading maven...\n"
+	wget -q --show-progress $URL_MAVEN
+	tar zxvf apache-maven-3.5.2-bin.tar.gz -C $HOME > /dev/null
+	bin/rm apache-maven-3.5.2-bin.tar.gz > dev/null
+	M2_HOME=$HOME/apache-maven-3.5.2
+	export M2_HOME
+	#now add maven to .bashrc
+	sed "/PATH=.*/i\
+	M2_HOME='$M2_HOME'\nexport M2_HOME\n\n" -i ~/.bashrc
+	#now add maven home to path
+	sed '/PATH=.*/s/$/:$M2_HOME/bin/' -i ~/.bashrc
+	printf "Maven successfully downloaded and installed!\n"
+fi
+printf "mvn install ...."
+cd $infispector_location/infinispan_example_app/
+mvn -q clean install > $infispector_location/mvn_err.log
+if [ $? -eq 0 ]
+then
+	printf " ${GREEN}OK${NC}\n"
 else
-	printf "mvn install ...."
-	cd $infispector_location/infinispan_example_app/
-	mvn -q clean install > $infispector_location/mvn_err.log
-	if [ $? -eq 0 ]
-	then
-		printf " ${GREEN}OK${NC}\n"
-	else
-		printf " ${RED}FAIL${NC}\n"
-		printf "Error log available in file $infispector_location/mvn_err.log\n" >&2
-		exit 1
-	fi
+	printf " ${RED}FAIL${NC}\n"
+	printf "Error log available in file $infispector_location/mvn_err.log\n" >&2
+	exit 1
 fi
 
 if [ ! -s $infispector_location/mvn_err.log ]
