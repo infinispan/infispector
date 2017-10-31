@@ -96,7 +96,7 @@ then
 	cd $DRUID_LOCATION
 	printf "Starting druid ...."
 	java -Xmx512m -Duser.timezone=UTC -Dfile.encoding=UTF-8 -Ddruid.realtime.specFile=$INFISPECTOR_LOCATION/kafka_druid_infrastructure/infispectorDruid.spec -classpath "config/_common:config/realtime:lib/*" io.druid.cli.Main server realtime > log.txt 2> log_err.txt &
-	if echo $INFISPECTOR_LOCATION | grep travis
+	if echo $INFISPECTOR_LOCATION | grep travis > /dev/null
 	then
 		sleep 10
 	fi

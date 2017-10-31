@@ -9,7 +9,7 @@ install:
         - npm -s install
         - mvn -q clean install -f ./infinispan_example_app/
 script: 
-        - ./testFunctionality.sh
         - ./infispector.sh help
         - ./infispector.sh prepare
         - ./infispector.sh nodes
+        - ./testFunctionality.sh
