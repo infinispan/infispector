@@ -59,7 +59,7 @@ exports.getNodes = function (request, response) {
  * @param fromTime (format: 2000-10-01T00:00)
  * @param toTime (format: 2000-10-01T00:00)
  */
-var getMessagesCountIntern = function (srcNode, destNode, searchMessageText, fromTime, toTime/*zmena*/, group1, group2/*konec*/) {
+var getMessagesCountIntern = function (srcNode, destNode, searchMessageText, fromTime, toTime, group1, group2) {
     return new Promise(function (resolve, reject) {
         debug('getMessagesCountIntern function from druidApi.js was called.');
         // dimension is "src" now
@@ -72,10 +72,8 @@ var getMessagesCountIntern = function (srcNode, destNode, searchMessageText, fro
         druidRequester(druidQueryJson).then(function (result) {
             var res = JSON.stringify(result[0]);
             var reg = /(?:"length":)[0-9]+/g;
-            /* zmena */
             srcNode = group1;
             destNode = group2;
-            /* konec */
             var messagesCount = res.match(reg);
             if (messagesCount === null) {
                 // resolve with 0 messages count for now
@@ -92,25 +90,24 @@ var getMessagesCountIntern = function (srcNode, destNode, searchMessageText, fro
     }); // promise
 };
 
-var getMsgCnt = function (fromTime, toTime) {
-    return new Promise(function (resolve, reject) {
-        debug('getMsgCnt function from druidApi.js was called.');
-        var druidQueryJson = createGeneralTopNDruidQueryBase("src", "length");
-        setIntervalsToDruidQueryBase(druidQueryJson, fromTime, toTime);
-        druidRequester(druidQueryJson).then(function (result) {
-            var res = JSON.stringify(result[0]);
-            var reg = /(?:"length":)[0-9]+/g;
-            var messagesCount = res.match(reg);
-            if (messagesCount == null) {
-                resolve(0);
-            }
-            else {
-                messagesCount = messagesCount[0].replace('"length":', "");
-                debug("in getMsgCnt extracted messagesCount from: " + res + "=" + messagesCount);
-                resolve(messagesCount);
-            }
-        }).done();
-    });
+exports.getMsgCnt = function (request, response) {
+    debug('getMsgCnt function from druidApi.js was called.');
+    var druidQueryJson = createGeneralTopNDruidQueryBase("src", "length");
+    setIntervalsToDruidQueryBase(druidQueryJson, request.body.fromTime, request.body.toTime);
+    druidRequester(druidQueryJson).then(function (result) {
+        var res = JSON.stringify(result[0]);
+        var reg = /(?:"length":)[0-9]+/g;
+        var messagesCount = res.match(reg);
+        if (messagesCount == null) {
+            resolve(0);
+        }
+        else {
+            messagesCount = messagesCount[0].replace('"length":', "");
+            debug("in getMsgCnt extracted messagesCount from: " + res + "=" + messagesCount);
+            resolve(messagesCount);
+        }
+        response.send({error: 0, jsonResponseAsString: JSON.stringify(messagesCount)}, 200);
+    }).done();
 };
 
 /*

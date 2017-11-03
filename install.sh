@@ -1,5 +1,28 @@
 #!/bin/bash
 
+downloadMaven() {
+	printf "Downloading maven...\n"
+	wget -q --show-progress $URL_MAVEN
+	tar zxvf apache-maven-3.5.2-bin.tar.gz -C $HOME > /dev/null
+	/bin/rm apache-maven-3.5.2-bin.tar.gz > /dev/null
+	M2_HOME=$HOME/apache-maven-3.5.2
+	#now add maven to .bashrc
+	if ! cat ~/.bashrc | grep "PATH" > /dev/null
+	then
+		echo "M2_HOME='$M2_HOME'" >> ~/.bashrc
+		echo "export M2_HOME" >> ~/.bashrc
+		echo 'PATH=$M2_HOME/bin:$PATH' >> ~/.bashrc
+		echo "export PATH" >> ~/.bashrc	
+	else
+		sed "/PATH=.*/i\
+		M2_HOME='$M2_HOME'\nexport M2_HOME\n\n" -i ~/.bashrc
+		#now add maven home to path
+		sed "/PATH=.*/s/$/:\$M2_HOME\/bin/" -i ~/.bashrc
+	fi
+	printf "Maven successfully downloaded and installed!\n"
+	source ~/.bashrc
+}
+
 #colors
 RED='\033[0;31m'
 NC='\033[0m'		#normal color
@@ -8,7 +31,7 @@ WHITE='\033[1;37m'
 
 #urls
 URL_DRUID="http://static.druid.io/artifacts/releases/druid-0.8.3-bin.tar.gz"
-URL_KAFKA="http://mirror.hosting90.cz/apache/kafka/0.8.2.0/kafka_2.10-0.8.2.0.tgz"
+URL_KAFKA="https://archive.apache.org/dist/kafka/0.8.2.0/kafka_2.10-0.8.2.0.tgz"
 URL_MAVEN="http://mirror.hosting90.cz/apache/maven/maven-3/3.5.2/binaries/apache-maven-3.5.2-bin.tar.gz"
 
 if [[ $EUID -eq 0 ]]
@@ -39,14 +62,14 @@ then
 	wget -q --show-progress $URL_DRUID
 	if [ $? -eq 0 ]
 	then
-		tar -xvzf /druid-0.8.3-bin.tar.gz -C $HOME > /dev/null
+		tar -xvzf druid-0.8.3-bin.tar.gz -C $HOME > /dev/null
 		/bin/rm -rf druid-0.8.3-bin.tar.gz > /dev/null
 	else
 		printf "Druid download failed\n" >&2
 		exit 1
 	fi
 else
-	printf " ${GREEN}FOUND${NC}. Download will be skipped.\n"
+	printf " ${GREEN}FOUND${NC}.\nDownload will be skipped.\n"
 fi
 
 printf "Looking for a kafka_2.10-0.8.2.0 folder in device ...."
@@ -76,7 +99,7 @@ fi
 
 #sets alias infispector to start script infispector.sh
 
-infispector_location=`find / -type d -iname infispector 2> /dev/null | awk '{ print length, $0 }' | sort -n -s | head -n1 | cut -f 2 -d ' '`
+infispector_location="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 if [ -z "$infispector_location" ]
 then
@@ -126,7 +149,7 @@ then
 	exit 1
 else
 	echo -n "npm install ...."
-	npm -s install 2> $infispector_location/npm_err.log
+	npm -s install 2> $infispector_location/npm_err.log > /dev/null
 	if [ $? -eq 0 ]
 	then
 		printf " ${GREEN}OK${NC}\n"
@@ -143,33 +166,30 @@ then
 fi
 
 #check if mvn is installed
-java -version
+java -version > /dev/null
 if [ $? -ne 0 ]
 then
 	printf "Please install java and run this script again\n" >&2
 	exit 1
 fi
 
-mvn --version > /dev/null
+mvn --version > /dev/null 2> /dev/null
 if [ $? -ne 0 ]
 then
 	printf "Maven is necessary to run infispector.\n"
-	printf "Downloading maven...\n"
-	wget -q --show-progress $URL_MAVEN
-	tar zxvf apache-maven-3.5.2-bin.tar.gz -C $HOME > /dev/null
-	bin/rm apache-maven-3.5.2-bin.tar.gz > dev/null
-	M2_HOME=$HOME/apache-maven-3.5.2
-	export M2_HOME
-	#now add maven to .bashrc
-	sed "/PATH=.*/i\
-	M2_HOME='$M2_HOME'\nexport M2_HOME\n\n" -i ~/.bashrc
-	#now add maven home to path
-	sed '/PATH=.*/s/$/:$M2_HOME/bin/' -i ~/.bashrc
-	printf "Maven successfully downloaded and installed!\n"
+	while true;
+	do
+		read -p "Do you wish to install maven? [y/n] " yn
+		case $yn in
+			[Yy]* ) downloadMaven; break;;
+			[Nn]* ) printf "Run ${GREEN}mvn clean install${NC} in ${WHITE}$infispector_location/infinispan_example_app/${NC} folder when you install maven."; exit 0;;
+			* ) echo "Please answer y or n.";;
+		esac
+	done
 fi
 printf "mvn install ...."
 cd $infispector_location/infinispan_example_app/
-mvn -q clean install > $infispector_location/mvn_err.log
+mvn -q clean install 2> $infispector_location/mvn_err.log
 if [ $? -eq 0 ]
 then
 	printf " ${GREEN}OK${NC}\n"
@@ -186,6 +206,6 @@ fi
 
 source ~/.bashrc
 
-printf "${WHITE}Infispector is ready to use!\n"
+printf "${WHITE}Infispector will be ready for use after terminal restart!\n"
 printf "if you need help type word infispector in you terminal${NC}\n"
 exit 0

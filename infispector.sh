@@ -1,5 +1,12 @@
 #!/bin/bash
 
+cleanUp() {
+	pkill -f druid -e
+	pkill -f kafka -e
+	pkill -f zookeeper -e
+	pkill -f grunt -e
+}
+
 #colors
 NC='\033[0m'
 WHITE='\033[1;37m'
@@ -23,6 +30,7 @@ commands:
 ${GREEN}infispector${NC} or ${GREEN}infispector help${NC} - prints this help
 ${GREEN}infispector prepare${NC} - starts dependecies (zookeeper, kafka, druid)
 ${GREEN}infispector start${NC} - starts application
+${GREEN}infispector stop${NC} - stops infispector
 ${GREEN}infispector nodes${NC} - starts 4 instances
 ${GREEN}infispector nodes ${RED}NUMBER${NC} - starts specified ${RED}NUMBER${NC} of instances
 "
@@ -76,18 +84,22 @@ then
 	cd $KAFKA_LOCATION
 	printf "Starting zookeeper ...."
 	bin/zookeeper-server-start.sh config/zookeeper.properties > /dev/null &
+	sleep 1
 	if [ $? -ne 0 ]
 	then
 		printf " ${RED}FAIL${NC}\n"
+		cleanUp
 		exit 1
 	else
 		printf " ${GREEN}OK${NC}\n"
 	fi
 	printf "Starting kafka ...."
 	bin/kafka-server-start.sh config/server.properties > /dev/null &
+	sleep 1
 	if [ $? -ne 0 ]
 	then
 		printf " ${RED}FAIL${NC}\n"
+		cleanUp
 		exit 1
 	else
 		printf " ${GREEN}OK${NC}\n"
@@ -100,15 +112,17 @@ then
 	then
 		sleep 10
 	fi
+	sleep 2
 	while true
 	do
 		if cat log.txt | grep "Firehose acquired!" > /dev/null
 		then
 			break
 		fi
-		if [ $TIMEOUT -eq "10" ]
+		if [ $TIMEOUT -eq "20" ]
 		then
 			printf " ${RED}FAIL${NC}\n"
+			cleanUp
 			exit 1
 		fi
 		TIMEOUT=$[$TIMEOUT + 1]
@@ -126,8 +140,16 @@ then
 	exit 0
 fi
 
+if [ $1 == "stop" ]
+then
+	cleanUp
+	exit 0
+fi
+
+
 if [ $1 == "nodes" ]
 then
+	cd $INFISPECTOR_LOCATION/infinispan_example_app
 	if ! [[ -z "$2" ]]
 	then
 		if ! [[ $2 =~ $NUMBER_CHECK ]]

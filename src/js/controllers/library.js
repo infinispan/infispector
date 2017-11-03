@@ -108,9 +108,9 @@ app.controller('InfiSpectorCtrl', ['$scope', '$http', function ($scope, $http) {
         // TODO: create matrix/array of flowcharts
         $scope.flowChart = function (messages) {
             messages = messages.split(",");
-            var times = getSelectedTime();
-            var from = times[0];
-            var to = times[1];
+            // var times = getSelectedTime();
+            // var from = times[0];
+            // var to = times[1];
             //var from = document.getElementById("valR").value;
             //var to = document.getElementById("valR2").value;
             // TODO: dynamically for each chart on dashboard

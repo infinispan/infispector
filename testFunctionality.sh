@@ -13,7 +13,6 @@ while true
 do
 	if cat tmp | grep "Server is listening on port [0-9][0-9]*" > /dev/null
 	then
-		cleanUp
 		exit 0
 	fi
 	if [ -s tmp2 ]
