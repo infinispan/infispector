@@ -12,7 +12,7 @@ function timeLine(units) {
     var data = [];
     var selectedValues = [];
     for (var j = 0; j <= numberOfBars; j++) {
-        data[j] = {"time": j * valueOfOneBar, "value": Math.random()};
+        data[j] = {"time": j * valueOfOneBar, "value": Math.round(Math.random() * 100)};
     }
 
     var numberOfSelected = 0;
@@ -124,7 +124,9 @@ function timeLine(units) {
 
     bars.append("text")
         .attr("x", function (d) {
-            return x(d.time / valueOfOneBar);
+            var thisBar = d3.selectAll("rect")[0][d.time / valueOfOneBar];
+            var xValue = parseInt(thisBar.getAttribute("x"), 10) + parseInt(thisBar.getAttribute("width"), 10) / 2;
+            return xValue;
         })
         .attr("y", -25)
         .attr("dy", "20px")
