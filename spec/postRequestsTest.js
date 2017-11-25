@@ -103,24 +103,26 @@ describe("Get flowChart matrix", function() {
     });
 });
 
-// describe("Get message count", function() {
-//     beforeEach(function(done) {
-//        var fromTime = new Date();
-//        fromTime.setHours(fromTime.getHours() - 1);
-//        var toTime = new Date();
-//        request.post({
-//            url: base_url + "getMsgCnt",
-//            form: {
-//                "fromTime": fromTime.toISOString(),
-//                "toTime": toTime.toISOString()
-//            }
-//        }, function(err, resp, body) {
-//            console.info(body);
-//            done();
-//        });
-//     });
-//
-//     it("better work", function(done) {
-//         done();
-//     })
-// })
+describe("Get message count", function() {
+    var numberOfMessages;
+    beforeEach(function(done) {
+       var fromTime = new Date();
+       fromTime.setHours(fromTime.getHours() - 1);
+       var toTime = new Date();
+       request.post({
+           url: base_url + "getMsgCnt",
+           form: {
+               "fromTime": fromTime.toISOString(),
+               "toTime": toTime.toISOString()
+           }
+       }, function(err, resp, body) {
+           numberOfMessages = JSON.parse(body).jsonResponseAsString;
+           done();
+       });
+    });
+
+    it("better work", function(done) {
+        expect(numberOfMessages).toBeGreaterThan(0);
+        done();
+    })
+});

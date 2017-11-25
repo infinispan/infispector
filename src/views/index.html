@@ -90,10 +90,14 @@
         <script src="js/chordDiagram.js"></script>
         <script src="js/messageFlowChart.js"></script>
         <!--<script src="js/timeLine.js"></script>-->
-        <script src="js/timeLineNew.js"></script>
-         <script src="js/growl_notifications.js"></script>
+        <script src="js/timeLine.js"></script>
+        <script src="js/timeLineUtils.js"></script>
+        <script src="js/growl_notifications.js"></script>
         <script>
-            timeLine("hours", valueOfOneBar);
+            timeLine("hours");
+//            calculateInitialUnits(function(initialUnits) {
+//                timeLine(initialUnits);
+//            })
         </script>
     </body>
 </html>
