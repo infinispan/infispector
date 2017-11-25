@@ -162,7 +162,7 @@ exports.getMinimumMessageTime = function (request, response) {
             .then(function (result) {
 
                 response.send({error: 0, jsonResponseAsString: JSON.stringify(result)}, 201);
-                console.log("\n\nResult: Maximum" + JSON.stringify(result));
+                console.log("\n\nResult: Minimum" + JSON.stringify(result));
             })
             .done();
 };

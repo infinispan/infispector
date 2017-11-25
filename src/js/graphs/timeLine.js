@@ -4,6 +4,11 @@
  */
 
 function timeLine(units) {
+    var ctrl = angular.element(document.getElementById('ctrl')).scope();
+    if (units === "first") {
+        ctrl.calculateDefaultUnits();
+        return;
+    }
     var numberOfBars = allUnits[units].value;
     var margin = {top: 20, right: 30, bottom: 30, left: 80},
             width = 900 - margin.left - margin.right,
@@ -108,8 +113,11 @@ function timeLine(units) {
                         selectedValues[1] = thisBar.attr("time");
                         dateTo = setTime(units, thisBar.attr("time"));
                         validateOrder();
-                        timeLineDestroy();
-                        timeLine(decideUnits(units, selectedValues));
+                        var nextUnits = decideUnits(units, selectedValues);
+                        if (nextUnits !== "unable") {
+                            timeLineDestroy();
+                            timeLine(nextUnits);
+                        }
                     }
                     getTime(units);
                     numberOfSelected++;

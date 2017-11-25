@@ -7,6 +7,69 @@ app.controller('InfiSpectorCtrl', ['$scope', '$http', function ($scope, $http) {
         $scope.index;
         $scope.hidden = true;
         $scope.legendHidden = true;
+
+        $scope.calculateDefaultUnits = function() {
+            var unitOrder = ["hours", "minutes", "seconds", "milliseconds"];
+            $scope.getFirstMessageTime().then(function (firstMessageTime) {
+                $scope.getLastMessageTime().then(function (lastMessageTime) {
+                    var start = new Date(firstMessageTime);
+                    var end = new Date(lastMessageTime);
+                    console.log(start);
+                    console.log(end);
+                    var difference = end.getTime() - start.getTime();
+                    console.log(difference);
+                    if (difference < 1000) {
+                        timeLine("milliseconds");
+                        return;
+                    }
+                    difference = Math.floor(difference / 1000);
+                    for (var i = unitOrder.length - 2; i >= 0; i--) {
+                        if (difference < 60 || i === 0) {
+                            timeLine(unitOrder[i]);
+                            return;
+                        }
+                        difference = Math.floor(difference / 60);
+                    }
+                });
+            });
+        };
+
+        $scope.getFirstMessageTime = function() {
+            var request = $http.post('/getMinimumMessageTime');
+            return request.then(function (response) {
+                if (response.data.error === 1) {
+                    console.log('ERROR: response.data.error === 1');
+                } else {
+                    var res = response.data.jsonResponseAsString;
+                    return JSON.parse(res)[0].timestamp;
+                }
+            });
+        };
+
+        $scope.getLastMessageTime = function() {
+            var request = $http.post('/getMaximumMessageTime');
+            return request.then(function (response) {
+                if (response.data.error === 1) {
+                    console.log('ERROR: response.data.error === 1');
+                } else {
+                    var res = response.data.jsonResponseAsString;
+                    return JSON.parse(res)[0].timestamp;
+                }
+            });
+        };
+
+        $scope.getMessagesCountInInterval = function (timeFrom, timeTo) {
+            console.log(timeTo);
+            var request = $http.post('/getMsgCnt',
+                {
+                    "fromTime": timeFrom.toISOString(),
+                    "toTime": timeTo.toISOString()
+                });
+            return request.then(function (response) {
+                console.log(response.data.jsonResponseAsString);
+                return response.data.jsonResponseAsString;
+            });
+        };
         
         $scope.connectToDruid = function () {
 
