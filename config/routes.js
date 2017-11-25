@@ -32,6 +32,14 @@ exports.getMessagesInfo = function(req, res) {
     api.druid.getMessagesInfo(req, res);
 };
 
+exports.getMinimumMessageTime = function(req, res) {
+    api.druid.getMinimumMessageTime(req, res);
+};
+
+exports.getMaximumMessageTime = function(req, res) {
+    api.druid.getMaximumMessageTime(req, res);
+};
+
 exports.getEntry = function(req, res) {    
     api.ispn.getEntry(req, res);
 };

@@ -17,6 +17,8 @@ function configureRoutes() {
     app.post('/getFlowChartMatrix', routes.getFlowChartMatrix);
     app.post('/getChordDiagramMatrix', routes.getChordDiagramMatrix);
     app.post('/getMessagesInfo', routes.getMessagesInfo);
+    app.post('/getMinimumMessageTime', routes.getMinimumMessageTime);
+    app.post('/getMaximumMessageTime', routes.getMaximumMessageTime);
     app.get('/', routes.index);
     app.get('/index.html', routes.index);
     app.get('/operations_get.html', routes.operations_get);
