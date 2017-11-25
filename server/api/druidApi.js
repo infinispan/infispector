@@ -93,19 +93,21 @@ var getMessagesCountIntern = function (srcNode, destNode, searchMessageText, fro
 exports.getMsgCnt = function (request, response) {
     debug('getMsgCnt function from druidApi.js was called.');
     var druidQueryJson = createGeneralTopNDruidQueryBase("src", "length");
-    setIntervalsToDruidQueryBase(druidQueryJson, request.body.fromTime, request.body.toTime);
-    druidRequester(druidQueryJson).then(function (result) {
-        var res = JSON.stringify(result[0]);
-        var reg = /(?:"length":)[0-9]+/g;
-        var messagesCount = res.match(reg);
-        if (messagesCount == null) {
-            resolve(0);
+    debug(request.body.fromTime);
+    druidRequester({
+        query: {
+            "queryType": "timeseries",
+            "dataSource": "InfiSpectorTopic",
+            "dimension": "src",
+            "granularity": "all",
+            "aggregations": [
+                {"type": "count", "fieldName": "timestamp", "name": "messagesCount"}
+            ],
+            "intervals": [request.body.fromTime + "/" + request.body.toTime]
         }
-        else {
-            messagesCount = messagesCount[0].replace('"length":', "");
-            debug("in getMsgCnt extracted messagesCount from: " + res + "=" + messagesCount);
-            resolve(messagesCount);
-        }
+    }).then(function (result) {
+        var messagesCount = result[0].result.messagesCount;
+        debug(messagesCount);
         response.send({error: 0, jsonResponseAsString: JSON.stringify(messagesCount)}, 200);
     }).done();
 };

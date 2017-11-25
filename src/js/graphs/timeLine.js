@@ -11,7 +11,7 @@ function timeLine(units) {
 
     var data = [];
     var selectedValues = [];
-    for (var j = 0; j <= numberOfBars; j++) {
+    for (var j = 0; j < numberOfBars; j++) {
         data[j] = {"time": j * valueOfOneBar, "value": Math.round(Math.random() * 100)};
     }
 

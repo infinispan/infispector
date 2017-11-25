@@ -1,3 +1,4 @@
+// var request = require("request");
 var allUnits = {
     "hours" : {value: 24},
     "minutes" : {value: 60},
@@ -127,3 +128,41 @@ function getTime(currentUnits) {
     console.log(dateFrom);
     console.log(dateTo);
 }
+
+// function getMinimumMessageTime(callback) {
+//     request.post({
+//         url: "http://localhost:8080/getMinimumMessageTime"
+//     }, function(err, resp, body) {
+//         callback(body.data.jsonResponseAsString);
+//     });
+// }
+//
+// function getMaximumMessageTime(callback) {
+//     request.post({
+//         url: "http://localhost:8080/getMaximumMessageTime"
+//     }, function(err, resp, body) {
+//         callback();
+//     });
+// }
+//
+// /**
+//  * Method calculates initial units
+//  */
+//
+// function calculateInitialUnits(callback) {
+//     getMinimumMessageTime(function(response) {
+//         var start = new Date(response);
+//         var end = new Date();
+//         var difference = end.getTime() - start.getTime();
+//         if (difference < 1000) {
+//             callback("milliseconds");
+//         }
+//         difference = Math.floor(difference / 1000);
+//         for (var i = unitOrder.length - 2; i >= 0; i--) {
+//             if (difference < 60 || i === 0) {
+//                 callback(unitOrder[i]);
+//             }
+//             difference = Math.floor(difference / 60);
+//         }
+//     });
+// }
