@@ -40,6 +40,10 @@ exports.getMaximumMessageTime = function(req, res) {
     api.druid.getMaximumMessageTime(req, res);
 };
 
+exports.getMessagesCount = function(req, res) {
+    api.druid.getMessagesCount(req, res);
+};
+
 exports.getEntry = function(req, res) {    
     api.ispn.getEntry(req, res);
 };
