@@ -7,6 +7,7 @@ app.controller('InfiSpectorCtrl', ['$scope', '$http', function ($scope, $http) {
         $scope.index;
         $scope.hidden = true;
         $scope.legendHidden = true;
+        $scope.loadingBarHidden = true;
 
         $scope.calculateDefaultUnits = function() {
             var unitOrder = ["hours", "minutes", "seconds", "milliseconds"];
@@ -108,12 +109,13 @@ app.controller('InfiSpectorCtrl', ['$scope', '$http', function ($scope, $http) {
          * @param nodeName contains name of node
          */
         
-        $scope.getNodeInfo = function (nodeName, filter) {
+        $scope.getNodeInfo = function (nodeName, filter, srcDest) {
             $scope.index = 0;
             console.log(filter);
             var request = $http.post('/getMessagesInfo', 
             {
-                "nodeName": nodeName,
+                "srcNode": (!srcDest) ? nodeName : null,
+                "destNode": (srcDest) ? nodeName : null,
                 "filter": filter
             });
             request.then(function (response) {
@@ -145,6 +147,7 @@ app.controller('InfiSpectorCtrl', ['$scope', '$http', function ($scope, $http) {
         };
         
         $scope.drawGraph = function (addedFilter) {
+            $scope.loadingBarHidden = false;
             var filters = "";
             if (addedFilter) {
                 filters = document.getElementById("inputFilter").value;
@@ -155,7 +158,7 @@ app.controller('InfiSpectorCtrl', ['$scope', '$http', function ($scope, $http) {
                 filters = "SingleRpcCommand,CacheTopologyControlCommand,StateResponseCommand,StateRequestCommand";
             }
             var element = document.getElementById("cmn-toggle-7");
-            $scope.flowChart(filters)
+            $scope.flowChart(filters);
             // if (element.checked) {      //flow chart
             //     $scope.flowChart(filters);
             // }
@@ -165,22 +168,22 @@ app.controller('InfiSpectorCtrl', ['$scope', '$http', function ($scope, $http) {
         };
 
         $scope.getMatrix = function (nodes, filter, filterCount, callback) {
-            var requestCnt = Math.pow(nodes.length, 2);
+            var requestsRemaining = Math.pow(nodes.length, 2);
             var matrix = [];
             var groupNames = [];
+            var onePercent = (requestsRemaining * filterCount) * 0.01;
             nodes.push(nodes.splice(nodes.indexOf("\"null\""), 1)[0]);
             var numberOfNodesInGroup = parseInt(document.getElementById("nodesInGroup").value, 10);
-            if (numberOfNodesInGroup === 1 || numberOfNodesInGroup >= nodes.length - 1) {
-                groupNames = nodes;
-                numberOfNodesInGroup = nodes.length;
-                $scope.legendHidden = true;
-            }
-            else {
-                for (var i = 0; i < numberOfNodesInGroup; i++) {
+            if (numberOfNodesInGroup > 1) {
+                for (var i = 0; i < Math.ceil(nodes.length / numberOfNodesInGroup); i++) {
                     groupNames.push(JSON.stringify("group" + i));
                 }
                 $scope.groupLegend = "";
                 $scope.legendHidden = false;
+            }
+            else {
+                groupNames = nodes;
+                $scope.legendHidden = true;
             }
             for (var i1 = 0; i1 < nodes.length; i1++) {
                 if (i1 % numberOfNodesInGroup === 0 && i1 !== nodes.length - 1) {
@@ -195,8 +198,8 @@ app.controller('InfiSpectorCtrl', ['$scope', '$http', function ($scope, $http) {
                             "srcNode": nodes[i1],
                             "destNode": nodes[i2],
                             "searchMessageText": filter,
-                            "groupSrc": groupNames[i1 % numberOfNodesInGroup],
-                            "groupDest": groupNames[i2 % numberOfNodesInGroup]
+                            "groupSrc": groupNames[Math.floor(i1 / numberOfNodesInGroup)],
+                            "groupDest": groupNames[Math.floor(i2 / numberOfNodesInGroup)]
                         });
                     request.then(function (response) {
                         if (response.data.error > 0) {
@@ -207,9 +210,20 @@ app.controller('InfiSpectorCtrl', ['$scope', '$http', function ($scope, $http) {
                             res = JSON.parse(res);
                             res[2] = parseInt(res[2], 10);
                             matrix.push(res);
-                            --requestCnt;
-                            if (requestCnt <= 0) {
-                                if (numberOfNodesInGroup !== nodes.length) {
+                            --requestsRemaining;
+                            ++requestsRemainingToPercent;
+                            if (requestsRemainingToPercent >= onePercent) {
+                                console.log(requestsRemainingToPercent);
+                                requestsRemainingToPercent = 0;
+                                if (onePercent < 1) {
+                                    frame(1/onePercent);
+                                }
+                                else {
+                                    frame(1);
+                                }
+                            }
+                            if (requestsRemaining <= 0) {
+                                if (numberOfNodesInGroup > 1) {
                                     var tmp;
                                     for (var i = 0; i < matrix.length; i++) {
                                         for (var j = 0; j < matrix.length; j++) {
@@ -248,8 +262,8 @@ app.controller('InfiSpectorCtrl', ['$scope', '$http', function ($scope, $http) {
                 for (var j = 0; j < messages.length; j++) {
                     searchMessageText = messages[j];
                     $scope.getMatrix(nodes, searchMessageText, messages.length, function (matrix, filter) {
-                        console.log(matrix);
-                        messageFlowChart(nodes, matrix, filter);
+                        cnt++;
+                        messageFlowChart(nodes, matrix, filter, cnt === messages.length);
                     });
                 }
             });
