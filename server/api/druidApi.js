@@ -100,7 +100,6 @@ exports.getMessagesCount = function (request, response) {
         var searchMessageText = request.body.searchMessageText;
         var groupSrc = request.body.groupSrc;
         var groupDest = request.body.groupDest;
-        console.log(srcNode);
         if (srcNode === "null") {
             groupSrc = JSON.stringify("null");
         }
@@ -114,8 +113,6 @@ exports.getMessagesCount = function (request, response) {
 
 exports.getMsgCnt = function (request, response) {
     debug('getMsgCnt function from druidApi.js was called.');
-    var druidQueryJson = createGeneralTopNDruidQueryBase("src", "length");
-    debug(request.body.fromTime);
     druidRequester({
         query: {
             "queryType": "timeseries",
@@ -142,9 +139,9 @@ exports.getMessagesInfo = function (request, response) {
     debug('getMessagesInfo function from druidApi.js was called. '
             + request.body.nodeName);
 
-    var srcNode = request.body.nodeName;
+    var srcNode = request.body.srcNode;
     //var filter = request.body.filter;
-    var destNode = null;
+    var destNode = request.body.destNode;
     var searchMessageText = request.body.filter;
 
     var druidQueryJson = createGeneralTopNDruidQueryBase("message", "length");
@@ -286,12 +283,13 @@ var setFilterToDruidQueryBase = function (queryJson, filterOperand, srcNode, des
     queryJson.query.filter = {};
     queryJson.query.filter.type = filterOperand;
     queryJson.query.filter.fields = [];
-
-    queryJson.query.filter.fields.push({
-        "type": "selector",
-        "dimension": "src",
-        "value": srcNode});
-
+    if (srcNode) {
+        queryJson.query.filter.fields.push({
+            "type": "selector",
+            "dimension": "src",
+            "value": srcNode
+        });
+    }
     if (destNode) {
         queryJson.query.filter.fields.push({
             "type": "selector",
