@@ -253,7 +253,7 @@
                                    .select(".mainbars")
                                    .selectAll(".mainbar")
                                    .select(".barlabel")
-                                   .on("click", function(d, i) {return bP.clickedNode(biP.data.keys[p][i] + "," + biP.id); });
+                                   .on("click", function(d, i) {return bP.clickedNode(biP.data.keys[p][i] + "," + biP.id, p); });
                         });
 		});
 	};
@@ -293,16 +293,16 @@
 		});
 	};
 
-        bP.clickedNode = function(nodeNameFilter) {
+        bP.clickedNode = function(nodeNameFilter, srcDest) {
             var args = nodeNameFilter.split(",");
-            angular.element(document.getElementById('ctrl')).scope().getNodeInfo(args[0], args[1]);
+            angular.element(document.getElementById('ctrl')).scope().getNodeInfo(args[0], args[1], srcDest);
         };
 
 
 	this.bP = bP;
 }();
 
-function messageFlowChart(nodes, matrix, messageType) {
+function messageFlowChart(nodes, matrix, messageType, last) {
     //deleteGraphs();
     var longest = nodes.sort(function (a, b) { return b.length - a.length; })[0].length;
     var longestCnt = 0;
@@ -330,6 +330,12 @@ function messageFlowChart(nodes, matrix, messageType) {
             {data:bP.partData(matrix,2), id:messageType, header:["From","To", ""]}
     ];
     bP.draw(data, svg, longest, longestCnt * 10 + 4);
+    if (last) {
+        angular.element(document.getElementById('ctrl')).scope().loadingBarHidden = true;
+        widthBar = 0;
+        frame(0);
+        cnt = 0;
+    }
 }
 
 function deleteGraphs() {

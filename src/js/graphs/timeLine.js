@@ -127,6 +127,7 @@ function timeLine(units) {
                 thisBar.attr("selected", false);
                 numberOfSelected--;
                 selectedValues.pop();
+                thisBar.attr("fill", "red");
             }
         });
 

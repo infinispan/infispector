@@ -7,7 +7,7 @@ cleanUp() {
 	rm tmp2
 }
 
-grunt > tmp 2> tmp2 &
+grunt > tmp &
 
 while true
 do

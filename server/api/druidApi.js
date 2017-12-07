@@ -7,7 +7,7 @@ var druidRequester = require('plywood-druid-requester').druidRequesterFactory(pa
 
 // TODO: pass this as a parameter when starting grunt to enable/disable log messages
 // without the need of code change here
-var druid_debug_enabled = true;
+var druid_debug_enabled = false;
 var debug = function (msg) {
     if (druid_debug_enabled) {
         console.log(msg);
@@ -61,7 +61,7 @@ exports.getNodes = function (request, response) {
  */
 var getMessagesCountIntern = function (srcNode, destNode, searchMessageText, fromTime, toTime, group1, group2) {
     return new Promise(function (resolve, reject) {
-        debug('getMessagesCountIntern function from druidApi.js was called.');
+        // debug('getMessagesCountIntern function from druidApi.js was called.');
         // dimension is "src" now
         // when dimension would be "message" we can get aggregation through
         // different messages and their count
@@ -72,8 +72,8 @@ var getMessagesCountIntern = function (srcNode, destNode, searchMessageText, fro
         druidRequester(druidQueryJson).then(function (result) {
             var res = JSON.stringify(result[0]);
             var reg = /(?:"length":)[0-9]+/g;
-            srcNode = group1;
-            destNode = group2;
+            srcNode = JSON.parse(group1);
+            destNode = JSON.parse(group2);
             var messagesCount = res.match(reg);
             if (messagesCount === null) {
                 // resolve with 0 messages count for now
@@ -81,19 +81,41 @@ var getMessagesCountIntern = function (srcNode, destNode, searchMessageText, fro
                 resolve([srcNode, destNode, 0]);
             } else {
                 messagesCount = messagesCount[0].replace('"length":', "");
-
-                debug("in getMessagesCountIntern extracted messagesCount from: "
+                if (searchMessageText === "CacheTopologyControlCommand") {
+                    console.log("in getMessagesCountIntern extracted messagesCount from: "
                         + res + " = " + messagesCount);
+                }
                 resolve([srcNode, destNode, messagesCount]);
             }
         }).done();
     }); // promise
 };
 
+exports.getMessagesCount = function (request, response) {
+
+        debug('getMessagesCount function from druidApi.js was called.');
+        var srcNode = request.body.srcNode;
+        srcNode = JSON.parse(srcNode);
+        var destNode = request.body.destNode;
+        destNode = JSON.parse(destNode);
+        var searchMessageText = request.body.searchMessageText;
+        var groupSrc = request.body.groupSrc;
+        var groupDest = request.body.groupDest;
+        if (srcNode === "null") {
+            groupSrc = JSON.stringify("null");
+            srcNode = JSON.parse(srcNode);
+        }
+        if (destNode === "null") {
+            destNode = JSON.stringify("null");
+            destNode = JSON.parse(destNode);
+        }
+        getMessagesCountIntern(srcNode, destNode, searchMessageText, "", "", groupSrc, groupDest).then(function (result) {
+            response.send({error: 0, result: JSON.stringify(result), searchMessageText: JSON.stringify(searchMessageText)}, 201);
+        });
+};
+
 exports.getMsgCnt = function (request, response) {
     debug('getMsgCnt function from druidApi.js was called.');
-    var druidQueryJson = createGeneralTopNDruidQueryBase("src", "length");
-    debug(request.body.fromTime);
     druidRequester({
         query: {
             "queryType": "timeseries",
@@ -120,9 +142,9 @@ exports.getMessagesInfo = function (request, response) {
     debug('getMessagesInfo function from druidApi.js was called. '
             + request.body.nodeName);
 
-    var srcNode = request.body.nodeName;
+    var srcNode = request.body.srcNode;
     //var filter = request.body.filter;
-    var destNode = null;
+    var destNode = request.body.destNode;
     var searchMessageText = request.body.filter;
 
     var druidQueryJson = createGeneralTopNDruidQueryBase("message", "length");
@@ -167,7 +189,6 @@ exports.getMinimumMessageTime = function (request, response) {
             .done();
 };
 
-
 /**
  * Returns the time of the last message in monitored communication
  *
@@ -196,101 +217,6 @@ exports.getMaximumMessageTime = function (request, response) {
             })
             .done();
 };
-
-// TODO -- move to chartingApi.js and require druidApi.js
-exports.getFlowChartMatrix = function (request, response) {
-    var groups = request.body.nodes;
-    var from = request.body.from;
-    var to = request.body.to;
-    var searchMessageText = request.body.searchMessageText;
-    var numberOfGroups = groups.length;
-    var matrix = [];
-    var promises = [];
-    var srcGroup = "";
-    var dstGroup = "";
-    for (var i1 = 0; i1 < numberOfGroups; i1++) {
-        for (var i2 = 0; i2 < groups[i1].length; i2++) {
-           for (var i3 = 0; i3 < numberOfGroups; i3++) {
-               for (var i4 = 0; i4 < groups[i3].length; i4++) {
-                   if (groups[i1].length === 1) {
-                       srcGroup = groups[i1][i2].nodeName;
-                       srcGroup = srcGroup.substr(1);
-                       srcGroup = srcGroup.substr(0, srcGroup.length-1);
-                   }
-                   else {
-                       srcGroup = "group" + i1.toString();
-                   }
-                   if (groups[i3].length === 1) {
-                       dstGroup = groups[i3][i4].nodeName;
-                       dstGroup = dstGroup.substr(1);
-                       dstGroup = dstGroup.substr(0, dstGroup.length-1);
-                   }
-                   else {
-                       dstGroup = "group" + i3.toString();
-                    }
-                    promises = promises.concat(getMessagesCountIntern(
-                           JSON.parse(groups[i1][i2].nodeName), JSON.parse(groups[i3][i4].nodeName),
-                           searchMessageText, from, to, srcGroup, dstGroup));
-               }
-           }
-        }
-    }
-    // one matrix element is an [srcNode, destNode, messagesCount] array
-    // each promise returns such an array
-    // matrixElements is array of those arrays, ordered as executed and returned
-    RSVP.all(promises).then(function (matrixElements) {
-        for (var x = 0; x < matrixElements.length; x++) {
-            matrix[x] = matrixElements[x];
-        }
-        var tmp = 0;
-        for (var i = 0; i < matrix.length; i++) {
-            for (var j = 0; j < matrix.length; j++) {
-                if (i === j) {
-                    continue;
-                }
-                if (matrix[i][0] === matrix[j][0] && matrix[i][1] === matrix[j][1]) {
-                    tmp = matrix[j][2];
-                    matrix.splice(j, 1);
-                    matrix[i][2] = parseInt(tmp) + parseInt(matrix[i][2]);
-                }
-            }
-        }
-        response.send({error: 0, matrix: JSON.stringify(matrix), searchMessage: JSON.stringify(searchMessageText)}, 201);
-
-    }).catch(function (reason) {
-        console.log("At least one of the promises FAILED: " + reason);
-    });
-};
-
-// TODO -- move to chartingApi.js and require druidApi.js
-exports.getChordDiagramMatrix = function (request, response) {
-    var nodes = request.body.nodes;
-    var from = request.body.from;
-    var to = request.body.to;
-    // we will create one chart for every significant message type / pattern
-    var searchMessageText = request.body.searchMessageText;
-    var numberOfNodes = nodes.length;
-    var matrix = [];
-    var promises = [];
-    for (var i = 0; i < numberOfNodes; i++) {
-        for (var j = 0; j < numberOfNodes; j++) {
-            promises = promises.concat(getMessagesCountIntern(
-                    JSON.parse(nodes[i].nodeName), JSON.parse(nodes[j].nodeName),
-                    searchMessageText, from, to));
-        }
-    }
-
-    RSVP.all(promises).then(function (matrixElements) {
-        for (var i = 0; i < numberOfNodes; i++) {
-            matrix[i] = [];
-            for (var j = 0; j < numberOfNodes; j++) {
-                matrix[i][j] = JSON.parse(matrixElements[i * numberOfNodes + j][2]);
-            }
-        }
-        response.send({error: 0, matrix: JSON.stringify(matrix), searchMessage: JSON.stringify(searchMessageText)}, 201);
-    });
-};
-
 
 // EXAMPLE QUERY
 // { query: {
@@ -360,12 +286,13 @@ var setFilterToDruidQueryBase = function (queryJson, filterOperand, srcNode, des
     queryJson.query.filter = {};
     queryJson.query.filter.type = filterOperand;
     queryJson.query.filter.fields = [];
-
-    queryJson.query.filter.fields.push({
-        "type": "selector",
-        "dimension": "src",
-        "value": srcNode});
-
+    if (srcNode) {
+        queryJson.query.filter.fields.push({
+            "type": "selector",
+            "dimension": "src",
+            "value": srcNode
+        });
+    }
     if (destNode) {
         queryJson.query.filter.fields.push({
             "type": "selector",
@@ -399,7 +326,7 @@ var setIntervalsToDruidQueryBase = function (queryJson, fromTime, toTime) {
     if (fromTime && toTime) {
         queryJson.query.intervals = [fromTime + "/" + toTime];
     } else {
-        console.log("In setIntervalsToDruidQueryBase: fromTime or toTime not specified, using default 50 years (2000-2050).")
+        debug("In setIntervalsToDruidQueryBase: fromTime or toTime not specified, using default 50 years (2000-2050).")
         queryJson.query.intervals = ["2000-10-01T00:00/2050-01-01T00"];
     }
 }
@@ -475,68 +402,6 @@ var setIntervalsToDruidQueryBase = function (queryJson, fromTime, toTime) {
             .done();
     };
 
-
-    /*
-     @brief function which returns final count of messages from src node to dest node
-     @param srcNode
-     @param destNode
-     @return JSON
-     */
-
-    exports.getMessagesCount = function (request, response) {
-
-        console.log('getMessagesCount function from druidApi.js called. '
-            + request.body.srcNode + " " + request.body.destNode);
-
-        var srcNode = request.body.srcNode;
-        var destNode = request.body.destNode;
-
-        //var params = {host: "127.0.0.1:8084", debug: "true"};
-        //var druidRequester = require('plywood-druid-requester').druidRequesterFactory(params);
-
-        druidRequester({
-            query: {
-                "queryType": "topN",
-                "dataSource": "InfiSpectorTopic",
-                "granularity": "all",
-                "dimension": "length",
-                "metric": "length",
-                "threshold": 10000,
-                "filter": {
-                    "type": "and",
-                    "fields": [
-                        {
-                            "type": "selector",
-                            "dimension": "src",
-                            "value": srcNode
-                        },
-                        {
-                            "type": "selector",
-                            "dimension": "dest",
-                            "value": destNode
-                        }
-                    ]
-                },
-                "aggregations": [
-                    {"type": "count", "fieldName": "length", "name": "length"}
-                ],
-                "intervals": ["2009-10-01T00:00/2020-01-01T00"]
-            }
-        })
-
-            .then(function (result) {
-
-                var test = JSON.stringify(result[0]);
-                var reg = /(?:"length":)[0-9]+/g;
-                var messagesCount = test.match(reg);
-                messagesCount = messagesCount[0].replace('"length":', "");
-
-                //console.log(messagesCount);
-
-                response.send({error: 0, jsonResponseAsString: JSON.stringify(messagesCount)}, 201);
-            })
-            .done();
-    };
 
     /*
      @brief function which returns final count of messages from src node to dest node and from given time interval

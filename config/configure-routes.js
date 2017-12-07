@@ -19,6 +19,7 @@ function configureRoutes() {
     app.post('/getMessagesInfo', routes.getMessagesInfo);
     app.post('/getMinimumMessageTime', routes.getMinimumMessageTime);
     app.post('/getMaximumMessageTime', routes.getMaximumMessageTime);
+    app.post('/getMessagesCount', routes.getMessagesCount);
     app.get('/', routes.index);
     app.get('/index.html', routes.index);
     app.get('/operations_get.html', routes.operations_get);

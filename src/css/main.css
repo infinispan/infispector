@@ -380,3 +380,32 @@ svg[id=chordDiagram] {
 .x.axis path {
     display: none;
 }
+
+#myProgress {
+    width: 80%;
+    background-color: #ddd;
+    position: fixed;
+    top:50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#myBar {
+    width: 0%;
+    height: 30px;
+    background-color: #a45b36;
+    text-align: center;
+    line-height: 30px;
+    color: white;
+}
+
+.overlay{
+    opacity:0.8;
+    background-color:#ccc;
+    position:fixed;
+    width:100%;
+    height:100%;
+    top:0px;
+    left:0px;
+    z-index:1000;
+}

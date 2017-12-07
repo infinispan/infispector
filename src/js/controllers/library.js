@@ -7,6 +7,7 @@ app.controller('InfiSpectorCtrl', ['$scope', '$http', function ($scope, $http) {
         $scope.index;
         $scope.hidden = true;
         $scope.legendHidden = true;
+        $scope.loadingBarHidden = true;
 
         $scope.calculateDefaultUnits = function() {
             var unitOrder = ["hours", "minutes", "seconds", "milliseconds"];
@@ -14,10 +15,7 @@ app.controller('InfiSpectorCtrl', ['$scope', '$http', function ($scope, $http) {
                 $scope.getLastMessageTime().then(function (lastMessageTime) {
                     var start = new Date(firstMessageTime);
                     var end = new Date(lastMessageTime);
-                    console.log(start);
-                    console.log(end);
                     var difference = end.getTime() - start.getTime();
-                    console.log(difference);
                     if (difference < 1000) {
                         timeLine("milliseconds");
                         return;
@@ -111,12 +109,13 @@ app.controller('InfiSpectorCtrl', ['$scope', '$http', function ($scope, $http) {
          * @param nodeName contains name of node
          */
         
-        $scope.getNodeInfo = function (nodeName, filter) {
+        $scope.getNodeInfo = function (nodeName, filter, srcDest) {
             $scope.index = 0;
             console.log(filter);
             var request = $http.post('/getMessagesInfo', 
             {
-                "nodeName": nodeName,
+                "srcNode": (!srcDest) ? nodeName : null,
+                "destNode": (srcDest) ? nodeName : null,
                 "filter": filter
             });
             request.then(function (response) {
@@ -125,7 +124,6 @@ app.controller('InfiSpectorCtrl', ['$scope', '$http', function ($scope, $http) {
                 $scope.nodeMessagesInfo = [];
                 for (var i = 0; i < parsed.result.length; i++) {
                     $scope.nodeMessagesInfo[i] = "\nnode name: " + nodeName + "\ncount: " + parsed.result[i].length + "\nmessage: " + parsed.result[i].message + "\n\n\n" + (i + 1) + "/" + parsed.result.length;
-                    //$scope.nodeMessagesInfo[i] = $scope.nodeMessagesInfo[i].split(",").join('\n').replace("^\"", "").replace("$\"", "");      // funny -> replace didnt work out for me
                 }
                 $scope.messageInfo = $scope.nodeMessagesInfo[0];
             });
@@ -157,8 +155,25 @@ app.controller('InfiSpectorCtrl', ['$scope', '$http', function ($scope, $http) {
                 deleteGraphs();
                 filters = "SingleRpcCommand,CacheTopologyControlCommand,StateResponseCommand,StateRequestCommand";
             }
+            filters = filters.split(",");
             var element = document.getElementById("cmn-toggle-7");
-            $scope.flowChart(filters)
+            var graphClass = document.getElementsByClassName("graph");
+            var filtersUsed = [];
+            if (graphClass.length > 0) {
+                for (var i = 0; i < graphClass.length; i++) {
+                    filtersUsed.push(graphClass[i].childNodes[0].innerText);
+                }
+            }
+            for (var j = 0; j < filters.length; j++) {
+                if (filtersUsed.indexOf(filters[j]) > -1) {
+                    displayGrowl(filters[j] + " filter already used");
+                    filters.splice(j, 1);
+                }
+            }
+            if (filters.length > 0) {
+                $scope.loadingBarHidden = false;
+                $scope.flowChart(filters);
+            }
             // if (element.checked) {      //flow chart
             //     $scope.flowChart(filters);
             // }
@@ -166,73 +181,104 @@ app.controller('InfiSpectorCtrl', ['$scope', '$http', function ($scope, $http) {
             //     $scope.chordDiagram(filters);
             // }
         };
+
+        $scope.getMatrix = function (nodes, filter, filterCount, callback) {
+            var requestsRemaining = Math.pow(nodes.length, 2);
+            var matrix = [];
+            var groupNames = [];
+            var onePercent = (requestsRemaining * filterCount) * 0.01;
+            nodes.push(nodes.splice(nodes.indexOf("\"null\""), 1)[0]);
+            var numberOfNodesInGroup = parseInt(document.getElementById("nodesInGroup").value, 10);
+            if (numberOfNodesInGroup > 1) {
+                for (var i = 0; i < Math.ceil(nodes.length / numberOfNodesInGroup); i++) {
+                    groupNames.push(JSON.stringify("group" + i));
+                }
+                $scope.groupLegend = "";
+                $scope.legendHidden = false;
+            }
+            else {
+                groupNames = nodes;
+                $scope.legendHidden = true;
+            }
+            for (var i1 = 0; i1 < nodes.length; i1++) {
+                if (i1 % numberOfNodesInGroup === 0 && i1 !== nodes.length - 1) {
+                    $scope.groupLegend += "\ngroup" + i1 / numberOfNodesInGroup + ":\n";
+                }
+                if (i1 !== nodes.length - 1) {
+                    $scope.groupLegend += nodes[i1] + "\n";
+                }
+                for (var i2 = 0; i2 < nodes.length; i2++) {
+                    var request = $http.post("/getMessagesCount",
+                        {
+                            "srcNode": nodes[i1],
+                            "destNode": nodes[i2],
+                            "searchMessageText": filter,
+                            "groupSrc": groupNames[Math.floor(i1 / numberOfNodesInGroup)],
+                            "groupDest": groupNames[Math.floor(i2 / numberOfNodesInGroup)]
+                        });
+                    request.then(function (response) {
+                        if (response.data.error > 0) {
+                            console.log("ERROR: response.data.error > 0");
+                        }
+                        else {
+                            var res = response.data.result;
+                            res = JSON.parse(res);
+                            res[2] = parseInt(res[2], 10);
+                            matrix.push(res);
+                            --requestsRemaining;
+                            ++requestsRemainingToPercent;
+                            if (requestsRemainingToPercent >= onePercent) {
+                                console.log(requestsRemainingToPercent);
+                                requestsRemainingToPercent = 0;
+                                if (onePercent < 1) {
+                                    frame(1/onePercent);
+                                }
+                                else {
+                                    frame(1);
+                                }
+                            }
+                            if (requestsRemaining <= 0) {
+                                if (numberOfNodesInGroup > 1) {
+                                    var tmp;
+                                    for (var i = 0; i < matrix.length; i++) {
+                                        for (var j = 0; j < matrix.length; j++) {
+                                            if (i === j) {
+                                                continue;
+                                            }
+                                            if (matrix[i][0] === matrix[j][0] && matrix[i][1] === matrix[j][1]) {
+                                                tmp = matrix[j][2];
+                                                matrix.splice(j, 1);
+                                                matrix[i][2] = parseInt(tmp, 10) + parseInt(matrix[i][2], 10);
+                                                j--;
+                                            }
+                                        }
+                                    }
+                                }
+                                callback(matrix, JSON.parse(response.data.searchMessageText));
+                            }
+                        }
+                    });
+                }
+            }
+        };
         
         // TODO: we will need more flowCharts in the dashboard 
         // TODO: create matrix/array of flowcharts
-        $scope.flowChart = function (messages) {
-            messages = messages.split(",");
+        $scope.flowChart = function (filters) {
+            // filters = filters.split(",");
             // var times = getSelectedTime();
             // var from = times[0];
             // var to = times[1];
-            //var from = document.getElementById("valR").value;
-            //var to = document.getElementById("valR2").value;
-            // TODO: dynamically for each chart on dashboard
-            // SingleRpcCommand, CacheTopologyControlCommand 
+            // SingleRpcCommand, CacheTopologyControlCommand
             // StateResponseCommand, StateRequestCommand
 //            var searchMessageText = document.getElementById("searchMessageText").value;
             var searchMessageText = ""; // "" means show all messages, no filter
             $scope.getNodes().then(function (nodes) {
-                var numberOfNodesInGroup = document.getElementById("nodesInGroup").value;
-                var nodesArrayInJson = [];
-                var tmp = 0;
-                var index1 = nodes.indexOf("\"null\"");
-                $scope.groupLegend = "";
-                nodes.splice(index1, 1);
-                if (numberOfNodesInGroup >= 1) {
-                    for (var index = 0; index < nodes.length; index++) {
-                        tmp = Math.floor(index / numberOfNodesInGroup);
-                        if (Math.ceil(index / numberOfNodesInGroup) - tmp === 0) {
-                            nodesArrayInJson[tmp] = [];
-                        }
-                        nodesArrayInJson[tmp][index % numberOfNodesInGroup] = {"nodeName": nodes[index]};
-                    }
-                    nodesArrayInJson.push([]);
-                    nodesArrayInJson[nodesArrayInJson.length - 1][0] = {"nodeName": "\"null\""};
-                }
-                else {
-                    displayGrowl('Number of nodes in group must be greater than 0');
-                }
-                if (numberOfNodesInGroup > 1) {
-                        for (var i = 0; i < nodesArrayInJson.length; i++) {
-                            if (nodesArrayInJson[i].length > 1) {
-                                $scope.groupLegend += "\ngroup" + i.toString() + ":\n";
-                                for (var j1 = 0; j1 < nodesArrayInJson[i].length; j1++) {
-                                    $scope.groupLegend += nodesArrayInJson[i][j1].nodeName + "\n";
-                                }
-                                $scope.groupLegend += "\n";
-                            }
-                        }
-                        $scope.legendHidden = false;
-                }
-                else {
-                    $scope.legendHidden = true;
-                }
-                for (var j = 0; j < messages.length; j++) {
-                    searchMessageText = messages[j];
-                    var request = $http.post("/getFlowChartMatrix",
-                        {
-                            "nodes": nodesArrayInJson,
-                            "searchMessageText" : searchMessageText
-                        });
-                    request.then(function (response) {
-                       if (response.data.error > 0) {
-                           console.log("ERROR: response.data.error > 0");
-                       } 
-                       else {
-                            var matrix = JSON.parse(response.data.matrix);
-                            var searchMessage = JSON.parse(response.data.searchMessage);
-                            messageFlowChart(nodes, matrix, searchMessage);
-                       }
+                for (var j = 0; j < filters.length; j++) {
+                    searchMessageText = filters[j];
+                    $scope.getMatrix(nodes, searchMessageText, filters.length, function (matrix, filter) {
+                        cnt++;
+                        messageFlowChart(nodes, matrix, filter, cnt === filters.length);
                     });
                 }
             });
