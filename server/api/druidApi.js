@@ -7,7 +7,7 @@ var druidRequester = require('plywood-druid-requester').druidRequesterFactory(pa
 
 // TODO: pass this as a parameter when starting grunt to enable/disable log messages
 // without the need of code change here
-var druid_debug_enabled = true;
+var druid_debug_enabled = false;
 var debug = function (msg) {
     if (druid_debug_enabled) {
         console.log(msg);
@@ -61,7 +61,7 @@ exports.getNodes = function (request, response) {
  */
 var getMessagesCountIntern = function (srcNode, destNode, searchMessageText, fromTime, toTime, group1, group2) {
     return new Promise(function (resolve, reject) {
-        debug('getMessagesCountIntern function from druidApi.js was called.');
+        // debug('getMessagesCountIntern function from druidApi.js was called.');
         // dimension is "src" now
         // when dimension would be "message" we can get aggregation through
         // different messages and their count
@@ -81,9 +81,10 @@ var getMessagesCountIntern = function (srcNode, destNode, searchMessageText, fro
                 resolve([srcNode, destNode, 0]);
             } else {
                 messagesCount = messagesCount[0].replace('"length":', "");
-
-                debug("in getMessagesCountIntern extracted messagesCount from: "
+                if (searchMessageText === "CacheTopologyControlCommand") {
+                    console.log("in getMessagesCountIntern extracted messagesCount from: "
                         + res + " = " + messagesCount);
+                }
                 resolve([srcNode, destNode, messagesCount]);
             }
         }).done();
@@ -102,9 +103,11 @@ exports.getMessagesCount = function (request, response) {
         var groupDest = request.body.groupDest;
         if (srcNode === "null") {
             groupSrc = JSON.stringify("null");
+            srcNode = JSON.parse(srcNode);
         }
         if (destNode === "null") {
             destNode = JSON.stringify("null");
+            destNode = JSON.parse(destNode);
         }
         getMessagesCountIntern(srcNode, destNode, searchMessageText, "", "", groupSrc, groupDest).then(function (result) {
             response.send({error: 0, result: JSON.stringify(result), searchMessageText: JSON.stringify(searchMessageText)}, 201);
@@ -323,7 +326,7 @@ var setIntervalsToDruidQueryBase = function (queryJson, fromTime, toTime) {
     if (fromTime && toTime) {
         queryJson.query.intervals = [fromTime + "/" + toTime];
     } else {
-        console.log("In setIntervalsToDruidQueryBase: fromTime or toTime not specified, using default 50 years (2000-2050).")
+        debug("In setIntervalsToDruidQueryBase: fromTime or toTime not specified, using default 50 years (2000-2050).")
         queryJson.query.intervals = ["2000-10-01T00:00/2050-01-01T00"];
     }
 }

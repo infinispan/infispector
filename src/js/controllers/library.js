@@ -124,7 +124,6 @@ app.controller('InfiSpectorCtrl', ['$scope', '$http', function ($scope, $http) {
                 $scope.nodeMessagesInfo = [];
                 for (var i = 0; i < parsed.result.length; i++) {
                     $scope.nodeMessagesInfo[i] = "\nnode name: " + nodeName + "\ncount: " + parsed.result[i].length + "\nmessage: " + parsed.result[i].message + "\n\n\n" + (i + 1) + "/" + parsed.result.length;
-                    //$scope.nodeMessagesInfo[i] = $scope.nodeMessagesInfo[i].split(",").join('\n').replace("^\"", "").replace("$\"", "");      // funny -> replace didnt work out for me
                 }
                 $scope.messageInfo = $scope.nodeMessagesInfo[0];
             });
@@ -147,7 +146,6 @@ app.controller('InfiSpectorCtrl', ['$scope', '$http', function ($scope, $http) {
         };
         
         $scope.drawGraph = function (addedFilter) {
-            $scope.loadingBarHidden = false;
             var filters = "";
             if (addedFilter) {
                 filters = document.getElementById("inputFilter").value;
@@ -157,8 +155,25 @@ app.controller('InfiSpectorCtrl', ['$scope', '$http', function ($scope, $http) {
                 deleteGraphs();
                 filters = "SingleRpcCommand,CacheTopologyControlCommand,StateResponseCommand,StateRequestCommand";
             }
+            filters = filters.split(",");
             var element = document.getElementById("cmn-toggle-7");
-            $scope.flowChart(filters);
+            var graphClass = document.getElementsByClassName("graph");
+            var filtersUsed = [];
+            if (graphClass.length > 0) {
+                for (var i = 0; i < graphClass.length; i++) {
+                    filtersUsed.push(graphClass[i].childNodes[0].innerText);
+                }
+            }
+            for (var j = 0; j < filters.length; j++) {
+                if (filtersUsed.indexOf(filters[j]) > -1) {
+                    displayGrowl(filters[j] + " filter already used");
+                    filters.splice(j, 1);
+                }
+            }
+            if (filters.length > 0) {
+                $scope.loadingBarHidden = false;
+                $scope.flowChart(filters);
+            }
             // if (element.checked) {      //flow chart
             //     $scope.flowChart(filters);
             // }
@@ -249,8 +264,8 @@ app.controller('InfiSpectorCtrl', ['$scope', '$http', function ($scope, $http) {
         
         // TODO: we will need more flowCharts in the dashboard 
         // TODO: create matrix/array of flowcharts
-        $scope.flowChart = function (messages) {
-            messages = messages.split(",");
+        $scope.flowChart = function (filters) {
+            // filters = filters.split(",");
             // var times = getSelectedTime();
             // var from = times[0];
             // var to = times[1];
@@ -259,11 +274,11 @@ app.controller('InfiSpectorCtrl', ['$scope', '$http', function ($scope, $http) {
 //            var searchMessageText = document.getElementById("searchMessageText").value;
             var searchMessageText = ""; // "" means show all messages, no filter
             $scope.getNodes().then(function (nodes) {
-                for (var j = 0; j < messages.length; j++) {
-                    searchMessageText = messages[j];
-                    $scope.getMatrix(nodes, searchMessageText, messages.length, function (matrix, filter) {
+                for (var j = 0; j < filters.length; j++) {
+                    searchMessageText = filters[j];
+                    $scope.getMatrix(nodes, searchMessageText, filters.length, function (matrix, filter) {
                         cnt++;
-                        messageFlowChart(nodes, matrix, filter, cnt === messages.length);
+                        messageFlowChart(nodes, matrix, filter, cnt === filters.length);
                     });
                 }
             });
