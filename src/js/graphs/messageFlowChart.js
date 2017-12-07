@@ -330,7 +330,6 @@ function messageFlowChart(nodes, matrix, messageType, last) {
             {data:bP.partData(matrix,2), id:messageType, header:["From","To", ""]}
     ];
     bP.draw(data, svg, longest, longestCnt * 10 + 4);
-    console.log(last);
     if (last) {
         angular.element(document.getElementById('ctrl')).scope().loadingBarHidden = true;
         widthBar = 0;
