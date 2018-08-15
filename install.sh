@@ -94,7 +94,7 @@ then
 		printf "Kafka download failed\n" >&2
 	fi
 else
-	printf " ${GREEN}FOUND${NC}. Download will be skipped.\n"
+	printf " ${GREEN}FOUND${NC}.\nDownload will be skipped.\n"
 fi
 
 #sets alias infispector to start script infispector.sh
@@ -116,6 +116,8 @@ fi
 if ! grep "alias infispector='${infispector_location}/infispector.sh'" < ~/.bashrc > /dev/null
 then
 	printf "alias infispector='${infispector_location}/infispector.sh'\n" >> ~/.bashrc
+	printf "infispector_location='${infispector_location}'\n" >> ~/.bashrc
+	printf "export infispector_location\n" >> ~/.bashrc
 fi
 
 #create new file with autocomplete - requires permission
@@ -189,7 +191,7 @@ then
 fi
 printf "mvn install ...."
 cd $infispector_location/infinispan_example_app/
-mvn -q clean install 2> $infispector_location/mvn_err.log
+mvn clean install 2> $infispector_location/mvn_err.log
 if [ $? -eq 0 ]
 then
 	printf " ${GREEN}OK${NC}\n"
