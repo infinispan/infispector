@@ -7,6 +7,8 @@ cleanUp() {
 	rm tmp2
 }
 
+$SHELL --version
+export infispector_location=`readlink -f .`
 grunt > tmp &
 
 while true
