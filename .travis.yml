@@ -1,15 +1,18 @@
 language: node_js
+node_js:
+        - "iojs"
+        - "8"
 sudo: required
 before_install:
-        - 'if [[ `npm -v` != 3* ]]; then npm i -g npm@3; fi'
         - wget "http://static.druid.io/artifacts/releases/druid-0.8.3-bin.tar.gz"
         - tar -zxvf druid-0.8.3-bin.tar.gz
         - wget "https://archive.apache.org/dist/kafka/0.8.2.0/kafka_2.10-0.8.2.0.tgz"
         - tar -zxvf kafka_2.10-0.8.2.0.tgz
 install:
-        - npm -s install
-        - mvn -q clean install -f ./infinispan_example_app/pom.xml
+        - npm install
+        - mvn clean install -f ./infinispan_example_app/pom.xml
 script: 
+        - node --version
         - ./infispector.sh help
         - ./infispector.sh prepare
         - ./infispector.sh nodes

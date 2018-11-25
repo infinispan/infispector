@@ -2,7 +2,7 @@
 
 downloadMaven() {
 	printf "Downloading maven...\n"
-	wget -q --show-progress $URL_MAVEN
+	wget $_PROGRESS_OPT $URL_MAVEN
 	tar zxvf apache-maven-3.5.2-bin.tar.gz -C $HOME > /dev/null
 	/bin/rm apache-maven-3.5.2-bin.tar.gz > /dev/null
 	M2_HOME=$HOME/apache-maven-3.5.2
@@ -48,6 +48,10 @@ then
 	exit 1
 fi
 
+#set wget options
+wget --help | grep -q '\--show-progress' && \
+  _PROGRESS_OPT="-q --show-progress" || _PROGRESS_OPT=""
+
 printf "Looking for a druid-0.8.3 folder in device ...."
 druid_location=`find /home -type d -name druid-0.8.3 2> /dev/null`
 if echo $druid_location | grep "Trash" > /dev/null
@@ -59,7 +63,7 @@ fi
 if [ -z "$druid_location" ]
 then
 	printf " ${RED}NOT FOUND${NC}.\n"
-	wget -q --show-progress $URL_DRUID
+	wget $_PROGRESS_OPT $URL_DRUID
 	if [ $? -eq 0 ]
 	then
 		tar -xvzf druid-0.8.3-bin.tar.gz -C $HOME > /dev/null
@@ -84,7 +88,7 @@ fi
 if [ -z "$kafka_location" ]
 then
 	printf " ${RED}NOT FOUND${NC}.\n"
-	wget -q --show-progress $URL_KAFKA
+	wget $_PROGRESS_OPT $URL_KAFKA
 	if [ $? -eq 0 ]
 	then
 		tar -xvzf kafka_2.10-0.8.2.0.tgz -C $HOME > /dev/null
@@ -94,7 +98,7 @@ then
 		printf "Kafka download failed\n" >&2
 	fi
 else
-	printf " ${GREEN}FOUND${NC}. Download will be skipped.\n"
+	printf " ${GREEN}FOUND${NC}.\nDownload will be skipped.\n"
 fi
 
 #sets alias infispector to start script infispector.sh
@@ -116,6 +120,8 @@ fi
 if ! grep "alias infispector='${infispector_location}/infispector.sh'" < ~/.bashrc > /dev/null
 then
 	printf "alias infispector='${infispector_location}/infispector.sh'\n" >> ~/.bashrc
+	printf "infispector_location='${infispector_location}'\n" >> ~/.bashrc
+	printf "export infispector_location\n" >> ~/.bashrc
 fi
 
 #create new file with autocomplete - requires permission
@@ -189,7 +195,7 @@ then
 fi
 printf "mvn install ...."
 cd $infispector_location/infinispan_example_app/
-mvn -q clean install 2> $infispector_location/mvn_err.log
+mvn clean install 2> $infispector_location/mvn_err.log
 if [ $? -eq 0 ]
 then
 	printf " ${GREEN}OK${NC}\n"

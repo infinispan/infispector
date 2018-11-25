@@ -10,3 +10,4 @@ node_modules/
 ideas
 *_err.log
 *.swp
+package-lock.json
