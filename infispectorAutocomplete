@@ -2,7 +2,7 @@ _infispector_complete() {
 	local words cur
 	cur="${COMP_WORDS[COMP_CWORD]}"
 	COMPREPLY=()
-	words="prepare start nodes help stop"
+	words="prepare start nodes help stop uninstall"
 	if [ ${COMP_CWORD} -eq 1 ]
 	then
 		COMPREPLY=( $(compgen -W "${words}" -- $cur) )

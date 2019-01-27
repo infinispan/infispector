@@ -5,6 +5,7 @@ cleanUp() {
 	pkill -f kafka -e
 	pkill -f zookeeper -e
 	pkill -f grunt -e
+	pkill -f nodemon -e
 }
 
 printHelp() {
@@ -25,19 +26,20 @@ ${GREEN}infispector prepare${NC} - starts dependecies (zookeeper, kafka, druid)
 ${GREEN}infispector start${NC} - starts application
 ${GREEN}infispector stop${NC} - stops infispector
 ${GREEN}infispector nodes${NC} - starts 4 instances
+${GREEN}infispector uninstall${NC} - uninstalls infispector
 ${GREEN}infispector nodes ${RED}NUMBER${NC} - starts specified ${RED}NUMBER${NC} of instances
 "
 }
 
 getInfispectorLocation() {
     result=""
-    if [ -z "$infispector_location" ]
+    if [[ -z "$infispector_location" ]]
     then
-        result=`find /home -type d -iname infispector 2> /dev/null | awk '{ print length, $0 }' | sort -n -s | head -n1 | cut -f 2 -d ' '`
+        result=`find /home -type d -name infispector 2> /dev/null | awk '{ print length, $0 }' | sort -n -s | head -n1 | cut -f 2 -d ' '`
     else
         result="$infispector_location"
     fi
-    if [ -z "$result" ]
+    if [[ -z "$result" ]]
     then
         printf "Infispector not found. Infispector must be in /home/* directory\n" >&2
         exit 1
@@ -47,7 +49,7 @@ getInfispectorLocation() {
 
 getDruidLocation() {
     result=`find /home -type d -name druid-0.8.3 2> /dev/null`
-    if [ -z "$result" ]
+    if [[ -z "$result" ]]
     then
 	    printf "Druid not found. Druid must be in /home/* directory\n" >&2
         exit 1
@@ -57,7 +59,7 @@ getDruidLocation() {
 
 getKafkaLocation() {
     result=`find /home -type d -name kafka_2.10-0.8.2.0 2> /dev/null`
-    if [ -z "$result" ]
+    if [[ -z "$result" ]]
     then
         printf "Kafka not found. Kafka must be in /home/* directory\n" >&2
         exit 1
@@ -66,13 +68,13 @@ getKafkaLocation() {
 }
 
 checkUserAndParams() {
-    if [ $EUID -eq 0 ]
+    if [[ $EUID -eq 0 ]]
     then
         printf "Please, run this as a ${WHITE}normal${NC} user, not root.\n" >&2
         exit 1
     fi
 
-    if [ "$#" -gt "2" ] || { [ "$#" -eq "2" ] && [ "$1" != "nodes"  ]; }
+    if [[ "$#" -gt "2" ]] || { [[ "$#" -eq "2" ]] && [[ "$1" != "nodes"  ]]; }
     then
         printf "Invalid number of arguments!\n" >&2
         exit 1
@@ -80,11 +82,11 @@ checkUserAndParams() {
 }
 
 startKafka() {
-    cd $KAFKA_LOCATION
+    cd ${KAFKA_LOCATION}
 	printf "Starting zookeeper ...."
 	bin/zookeeper-server-start.sh config/zookeeper.properties > /dev/null &
 	sleep 1
-	if [ $? -ne 0 ]
+	if [[ $? -ne 0 ]]
 	then
 		printf " ${RED}FAIL${NC}\n"
 		cleanUp
@@ -95,7 +97,7 @@ startKafka() {
 	printf "Starting kafka ...."
 	bin/kafka-server-start.sh config/server.properties > /dev/null &
 	sleep 1
-	if [ $? -ne 0 ]
+	if [[ $? -ne 0 ]]
 	then
 		printf " ${RED}FAIL${NC}\n"
 		cleanUp
@@ -107,10 +109,10 @@ startKafka() {
 
 startDruid() {
     TIMEOUT="0"
-    cd $DRUID_LOCATION
+    cd ${DRUID_LOCATION}
 	printf "Starting druid ...."
-	java -Xmx512m -Duser.timezone=UTC -Dfile.encoding=UTF-8 -Ddruid.realtime.specFile=$INFISPECTOR_LOCATION/kafka_druid_infrastructure/infispectorDruid.spec -classpath "config/_common:config/realtime:lib/*" io.druid.cli.Main server realtime > log.txt 2> log_err.txt &
-	if echo $INFISPECTOR_LOCATION | grep travis > /dev/null
+	java -Xmx512m -Duser.timezone=UTC -Dfile.encoding=UTF-8 -Ddruid.realtime.specFile=${INFISPECTOR_LOCATION}/kafka_druid_infrastructure/infispectorDruid.spec -classpath "config/_common:config/realtime:lib/*" io.druid.cli.Main server realtime > log.txt 2> log_err.txt &
+	if echo ${INFISPECTOR_LOCATION} | grep travis > /dev/null
 	then
 		sleep 10
 	fi
@@ -140,30 +142,42 @@ prepare() {
 }
 
 start() {
-    cd $INFISPECTOR_LOCATION
-	grunt
+    cd ${INFISPECTOR_LOCATION}
+	grunt | tee output.out &
+	while true
+	do
+		if cat output.out | grep "Server is listening on port 8080" > /dev/null
+		then
+			break
+		fi
+	done
+	rm output.out
+}
+
+uninstall() {
+    ${INFISPECTOR_LOCATION}/uninstall.sh
 }
 
 setNumberOfNodes() {
     result="4"
     NUMBER_CHECK='^[0-9]+$'
-    if ! [[ -z "$2" ]]
+    if ! [[ -z "$1" ]]
 	then
-		if ! [[ $2 =~ $NUMBER_CHECK ]]
+		if ! [[ $1 =~ $NUMBER_CHECK ]]
 		then
 			printf "Second argument must be a number\n" >&2
 			exit 1
 		fi
-		DEFAULT=$2
-		if [ $DEFAULT -ge "10" ]
+		result=$1
+		if [[ "$result" -ge "10" ]]
 		then
 			while true;
 			do
-				read -p "Are you sure you want to start ${DEFAULT} instances? [y/n] " yn
+				read -p "Are you sure you want to start ${result} instances? [y/n] " yn
 				case $yn in
 					[Yy]* ) break;;
 					[Nn]* ) exit 0;;
-					*) echo "Please answer y or n.";;
+					*) echo "Please answer y or n." >&2;;
 				esac
 			done
 		fi
@@ -172,14 +186,14 @@ setNumberOfNodes() {
 }
 
 nodes() {
-    DEFAULT=$(setNumberOfNodes)
+    DEFAULT="$(setNumberOfNodes "$1")"
     cnt="0"
-    cd $INFISPECTOR_LOCATION/infinispan_example_app
+    cd ${INFISPECTOR_LOCATION}/infinispan_example_app
 
 	printf "Starting $DEFAULT nodes ...."
-	while [ $cnt -ne $DEFAULT ]
+	while [[ "$cnt" -ne "$DEFAULT" ]]
 	do
-		if [ $cnt -eq $[$DEFAULT - 1] ]
+		if [[ ${cnt} -eq $((DEFAULT - 1)) ]]
 		then
 			mvn exec:exec > /dev/null
 		else
@@ -187,7 +201,7 @@ nodes() {
 		fi
 		cnt=$[$cnt + 1]
 	done
-	if [ $? -eq 0 ]
+	if [[ $? -eq 0 ]]
 	then
 		printf " ${GREEN}OK${NC}\n"
 		exit 0
@@ -209,7 +223,7 @@ GREEN='\033[0;32m'
 RED='\033[0;31m'
 
 checkUserAndParams
-if [ $# -eq 0 ]
+if [[ $# -eq 0 ]]
 then
     printHelp
     exit 0
@@ -217,9 +231,11 @@ fi
 
 case $1 in
 ("prepare") prepare ;;
-("start") start ;;
+("start") start; xdg-open http://localhost:8080 ;;
 ("stop") cleanUp ;;
-("nodes") nodes ;;
+("nodes") nodes $2;;
+("uninstall") uninstall ;;
 ("help") printHelp ;;
 (*) echo "invalid argument"; echo "usage: " ; printHelp ;;
 esac
+exit 0
