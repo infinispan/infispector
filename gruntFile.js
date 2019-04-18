@@ -195,7 +195,7 @@
       serverFile: 'app.js',
       shell: {
           nodemon: {
-              command: 'nodemon <%= serverFile %>',
+              command: '${infispector_location}/node_modules/nodemon/bin/nodemon.js <%= serverFile %>',
               options: {
                   stdout: true,
                   stderr: true,
